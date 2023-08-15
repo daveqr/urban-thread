@@ -1,6 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/yarn,mean,macos,grunt,bower
 # Edit at https://www.toptal.com/developers/gitignore?templates=yarn,mean,macos,grunt,bower
 
+backend-old
 ### Bower ###
 bower_components
 .bower-cache

@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "type": "module",
   "scripts": {
-    "start": "node index.js"
-  },  
+    "start": "node src/index.js",
+    "seed": "node src/seed.cjs"
+  },
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "faker": "^6.6.6",
+    "mongodb": "^5.7.0"
   }
 }
