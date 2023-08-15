@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "type": "module",
   "scripts": {
     "start": "node src/index.js",
-    "seed": "node src/seed.cjs"
+    "seed": "node src/seed.js"
   },
   "dependencies": {
     "express": "^4.18.2",
-    "faker": "^6.6.6",
     "mongodb": "^5.7.0"
+  },
+  "packageManager": "yarn@3.6.1",
+  "devDependencies": {
+    "@faker-js/faker": "^8.0.2"
   }
 }

@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+const { MongoClient } = require('mongodb');
 
 const uri = 'mongodb://localhost:27017';
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -13,13 +13,12 @@ async function connectToDatabase() {
     throw error;
   }
 }
+
 async function close() {
   client.close();
 }
 
-const dbFunctions = {
+module.exports = {
   connectToDatabase,
   close
 };
-
-export default dbFunctions;
