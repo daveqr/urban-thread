@@ -3,10 +3,6 @@ const { faker } = require('@faker-js/faker');
 
 
 function createSeedData() {
-    const colors = ['red', 'blue', 'green',
-        'yellow', 'purple', 'orange',
-        'indigo', 'black', 'gray'];
-
     const seedData = Array.from({ length: 10 }, (_, index) => ({
         description: faker.commerce.product(),
         price: faker.commerce.price(),
@@ -19,7 +15,7 @@ function createSeedData() {
 
 async function seedDatabase() {
     const db = await dbFunctions.connectToDatabase();
-    const collection = db.collection('todos');
+    const collection = db.collection('items');
     const seedData = createSeedData()
 
     try {
