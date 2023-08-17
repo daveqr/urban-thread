@@ -1,20 +1,8 @@
-const dbFunctions = require('./db.js');
 const { faker } = require('@faker-js/faker');
-
-async function seedCollection(collectionName, createDataFunction) {
-    const db = await dbFunctions.connectToDatabase();
-    const collection = db.collection(collectionName);
-    const seedData = createDataFunction();
-
-    try {
-        await collection.insertMany(seedData);
-        console.log(`Seed data for ${collectionName} inserted successfully`);
-    } catch (error) {
-        console.error(`Error inserting seed data for ${collectionName}:`, error);
-    } finally {
-        dbFunctions.close(db);
-    }
-}
+const Edition = require('./models/edition');
+const Item = require('./models/item');
+const Category = require('./models/category');
+const mongoose = require('mongoose');
 
 function createItemData() {
     return Array.from({ length: 10 }, (_, index) => ({
@@ -25,39 +13,31 @@ function createItemData() {
     }));
 }
 
-async function seedItems() {
-    await seedCollection('items', createItemData);
-}
-
-function createCategoryData() {
+function createCategoryData(editions) {
     const categories = [
         {
             name: 'Silk Dresses',
-            collection: 'Pre-fall',
+            edition: editions[4]._id.toString(), // pre-fall
             description: 'Collection of silk dresses for Pre-fall season.',
         },
         {
             name: 'Suits',
-            collection: 'Designers',
+            edition: editions[3]._id.toString(), // designer
             description: 'Collection of suits from various designers.',
         },
         {
             name: 'Festival',
-            collection: 'Summer',
+            edition: editions[2]._id.toString(), // summer
             description: 'Collection of suits from various designers.',
         },
         {
             name: 'Showroom',
-            collection: 'Sale',
+            edition: editions[0]._id.toString(), // sale
             description: 'Collection of clothing on sale in our showroom.',
         },
     ];
 
     return categories;
-}
-
-async function seedCategories() {
-    await seedCollection('categories', createCategoryData);
 }
 
 function createEditionData() {
@@ -87,14 +67,51 @@ function createEditionData() {
     return editions;
 }
 
-async function seedEditions() {
-    await seedCollection('editions', createEditionData);
+async function insertEditions() {
+    const editionsData = createEditionData();
+    const editions = await Edition.insertMany(editionsData);
+    console.log('Inserted editions');
+    return editions;
+}
+
+async function insertItems() {
+    const itemData = createItemData();
+    await Item.insertMany(itemData);
+    console.log('Inserted items');
+}
+
+async function insertCategories(editions) {
+    const categoryData = createCategoryData(editions);
+    await Category.insertMany(categoryData);
+    console.log('Inserted categories');
 }
 
 async function main() {
-    await seedEditions();
-    await seedItems();
-    await seedCategories();
+    let connection;
+    try {
+        connection = await mongoose.connect('mongodb://localhost:27017/apparel', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+
+        console.log('Connected to MongoDB');
+
+        // editions (must come before category)
+        const editions = await insertEditions();
+
+        // items
+        await insertItems();
+
+        // categories (must come after editions)
+        await insertCategories(editions);
+    } catch (error) {
+        console.error('Error connecting to MongoDB:', error);
+    } finally {
+        if (connection) {
+            connection.disconnect();
+            console.log('Closed connection');
+        }
+    }
 }
 
 main();
