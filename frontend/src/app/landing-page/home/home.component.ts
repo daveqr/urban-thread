@@ -3,7 +3,7 @@ import { CategoryService } from '../../services/category.service';
 import { SimplifiedCategory } from '../../models/simplified-category.model'; 
 
 @Component({
-  selector: 'app-homex',
+  selector: 'app-landing-page-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   encapsulation: ViewEncapsulation.None
