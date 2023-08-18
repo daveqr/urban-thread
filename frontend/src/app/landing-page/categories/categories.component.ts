@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { UtilitiesService } from '../../shared/utilities.service';
+import { SimplifiedCategory } from '../../models/simplified-category.model';
 
 @Component({
   selector: 'app-categories',
@@ -7,7 +8,8 @@ import { UtilitiesService } from '../../shared/utilities.service';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent {
-  @Input() categories: any;
+  @Input()
+  categories: SimplifiedCategory[] = [];
 
   constructor(private utilitiesService: UtilitiesService) { }
 
