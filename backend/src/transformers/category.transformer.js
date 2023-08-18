@@ -1,4 +1,4 @@
-function transformCategory(category) {
+function transform(category) {
     return {
       name: category.name,
       description: category.description,
@@ -7,6 +7,6 @@ function transformCategory(category) {
   }
   
   module.exports = {
-    transformCategory
+    transform
   };
   

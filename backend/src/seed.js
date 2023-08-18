@@ -23,12 +23,12 @@ function createCategoryData(editions) {
         {
             name: 'Suits',
             edition: editions[3]._id.toString(), // designer
-            description: 'Collection of suits from various designers.',
+            description: 'Collection of designer suits.',
         },
         {
             name: 'Festival',
             edition: editions[2]._id.toString(), // summer
-            description: 'Collection of suits from various designers.',
+            description: 'Collection of suits for the summer season.',
         },
         {
             name: 'Showroom',
