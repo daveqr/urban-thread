@@ -5,7 +5,7 @@ const Category = require('./models/category');
 const mongoose = require('mongoose');
 
 function createItemData() {
-    return Array.from({ length: 10 }, (_, index) => ({
+    return Array.from({ length: 10 }, (_) => ({
         description: faker.commerce.product(),
         price: faker.commerce.price(),
         department: faker.commerce.department(),
