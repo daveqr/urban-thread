@@ -1,3 +1,8 @@
+/**
+ * Transforms a category object into a simplified format.
+ * @param {Object} category - The category object to be transformed.
+ * @returns {Object} The transformed category object.
+ */
 function transform(category) {
     return {
       name: category.name,

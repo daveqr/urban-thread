@@ -3,6 +3,13 @@ const router = express.Router();
 const Category = require('../models/category');
 const CategoryTransformer = require('../transformers/category.transformer');
 
+/**
+ * GET request handler for retrieving categories.
+ * @route GET /categories
+ * @param {express.Request} req - The Express request object.
+ * @param {express.Response} res - The Express response object.
+ * @returns {Promise<void>} A promise indicating the completion of the request handling.
+ */
 router.get('/', async (req, res) => {
     try {
         const { full } = req.query;

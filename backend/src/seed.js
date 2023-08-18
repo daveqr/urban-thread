@@ -4,6 +4,10 @@ const Item = require('./models/item');
 const Category = require('./models/category');
 const mongoose = require('mongoose');
 
+/**
+ * Generates seed item data.
+ * @returns {Object[]} An array of item data objects.
+ */
 function createItemData() {
     return Array.from({ length: 10 }, (_) => ({
         description: faker.commerce.product(),
@@ -13,6 +17,11 @@ function createItemData() {
     }));
 }
 
+/**
+ * Generates seed category data.
+ * @param {Object[]} editions - An array of edition objects.
+ * @returns {Object[]} An array of category data objects.
+ */
 function createCategoryData(editions) {
     const categories = [
         {
@@ -40,6 +49,10 @@ function createCategoryData(editions) {
     return categories;
 }
 
+/**
+ * Generates seed edition data.
+ * @returns {Object[]} An array of edition data objects.
+ */
 function createEditionData() {
     const editions = [
         {
@@ -67,6 +80,10 @@ function createEditionData() {
     return editions;
 }
 
+/**
+ * Inserts edition data into the database.
+ * @returns {Promise<Object[]>} A promise resolving to an array of inserted edition objects.
+ */
 async function insertEditions() {
     const editionsData = createEditionData();
     const editions = await Edition.insertMany(editionsData);
@@ -74,18 +91,31 @@ async function insertEditions() {
     return editions;
 }
 
+/**
+ * Inserts item data into the database.
+ * @returns {Promise<void>} A promise indicating the completion of item insertion.
+ */
 async function insertItems() {
     const itemData = createItemData();
     await Item.insertMany(itemData);
     console.log('Inserted items');
 }
 
+/**
+ * Inserts category data into the database.
+ * @param {Object[]} editions - An array of edition objects.
+ * @returns {Promise<void>} A promise indicating the completion of category insertion.
+ */
 async function insertCategories(editions) {
     const categoryData = createCategoryData(editions);
     await Category.insertMany(categoryData);
     console.log('Inserted categories');
 }
 
+/**
+ * Connects to MongoDB, inserts data, and handles disconnection.
+ * @returns {Promise<void>} A promise indicating the completion of the main function.
+ */
 async function main() {
     let connection;
     try {
