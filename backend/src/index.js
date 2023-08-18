@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors'); 
 const itemRoutes = require('./routes/items');
 const categoryRoutes = require('./routes/categories');
 
@@ -17,6 +18,13 @@ mongoose.connect('mongodb://localhost:27017/apparel', {
     console.error('Error connecting to MongoDB:', error);
   });
 
+// Allow cross-origin requests
+const corsOptions = {
+  origin: 'http://localhost:4200',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  optionsSuccessStatus: 204,
+};
+app.use(cors(corsOptions));
 
 // Routes
 app.use('/items', itemRoutes);
