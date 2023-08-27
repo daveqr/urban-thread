@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Category = require('../models/category');
+require('../models/edition');
 const CategoryTransformer = require('../transformers/category.transformer');
 
 /**
@@ -23,7 +24,7 @@ router.get('/', async (req, res) => {
             res.json(simplifiedData);
         }
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching categories', error });
+        res.status(500).json({ message: 'Error fetching categories: ' + error.message, error });
     }
 });
 
