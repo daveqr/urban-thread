@@ -5,6 +5,7 @@
  */
 function transform(category) {
     return {
+      id: category._id,
       name: category.name,
       description: category.description,
       editionName: category.edition ? category.edition.name : null
