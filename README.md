@@ -6,7 +6,7 @@ This is an active work-in-progress and is not yet feature-complete. I believe it
 
 Run quick reference
 ```BASH
-$ cd frontend
+$ cd web
 $ yarn install
 $ ng serve &
 
