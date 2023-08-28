@@ -4,8 +4,6 @@ import { CategoriesHomeComponent } from './categories-home/categories-home.compo
 import { CategoriesRoutingModule } from './categories-routing.module';
 import { CategoryDetail } from './category-detail/category-detail.component';
 
-
-
 @NgModule({
   declarations: [
     CategoriesHomeComponent,
