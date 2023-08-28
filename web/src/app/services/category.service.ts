@@ -16,14 +16,22 @@ export class CategoryService {
   constructor(private http: HttpClient) { }
 
   /**
-   * Retrieves a list of categories from the server.
-   *
-   * This method sends an HTTP GET request to the server to fetch a list of categories.
+   * Retrieves a list of categories from the API.
    *
    * @returns An Observable that emits the category data when the HTTP request is successful.
    */
   getCategories(): Observable<any> {
     const url = `${this.baseUrl}/categories`;
+    return this.http.get(url);
+  }
+
+  /**
+   * Retrieves a single category from the API.
+   *
+   * @returns An Observable that emits the category data when the HTTP request is successful.
+   */
+  getCategoryById(id: string): Observable<any> {
+    const url = `${this.baseUrl}/categories/${id}`;
     return this.http.get(url);
   }
 }
