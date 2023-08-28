@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { CategoriesHomeComponent } from './categories-home/categories-home.component';
 import { CategoriesRoutingModule } from './categories-routing.module';
 import { CategoryDetail } from './category-detail/category-detail.component';
-import { CategoriesDetailComponent } from './categories-detail/categories-detail.component';
 
 
 
@@ -11,7 +10,6 @@ import { CategoriesDetailComponent } from './categories-detail/categories-detail
   declarations: [
     CategoriesHomeComponent,
     CategoryDetail,
-    CategoriesDetailComponent
   ],
   imports: [
     CommonModule,

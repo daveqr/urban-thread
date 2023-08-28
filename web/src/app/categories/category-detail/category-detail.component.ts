@@ -17,7 +17,13 @@ export class CategoryDetail implements OnInit {
       id: '',
       name: '',
       description: ''
-    }
+    },
+    products: [{
+      id: '',
+      description: '',
+      price: '',
+      color: ''
+    }]
   };
   id: string | null = null;
 

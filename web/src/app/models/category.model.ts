@@ -7,5 +7,11 @@ export interface Category {
       name: string;
       description: string;
     };
+    products: [{
+      id: string;
+      description: string;
+      price: string;
+      color: string;
+    }]
   }
   

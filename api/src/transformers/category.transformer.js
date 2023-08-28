@@ -4,6 +4,13 @@
  * @returns {Object} The transformed category object.
  */
 function transform(category) {
+  const productsList = category.products.map(product => ({
+    id: product._id,
+    description: product.description,
+    price: product.price,
+    color: product.color,
+  }));
+
   return {
     id: category._id,
     name: category.name,
@@ -12,7 +19,8 @@ function transform(category) {
       id: category.edition._id,
       name: category.edition.name,
       description: category.edition.description,
-    }
+    },
+    products: productsList,
   }
 }
 

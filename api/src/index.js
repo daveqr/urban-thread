@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors'); 
-const itemRoutes = require('./routes/items');
+const productRoutes = require('./routes/products');
 const categoryRoutes = require('./routes/categories');
 
 const app = express();
@@ -27,7 +27,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Routes
-app.use('/items', itemRoutes);
+app.use('/products', productRoutes);
 app.use('/categories', categoryRoutes);
 
 // Start the server
