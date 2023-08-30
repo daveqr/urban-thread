@@ -1,10 +1,7 @@
 import { Controller } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
+import { AppService } from './app.service';
 
-@Controller()
+@Controller('products')
 export class AppController {
-  @MessagePattern({ cmd: 'hello' })
-  hello(input?: string): string {
-    return `Hello, ${input || 'there'}!`;
-  }
+  constructor(private readonly appService: AppService) {}
 }

@@ -39,7 +39,7 @@ app.use(
 
 // Allow cross-origin requests
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN, // Specify your origin or '*' for any origin.
+  origin: process.env.CORS_ORIGIN,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   optionsSuccessStatus: 204,
   credentials: true,

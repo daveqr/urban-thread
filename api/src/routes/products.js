@@ -27,10 +27,7 @@ router.get('/:id', async (req, res) => {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        const data = product;
-        // const data = CategoryTransformer.transform(category);
-
-        res.json(data);
+        res.json(product);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching product: ' + error.message, error });
     }

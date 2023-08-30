@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { Product } from './models/product.model';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
-  }
+  constructor(
+    @InjectModel('Product') private readonly productModel: Model<Product>,
+  ) {}
 }

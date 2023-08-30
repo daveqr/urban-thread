@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
   password: String,
 });
 
+// TODO need to implement the user save encryption
 // userSchema.pre('save', function (next) {
 //   if (!this.isModified('password')) {
 //     return next();
