@@ -1,15 +1,12 @@
+const { productTransformer } = require('./product.transformer');
+
 /**
  * Transforms a category object into a populated category.
  * @param {Object} category - The category object to be transformed.
  * @returns {Object} The transformed category object.
  */
 function transform(category) {
-  const productsList = category.products.map(product => ({
-    id: product._id,
-    description: product.description,
-    price: product.price,
-    color: product.color,
-  }));
+  const productsList = category.products.map(productTransformer);
 
   return {
     id: category._id,
