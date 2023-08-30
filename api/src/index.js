@@ -1,37 +1,64 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors'); 
+const session = require('express-session');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const logger = require('./logger');
+require('./passport-config');
+const connectDB = require('./db');
+
 const productRoutes = require('./routes/products');
 const categoryRoutes = require('./routes/categories');
+const authRoutes = require('./routes/auth');
 
+// Create the express app
 const app = express();
 
+// Load environment variables
+if (process.env.NODE_ENV === 'development') {
+  dotenv.config({ path: '.env.dev' });
+} else if (process.env.NODE_ENV === 'production') {
+  dotenv.config({ path: '.env.prod' });
+}
+
 // Connect to the MongoDB database
-mongoose.connect('mongodb://localhost:27017/apparel', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(() => {
-    console.log('Connected to MongoDB');
+connectDB();
+
+// Middleware setup
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Configure Express Session
+// TODO replace with Redis
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
   })
-  .catch((error) => {
-    console.error('Error connecting to MongoDB:', error);
-  });
+);
 
 // Allow cross-origin requests
 const corsOptions = {
-  origin: 'http://localhost:4200',
+  origin: process.env.CORS_ORIGIN, // Specify your origin or '*' for any origin.
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   optionsSuccessStatus: 204,
+  credentials: true,
 };
 app.use(cors(corsOptions));
 
 // Routes
 app.use('/products', productRoutes);
 app.use('/categories', categoryRoutes);
+app.use('/auth', authRoutes);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  logger.info(`Server is running on port ${PORT}`);
 });

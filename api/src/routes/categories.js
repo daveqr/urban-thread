@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Category = require('../models/category');
-require('../models/edition');
+const Category = require('../schemas/category.schema');
+require('../schemas/edition.schema');
 const SimplifiedCategoryTransformer = require('../transformers/simplifiedCategory.transformer');
 const CategoryTransformer = require('../transformers/category.transformer');
 

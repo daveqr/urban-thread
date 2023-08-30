@@ -1,5 +1,5 @@
 const { productTransformer } = require('./product.transformer');
-const Category = require('./category.model');
+const Category = require('../models/category.model');
 
 /**
  * Transforms a category object into a populated category.

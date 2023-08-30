@@ -1,8 +1,11 @@
+const dotenv = require('dotenv');
 const { faker } = require('@faker-js/faker');
-const Edition = require('./schemas/edition');
-const Product = require('./schemas/product');
-const Category = require('./schemas/category');
 const mongoose = require('mongoose');
+
+const connectDB = require('./db');
+const Edition = require('./schemas/edition.schema');
+const Product = require('./schemas/product.schema');
+const Category = require('./schemas/category.schema');
 
 /**
  * Generates seed product data.
@@ -104,10 +107,8 @@ async function insertCategory(name, editionId, description, products) {
 async function main() {
     let connection;
     try {
-        connection = await mongoose.connect('mongodb://localhost:27017/apparel', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        dotenv.config({ path: '.env.dev' });
+        connection = await connectDB();
 
         console.log('Connected to MongoDB');
 
@@ -126,9 +127,10 @@ async function main() {
     } catch (error) {
         console.error('Error connecting to MongoDB:', error);
     } finally {
-        if (connection) {
-            connection.disconnect();
-            console.log('Closed connection');
+        if (mongoose.connection) {
+            console.log('Closing MongoDB connection...');
+            await mongoose.connection.close();
+            console.log('Closed MongoDB connection');
         }
     }
 }
