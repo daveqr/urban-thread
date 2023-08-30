@@ -1,13 +1,8 @@
-import * as mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 
-export const ProductSchema = new mongoose.Schema({
-  name: String,
-  description: String,
-  price: Number,
+export const ProductSchema = new Schema({
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  price: { type: Number, required: true },
+  color: { type: String, required: true },
 });
-
-export interface Product extends mongoose.Document {
-  name: string;
-  description: string;
-  price: number;
-}
