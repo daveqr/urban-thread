@@ -1,4 +1,5 @@
 const { productTransformer } = require('./product.transformer');
+const Category = require('./category.model');
 
 /**
  * Transforms a category object into a populated category.
@@ -8,17 +9,17 @@ const { productTransformer } = require('./product.transformer');
 function transform(category) {
   const productsList = category.products.map(productTransformer);
 
-  return {
-    id: category._id,
-    name: category.name,
-    description: category.description,
-    edition: {
+  return new Category(
+    category._id,
+    category.name,
+    category.description,
+    {
       id: category.edition._id,
       name: category.edition.name,
       description: category.edition.description,
     },
-    products: productsList,
-  }
+    productsList
+  );
 }
 
 module.exports = {

@@ -1,1 +1,134 @@
-<p>product-detail works!</p>
+<div class="my-5">
+    <h3>Product Overview</h3>
+    <p class="mb-5">Product Overviews with image gallery and expandable details</p>
+    <div class="card card-product card-plain">
+        <div class="row">
+            <div class="col-12 col-lg-6"><img class="w-90 rounded-2"
+                    src="./Astro Ecommerce_files/photo-1511499767150-a48a237f0083" alt="first_image">
+                <div class="d-flex mt-4"><img class="w-20 me-4 rounded-2"
+                        src="./Astro Ecommerce_files/photo-1511499767150-a48a237f0083" alt="first_image"><img
+                        class="w-20 me-4 rounded-2" src="./Astro Ecommerce_files/photo-1572635196237-14b3f281503f"
+                        alt="second_image"><img class="w-20 me-4 rounded-2"
+                        src="./Astro Ecommerce_files/photo-1508296695146-257a814070b4" alt="third_image"><img
+                        class="w-20 rounded-2" src="./Astro Ecommerce_files/photo-1522125123931-9304d91a42ee"
+                        alt="fourth_image"></div>
+            </div>
+            <div class="col-12 col-lg-6 mt-5 mt-lg-0">
+                <!-- TODO this should be the name -->
+                <h2>{{ product.name }}</h2>
+                <div class="d-flex mb-3">
+                    <h4 class="font-weight-normal">$<!-- -->1,490</h4><input class="opacity-0" value="1490">
+                </div>
+                <p class="mt-4">The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for
+                    our subscription service and be the first to get new, exciting colors, like our upcoming `Charcoal
+                    Gray` limited release.</p>
+                <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center"><svg class="text-warning w-rem flex-shrink-0"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                                clip-rule="evenodd"></path>
+                        </svg><svg class="text-warning w-rem flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                                clip-rule="evenodd"></path>
+                        </svg><svg class="text-warning w-rem flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                                clip-rule="evenodd"></path>
+                        </svg><svg class="text-warning w-rem flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                                clip-rule="evenodd"></path>
+                        </svg><svg class="text-warning w-rem flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                                clip-rule="evenodd"></path>
+                        </svg></div><span class="ms-2">100 reviews</span>
+                </div>
+                <h6 class="mt-4">Color:</h6>
+                <div><span class="badge filter rounded-4 bg-black"></span><span
+                        class="badge filter rounded-4 bg-green"></span><span
+                        class="badge filter rounded-4 bg-white"></span></div>
+                <div class="d-flex align-items-center mt-4"><button class="btn btn-dark btn-lg mb-0 me-4">Add to
+                        Cart</button><a href="https://demos.creative-tim.com/astro-ecommerce/#favorite"><i id="heart1"
+                            class="far fa-heart text-2xl" aria-hidden="true"></i></a></div>
+                <div class="accordion mt-5" id="accordionEcommerce">
+                    <div class="accordion-item">
+                        <h5 class="accordion-header" id="heading0"><button
+                                class="accordion-button border-bottom font-weight-bold collapsed py-4" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapse0" aria-expanded="true"
+                                aria-controls="collapse0">Features<i
+                                    class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3"
+                                    aria-hidden="true"></i><i
+                                    class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3"
+                                    aria-hidden="true"></i></button></h5>
+                        <div id="collapse0" class="accordion-collapse collapse show" aria-labelledby="heading0"
+                            data-bs-parent="#accordionEcommerce">
+                            <div class="accordion-body text-body text-sm opacity-8">The time is now for it to be okay to
+                                be great. People in this world shun people for being great. For being a bright color.
+                                For standing out. But the time is now to be okay to be the greatest you.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h5 class="accordion-header" id="heading1"><button
+                                class="accordion-button border-bottom font-weight-bold py-4" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false"
+                                aria-controls="collapse1">Care<i
+                                    class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3"
+                                    aria-hidden="true"></i><i
+                                    class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3"
+                                    aria-hidden="true"></i></button></h5>
+                        <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1"
+                            data-bs-parent="#accordionEcommerce">
+                            <div class="accordion-body text-body text-sm opacity-8">It really matters and then like it
+                                really doesn`t matter. What matters is the people who are sparked by it. And the people
+                                who are like offended by it, it doesn`t matter. Because it's about motivating the doers.
+                                Because I`m here to follow my dreams and inspire other people to follow their dreams,
+                                too.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h5 class="accordion-header" id="heading2"><button
+                                class="accordion-button border-bottom font-weight-bold py-4" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false"
+                                aria-controls="collapse2">Shipping<i
+                                    class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3"
+                                    aria-hidden="true"></i><i
+                                    class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3"
+                                    aria-hidden="true"></i></button></h5>
+                        <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2"
+                            data-bs-parent="#accordionEcommerce">
+                            <div class="accordion-body text-body text-sm opacity-8">The time is now for it to be okay to
+                                be great. People in this world shun people for being great. For being a bright color.
+                                For standing out. But the time is now to be okay to be the greatest you. Would you
+                                believe in what you believe in, if you were the only one who believed it?</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h5 class="accordion-header" id="heading3"><button
+                                class="accordion-button border-bottom font-weight-bold py-4" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false"
+                                aria-controls="collapse3">Returns<i
+                                    class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3"
+                                    aria-hidden="true"></i><i
+                                    class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3"
+                                    aria-hidden="true"></i></button></h5>
+                        <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3"
+                            data-bs-parent="#accordionEcommerce">
+                            <div class="accordion-body text-body text-sm opacity-8">I always felt like I could do
+                                anything. That`s the main thing people are controlled by! Thoughts- their perception of
+                                themselves! They're slowed down by their perception of themselves. If you're taught you
+                                can`t do anything, you won`t do anything. I was taught I could do everything.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

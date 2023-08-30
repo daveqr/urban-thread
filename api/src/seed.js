@@ -1,7 +1,7 @@
 const { faker } = require('@faker-js/faker');
-const Edition = require('./models/edition');
-const Product = require('./models/product');
-const Category = require('./models/category');
+const Edition = require('./schemas/edition');
+const Product = require('./schemas/product');
+const Category = require('./schemas/category');
 const mongoose = require('mongoose');
 
 /**
@@ -10,7 +10,8 @@ const mongoose = require('mongoose');
  */
 function createProductData() {
     return Array.from({ length: 40 }, (_) => ({
-        description: faker.commerce.product(),
+        name: faker.commerce.product(),
+        description: faker.commerce.productDescription(),
         price: faker.commerce.price(),
         color: faker.color.human(),
     }));
@@ -93,7 +94,7 @@ async function insertProducts() {
 async function insertCategory(name, editionId, description, products) {
     const categoryData = createCategoryData(name, editionId, description, products);
     await Category.insertMany(categoryData);
-    console.log('Inserted category: ' +);
+    console.log('Inserted category: ' + categoryData.name);
 }
 
 /**
