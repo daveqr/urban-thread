@@ -11,9 +11,6 @@ kill_process_by_port() {
     fi
 }
 
-# Kill the product-microservice
-kill_process_by_port 8080
-
 # Kill the web
 kill_process_by_port 4200
 
