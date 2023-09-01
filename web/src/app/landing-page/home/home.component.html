@@ -13,18 +13,20 @@
           <a href="#" class="nav-link m-2 menu-item">Home</a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link m-2 menu-item">Sign In/Sign Up</a>
+          <a (click)="toggleSignIn()" class="nav-link m-2 menu-item">Sign In/Sign Up</a>
         </li>
       </ul>
     </div>
   </nav>
 
-  <div class="bg-dark" id="navbarCollapse">
-    <ul class="navbar-nav ms-auto mb-2 mb-md-0">
-      <li class="nav-item" role="presentation">
-        <a class="nav-link active" href="#">Sign In / Sign Up</a>
-      </li>
-    </ul>
+  <div [@fadeInOut] *ngIf="showSignIn" class="sign-in-overlay">
+
+    <!-- Close button -->
+    <button (click)="toggleSignIn()" class="close-button">
+      <span aria-hidden="true">X</span>
+    </button>
+
+    <app-sign-in></app-sign-in>
   </div>
 
 
