@@ -6,9 +6,9 @@ const logger = require('./logger');
 require('./passport-config');
 const connectDB = require('./db');
 
-const productRoutes = require('./routes/products');
-const categoryRoutes = require('./routes/categories');
-const authRoutes = require('./routes/auth');
+const productRoutes = require('./routes/products.route');
+const categoryRoutes = require('./routes/categories.route');
+const authRoutes = require('./routes/auth.route');
 
 // Create the express app
 const app = express();

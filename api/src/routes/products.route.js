@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../schemas/product.schema');
 const Category = require('../schemas/category.schema');
+const ProductRestTransformer = require('../transformers/product-rest.transformer');
 
 /**
  * Fetch all products.
@@ -23,6 +24,7 @@ router.get('/', async (req, res) => {
 
 /**
  * Fetch a product by id.
+ * 
  * @route GET /product/:id
  * @returns {Object} The product object with HATEOAS links.
  * @throws {Object} If an error occurs, an object with an 'error' field will be returned.
@@ -30,41 +32,38 @@ router.get('/', async (req, res) => {
  *                  fetch the product.
  * 
  * @example <caption>Success response.</caption>
- * // TODO update this doc
+ *
  * {
- *   "_embedded":{
- *      "categoryList":[
- *         {
- *            "name":"Category 1",
- *            "_links":{
- *               "self":{
- *                  "href":"/categories/1"
- *               }
- *            }
- *         },
- *         {
- *            "name":"Category 2",
- *            "_links":{
- *               "self":{
- *                  "href":"/categories/2"
- *               }
- *            }
- *         },
- *         {
- *            "name":"Category 3",
- *            "_links":{
- *               "self":{
- *                  "href":"/categories/3"
- *               }
- *            }
- *         }
- *      ]
- *   },
- *   "_links":{
- *      "self":{
- *         "href":"/products/64ef325035a7060656be182c"
- *      }
- *   }
+ *    "_embedded":{
+ *       "categoryList":[
+ *          {
+ *             "name":"Category 1",
+ *             "_links":{
+ *                "self":{
+ *                   "href":"/categories/1"
+ *                }
+ *             }
+ *          },
+ *          {
+ *             "name":"Category 2",
+ *             "_links":{
+ *                "self":{
+ *                   "href":"/categories/2"
+ *                }
+ *             }
+ *          }
+ *       ]
+ *    },
+ *    "id":"1",
+ *    "name":"Chair",
+ *    "description":"The description.",
+ *    "price":454,
+ *    "color":"orange",
+ *    "_links":{
+ *       "self":{
+ *          "href":"/products/1"
+ *       }
+ *    }
  * }
  *
  * @example <caption>Error response.</caption>
@@ -81,9 +80,9 @@ router.get('/:id', async (req, res) => {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        const categories = await findProductCategories();
+        const categories = await Category.find({ _id: { $in: product.categoryIds } });
         const categoryLinks = createCategoryLinks(categories);
-        const transformedProduct = createTransformedProduct(product, categoryLinks, req.baseUrl);
+        const transformedProduct = ProductRestTransformer.transform(product, categoryLinks, req.baseUrl);
 
         res.setHeader('Content-Type', 'application/hal+json');
         res.json(transformedProduct);
@@ -93,41 +92,6 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-function createTransformedProduct(product, categoryLinks, baseUrl) {
-    // TODO need to add the rest of the product fields
-    // TODO need to extract this transformer to the ProductTransformer
-    const embeddedCategories = {
-        categoryList: mapCategoriesToEmbedded(categoryLinks),
-    };
-
-    const selfLink = {
-        self: {
-            href: `${baseUrl}/${product._id}`,
-        },
-    };
-
-    return {
-        _embedded: embeddedCategories,
-        name: product.name,
-        description: product.description,
-        price: product.price,
-        color: product.color,
-        _links: selfLink,
-    };
-}
-
-function mapCategoriesToEmbedded(categories) {
-    return categories.map(category => ({
-        categoryId: category.id,
-        name: category.name,
-        _links: {
-            self: {
-                href: category.href,
-            },
-        },
-    }));
-}
-
 function createCategoryLinks(categories) {
     return categories.map(category => ({
         rel: 'category',
@@ -135,8 +99,6 @@ function createCategoryLinks(categories) {
         name: category.name,
     }));
 }
-
-
 
 // TODO remove this method once I get the
 //  await Category.find({ _id: { $in: product.categoryIds } });

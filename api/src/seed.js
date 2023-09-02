@@ -7,123 +7,99 @@ const Edition = require('./schemas/edition.schema');
 const Product = require('./schemas/product.schema');
 const Category = require('./schemas/category.schema');
 
-/**
- * Generates seed product data.
- * @returns {Object[]} An array of product data objects.
- */
-function createProductData() {
-    return Array.from({ length: 40 }, (_) => ({
-        name: faker.commerce.product(),
-        description: faker.commerce.productDescription(),
-        price: faker.commerce.price(),
-        color: faker.color.human(),
-    }));
-}
+const createProductData = () => ({
+    name: faker.commerce.product(),
+    description: faker.commerce.productDescription(),
+    price: faker.commerce.price(),
+    color: faker.color.human(),
+});
 
-/**
- * Generates seed category data.
- * @param {Object[]} editions - An array of edition objects.
- * @returns {Object[]} An array of category data objects.
- */
-function createCategoryData(name, editionId, description, products) {
-    const productIds = products.map(product => product._id.toString());
+const createCategoryData = (name, editionId, description, productIds) => ({
+    name,
+    edition: editionId,
+    description,
+    productIds,
+});
 
-    return {
-        name: name,
-        edition: editionId, edition: editionId,
-        description: description,
-        products: productIds
-    }
-}
+const createEditionData = () => [
+    {
+        name: 'Sale',
+        description: 'Collection for the sale season.',
+    },
+    {
+        name: 'Winter',
+        description: 'Collection for the winter season.',
+    },
+    {
+        name: 'Summer',
+        description: 'Collection for the summer season.',
+    },
+    {
+        name: 'Designer',
+        description: 'Designer collection.',
+    },
+    {
+        name: 'Pre-fall',
+        description: 'Collection for the fall season.',
+    },
+];
 
-/**
- * Generates seed edition data.
- * @returns {Object[]} An array of edition data objects.
- */
-function createEditionData() {
-    const editions = [
-        {
-            name: 'Sale',
-            description: 'Collection for the sale season.',
-        },
-        {
-            name: 'Winter',
-            description: 'Collection for the winter season.',
-        },
-        {
-            name: 'Summer',
-            description: 'Collection for the summer season.',
-        },
-        {
-            name: 'Designer',
-            description: 'Designer collection.',
-        },
-        {
-            name: 'Pre-fall',
-            description: 'Collection for the fall season.',
-        },
-    ];
-
-    return editions;
-}
-
-/**
- * Inserts edition data into the database.
- * @returns {Promise<Object[]>} A promise resolving to an array of inserted edition objects.
- */
-async function insertEditions() {
+const insertEditions = async () => {
     const editionsData = createEditionData();
     const editions = await Edition.insertMany(editionsData);
     console.log('Inserted editions');
     return editions;
+};
+
+const insertProduct = async (productData) => {
+    const product = await Product.create(productData);
+    return product;
+};
+
+const insertCategory = async (name, editionId, description, products) => {
+    const productIds = products.map(product => product._id);
+    const categoryData = createCategoryData(name, editionId, description, productIds);
+    const category = await Category.create(categoryData);
+    console.log('Inserted category: ' + category.name);
+
+    for (const product of products) {
+        product.categoryIds.push(category._id);
+        await product.save();
+    }
+
+    return category;
 }
 
-/**
- * Inserts product data into the database.
- * @returns {Promise<void>} A promise indicating the completion of product insertion.
- */
-async function insertProducts() {
-    const productData = createProductData();
-    const products = await Product.insertMany(productData);
+const insertProducts = async () => {
+    const retArr = [];
+    for (i = 0; i < 8; i++) {
+        const product = await insertProduct(createProductData());
+        retArr.push(product);
+    }
+
     console.log('Inserted products');
-    return products;
+
+    return retArr;
 }
 
-/**
- * Inserts category data into the database.
- * @param {Object[]} editions - An array of edition objects.
- * @returns {Promise<void>} A promise indicating the completion of category insertion.
- */
-async function insertCategory(name, editionId, description, products) {
-    const categoryData = createCategoryData(name, editionId, description, products);
-    await Category.insertMany(categoryData);
-    console.log('Inserted category: ' + categoryData.name);
-}
-
-/**
- * Connects to MongoDB, inserts data, and handles disconnection.
- * @returns {Promise<void>} A promise indicating the completion of the main function.
- */
-async function main() {
+const main = async () => {
     let connection;
     try {
         dotenv.config({ path: '.env.dev' });
         connection = await connectDB();
 
-        console.log('Connected to MongoDB');
-
         // editions (must come before category)
         const editions = await insertEditions();
 
         // products (must come before category)
-        // creates 40 products (10 for each category)
         const products = await insertProducts();
 
         // categories (must come after editions and products)
-        await insertCategory('Silk Dresses', editions[4]._id.toString(), 'Collection of silk dresses for Pre-fall season.', products.slice(0, 10));
-        await insertCategory('Suits', editions[3]._id.toString(), 'Collection of designer suits.', products.slice(10, 20));
-        await insertCategory('Festival', editions[2]._id.toString(), 'Collection of suits for the summer season.', products.slice(20, 30));
-        await insertCategory('Showroom', editions[0]._id.toString(), 'Collection of clothing on sale in our showroom.', products.slice(30, 40));
+        await insertCategory('Silk Dresses', editions[4]._id.toString(), 'Collection of silk dresses for Pre-fall season.', products.slice(0, 1));
+        await insertCategory('Suits', editions[3]._id.toString(), 'Collection of designer suits.', products.slice(0, 2));
+        await insertCategory('Festival', editions[2]._id.toString(), 'Collection of suits for the summer season.', products.slice(2, 5));
+        await insertCategory('Showroom', editions[0]._id.toString(), 'Collection of clothing on sale in our showroom.', products.slice(4, 8));
+
     } catch (error) {
         console.error('Error connecting to MongoDB:', error);
     } finally {
