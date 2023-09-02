@@ -6,7 +6,9 @@ class CategoryService {
     }
 
     async getCategoryById(categoryId) {
-        return await Category.findById(categoryId);
+        return await Category.findById(categoryId)
+            .populate('edition')
+            .populate('products');
     }
 
     async getCategoriesWithMinProducts() {

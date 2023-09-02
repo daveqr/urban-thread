@@ -35,7 +35,10 @@ router.get('/', async (req, res) => {
         } else {
             const productLinksByCategory = groupProductLinksByCategory(categories);
             const basicCategories = categories.map(category =>
-                basicTransformer.transform(category, req.baseUrl, productLinksByCategory[category._id]));
+                basicTransformer.transform(
+                    category,
+                    req.baseUrl,
+                    productLinksByCategory[category._id]));
             res.json(basicCategories);
         }
     } catch (error) {
@@ -54,18 +57,19 @@ router.get('/', async (req, res) => {
  */
 router.get('/:id', async (req, res) => {
     try {
-        const categoryId = req.params.id;
-        const category = await Category.findById(categoryId)
-            .populate('edition')
-            .populate('products');
+        const category = await categoryService.getCategoryById(req.params.id);
 
         if (!category) {
             return res.status(404).json({ message: 'Category not found' });
         }
 
-        const data = detailedTransformer.transform(category);
+        const productLinksByCategory = groupProductLinksByCategory([category]);
+        const transformedCategory = detailedTransformer.transform(
+            category,
+            req.baseUrl,
+            productLinksByCategory[category._id]);
 
-        res.json(data);
+        res.json(transformedCategory);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching category: ' + error.message, error });
     }
