@@ -1,6 +1,6 @@
+
 const express = require('express');
 const router = express.Router();
-const Category = require('../schemas/category.schema');
 require('../schemas/edition.schema');
 const basicTransformer = require('../transformers/category.basic.transformer');
 const detailedTransformer = require('../transformers/category.detailed.transformer');
