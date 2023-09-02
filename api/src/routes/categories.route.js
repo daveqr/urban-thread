@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Category = require('../schemas/category.schema');
 require('../schemas/edition.schema');
-const SimplifiedCategoryTransformer = require('../transformers/simplifiedCategory.transformer');
-const CategoryTransformer = require('../transformers/category.transformer');
+const BasicCategoryTransformer = require('../transformers/category.basic.transformer');
+const CategoryTransformer = require('../transformers/category.detailed.transformer');
 
 /**
  * GET request handler for retrieving categories.
@@ -25,6 +25,8 @@ const CategoryTransformer = require('../transformers/category.transformer');
 router.get('/', async (req, res) => {
     try {
         // full argument means to return the list of categories fully populated (ie not simplified)
+        // TODO replace with accept header
+        // Accept: application/hal+json, application/vnd.custom-extended-resource+json
         const { full } = req.query;
         const categories = await Category.find().populate('edition');
 
@@ -32,7 +34,7 @@ router.get('/', async (req, res) => {
             res.json(categories);
         } else {
             // return simplified categories by default
-            const simplifiedData = categories.map(category => SimplifiedCategoryTransformer.transform(category));
+            const simplifiedData = categories.map(category => BasicCategoryTransformer.transform(category));
             res.json(simplifiedData);
         }
     } catch (error) {

@@ -1,4 +1,4 @@
-const { productTransformer } = require('./product.transformer');
+const ProductBasicTranformer = require('./product.basic.transformer');
 const Category = require('../models/category.model');
 
 /**
@@ -7,7 +7,8 @@ const Category = require('../models/category.model');
  * @returns {Object} The transformed category object.
  */
 function transform(category) {
-  const productsList = category.products.map(productTransformer);
+  // TODO make this hateoas
+  const productsList = category.products.map(ProductBasicTranformer.transform);
 
   return new Category(
     category._id,

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../schemas/product.schema');
 const Category = require('../schemas/category.schema');
-const ProductRestTransformer = require('../transformers/product-rest.transformer');
+const ProductDetailedTransformer = require('../transformers/product.detailed.transformer');
 
 /**
  * Fetch all products.
@@ -82,7 +82,7 @@ router.get('/:id', async (req, res) => {
 
         const categories = await Category.find({ _id: { $in: product.categoryIds } });
         const categoryLinks = createCategoryLinks(categories);
-        const transformedProduct = ProductRestTransformer.transform(product, categoryLinks, req.baseUrl);
+        const transformedProduct = ProductDetailedTransformer.transform(product, categoryLinks, req.baseUrl);
 
         res.setHeader('Content-Type', 'application/hal+json');
         res.json(transformedProduct);

@@ -7,6 +7,7 @@ const Product = require('../models/product.model');
  * @returns {Object} A populated Product model object.
  */
 function transform(product) {
+  // TODO make this hateoas
   return new Product(
     product._id,
     product.description,

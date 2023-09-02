@@ -3,7 +3,7 @@ const session = require('express-session');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const logger = require('./logger');
-require('./passport-config');
+require('./passport.config');
 const connectDB = require('./db');
 
 const productRoutes = require('./routes/products.route');
