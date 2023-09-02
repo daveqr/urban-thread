@@ -30,32 +30,41 @@ router.get('/', async (req, res) => {
  *                  fetch the product.
  * 
  * @example <caption>Success response.</caption>
- * // TODO need to update this with transformed response
+ * // TODO update this doc
  * {
- *   "data": {
- *     "_id": "64ef325035a7060656be182c",
- *     "name": "Chair",
- *     "description": "New range of formal shirts are designed keeping you in mind.",
- *     "price": 454,
- *     "color": "orange",
- *     "__v": 0
+ *   "_embedded":{
+ *      "categoryList":[
+ *         {
+ *            "name":"Category 1",
+ *            "_links":{
+ *               "self":{
+ *                  "href":"/categories/1"
+ *               }
+ *            }
+ *         },
+ *         {
+ *            "name":"Category 2",
+ *            "_links":{
+ *               "self":{
+ *                  "href":"/categories/2"
+ *               }
+ *            }
+ *         },
+ *         {
+ *            "name":"Category 3",
+ *            "_links":{
+ *               "self":{
+ *                  "href":"/categories/3"
+ *               }
+ *            }
+ *         }
+ *      ]
  *   },
- *   "links": [
- *     {
- *       "rel": "self",
- *       "href": "/products/1"
- *     },
- *     {
- *       "rel": "category",
- *       "href": "/categories/1",
- *       "name": "Category 1"
- *     },
- *     {
- *       "rel": "category",
- *       "href": "/categories/2",
- *       "name": "Category 2"
- *     }
- *   ]
+ *   "_links":{
+ *      "self":{
+ *         "href":"/products/64ef325035a7060656be182c"
+ *      }
+ *   }
  * }
  *
  * @example <caption>Error response.</caption>
@@ -68,24 +77,56 @@ router.get('/:id', async (req, res) => {
         const productId = req.params.id;
         const product = await Product.findById(productId);
 
-        // TODO need to transform product to simplified product
-
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        // TODO replace this with a simple call to the Category (return stripped down category)
-        // const categories = await Category.find({ _id: { $in: product.categoryIds } });
-        const categories = await findProductCategories(product);
+        const categories = await findProductCategories();
         const categoryLinks = createCategoryLinks(categories);
-        const productLinks = createProductLinks(req, productId, categoryLinks);
+        const transformedProduct = createTransformedProduct(product, categoryLinks, req.baseUrl);
 
-        res.json({ data: product, links: productLinks });
+        res.setHeader('Content-Type', 'application/hal+json');
+        res.json(transformedProduct);
 
     } catch (error) {
         res.status(500).json({ message: 'Error fetching product: ' + error.message, error });
     }
 });
+
+function createTransformedProduct(product, categoryLinks, baseUrl) {
+    // TODO need to add the rest of the product fields
+    // TODO need to extract this transformer to the ProductTransformer
+    const embeddedCategories = {
+        categoryList: mapCategoriesToEmbedded(categoryLinks),
+    };
+
+    const selfLink = {
+        self: {
+            href: `${baseUrl}/${product._id}`,
+        },
+    };
+
+    return {
+        _embedded: embeddedCategories,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        color: product.color,
+        _links: selfLink,
+    };
+}
+
+function mapCategoriesToEmbedded(categories) {
+    return categories.map(category => ({
+        categoryId: category.id,
+        name: category.name,
+        _links: {
+            self: {
+                href: category.href,
+            },
+        },
+    }));
+}
 
 function createCategoryLinks(categories) {
     return categories.map(category => ({
@@ -95,19 +136,12 @@ function createCategoryLinks(categories) {
     }));
 }
 
-function createProductLinks(req, productId, categoryLinks) {
-    const selfLink = {
-        rel: 'self',
-        href: `${req.baseUrl}/${productId}`,
-    };
 
-    return [selfLink].concat(categoryLinks);
-}
 
-async function findProductCategories(produdct) {
-    // TODO get the categories from the db
-    // TODO need to find stripped down versions of the categories. only return id and name
-    // return await Category.find({ _id: { $in: product.categoryIds } });
+// TODO remove this method once I get the
+//  await Category.find({ _id: { $in: product.categoryIds } });
+// working
+async function findProductCategories() {
     return [
         { id: 1, name: 'Category 1' },
         { id: 2, name: 'Category 2' },
