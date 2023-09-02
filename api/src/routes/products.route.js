@@ -6,6 +6,7 @@ const ProductDetailedTransformer = require('../transformers/product.detailed.tra
 
 /**
  * Fetch all products.
+ * 
  * @route GET /product
  * @returns {Object} An array of all products.
  * @throws {Object} If an error occurs, an object with an 'error' field will be returned.
@@ -98,17 +99,6 @@ function createCategoryLinks(categories) {
         href: `/categories/${category.id}`,
         name: category.name,
     }));
-}
-
-// TODO remove this method once I get the
-//  await Category.find({ _id: { $in: product.categoryIds } });
-// working
-async function findProductCategories() {
-    return [
-        { id: 1, name: 'Category 1' },
-        { id: 2, name: 'Category 2' },
-        { id: 3, name: 'Category 3' }
-    ]
 }
 
 module.exports = router;

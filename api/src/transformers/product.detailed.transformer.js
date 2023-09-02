@@ -1,4 +1,4 @@
-const Product = require('../models/product.model');
+const linkUtils = require('../utils/halLinkUtils');
 
 /**
  * Transforms a raw product object from the database into a populated Product model object.
@@ -7,25 +7,19 @@ const Product = require('../models/product.model');
  * @returns {Object} A populated Product model object.
  */
 function transform(product, categoryLinks, baseUrl) {
-
-  const embeddedCategories = {
-    categoryList: mapCategoriesToEmbedded(categoryLinks),
-  };
-
-  const selfLink = {
-    self: {
-      href: `${baseUrl}/${product._id}`,
-    },
-  };
-
+  const selfLink = linkUtils.createSelfLink(baseUrl, product._id);
+  const combinedLinks = linkUtils.combineLinks(selfLink)
+  
   return {
-    _embedded: embeddedCategories,
+    _embedded: {
+      categories: mapCategoriesToEmbedded(categoryLinks),
+    },
     id: product._id,
     name: product.name,
     description: product.description,
     price: product.price,
     color: product.color,
-    _links: selfLink,
+    _links: combinedLinks
   };
 }
 

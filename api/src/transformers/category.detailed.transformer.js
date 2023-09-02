@@ -3,6 +3,7 @@ const Category = require('../models/category.model');
 
 /**
  * Transforms a category object into a populated category.
+ * 
  * @param {Object} category - The category object to be transformed.
  * @returns {Object} The transformed category object.
  */

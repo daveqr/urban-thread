@@ -13,7 +13,7 @@ const categorySchema = new mongoose.Schema({
   name: { type: String, required: true },
   edition: { type: mongoose.Schema.Types.ObjectId, ref: 'Edition', required: true }, 
   description: { type: String, required: true },
-  productIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
+  products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
 });
 
 module.exports = mongoose.model('Category', categorySchema);

@@ -18,7 +18,9 @@ const createCategoryData = (name, editionId, description, productIds) => ({
     name,
     edition: editionId,
     description,
-    productIds,
+    // the attribute is 'products' in the schema. calling it productIds here
+    // because it's a list of IDs and not populated Products.
+    products: productIds,
 });
 
 const createEditionData = () => [
