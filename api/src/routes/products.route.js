@@ -1,7 +1,8 @@
 
 const express = require('express');
 const router = express.Router();
-const productService = require('../services/product.service');
+const ProductModel = require('../models/product.model');
+const ProductService = require('../services/product.service');
 
 router.use((req, res, next) => {
     if (req.method === 'GET') {
@@ -21,10 +22,9 @@ router.use((req, res, next) => {
  */
 router.get('/', async (req, res) => {
     try {
-        const products = await productService.find();
-        const transformedProducts = await productService.transformProducts(products, req.baseUrl);
+        const transformedProducts = await ProductService.getAllProducts(req.baseUrl);
 
-        res.status(200).json(transformedProducts);
+        res.json(transformedProducts);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch products' });
     }
@@ -82,13 +82,11 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const productId = req.params.id;
-        const product = await productService.findById(productId);
+        const transformedProduct = await ProductService.getProductById(productId, req.baseUrl);
 
-        if (!product) {
+        if (!transformedProduct) {
             return res.status(404).json({ message: 'Product not found' });
         }
-
-        const transformedProduct = await productService.transformProduct(product, req.baseUrl);
 
         res.json(transformedProduct);
     } catch (error) {

@@ -17,7 +17,7 @@ function combineLinks(...links) {
 function createCategoryLinks(categories) {
     const categoryLinks = {};
     for (const category of categories) {
-        const categoryId = category._id;
+        const categoryId = category.id;
         categoryLinks[categoryId] = {
             rel: 'category',
             href: `/categories/${categoryId}`,

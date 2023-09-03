@@ -1,20 +1,35 @@
 
-const Product = require('../schemas/product.schema');
-const Category = require('../schemas/category.schema');
 const CategoryModel = require('../models/category.model');
-const linkUtils = require('../utils/linkUtils');
+const ProductModel = require('../models/product.model');
 const ProductTransformer = require('../transformers/product.transformer');
+const linkUtils = require('../utils/linkUtils');
 
 class ProductService {
-    async findById(productId) {
-        return await Product.findById(productId);
+    static async getAllProducts(baseUrl) {
+        const products = await ProductModel.find();
+
+        return await ProductService.transformProducts(products, baseUrl);
     }
 
-    async find() {
-        return await Product.find();
+    static async getProductById(productId, baseUrl) {
+        const product = await ProductModel.findById(productId);
+
+        if (!product) {
+            return null;
+        }
+
+        return await ProductService.transformProduct(product, baseUrl);
     }
 
-    async transformProducts(products, baseUrl) {
+    static async transformProduct(product, baseUrl) {
+        const categories = await CategoryModel.find(product.categoryIds);
+        const categoryLinks = linkUtils.createCategoryLinks(categories);
+        const categoryLinksForProduct = categories.map(category => categoryLinks[category.id]);
+
+        return ProductTransformer.transform(product, categoryLinksForProduct, baseUrl);
+    }
+
+    static async transformProducts(products, baseUrl) {
         const categoryIds = Array.from(new Set(products.flatMap(product => product.categoryIds)));
         const categories = await CategoryModel.find(categoryIds);
         const categoryLinks = linkUtils.createCategoryLinks(categories);
@@ -22,21 +37,13 @@ class ProductService {
         const transformedProducts = await Promise.all(products.map(async (product) => {
             const categoryLinksForProduct = product.categoryIds.map(id => categoryLinks[id]);
 
-            const transformer = new ProductTransformer(baseUrl);
-            return transformer.transform(product, categoryLinksForProduct, baseUrl);
+            const retVal = ProductTransformer.transform(product, categoryLinksForProduct, baseUrl);
+
+            return retVal;
         }));
 
         return transformedProducts;
     }
-
-    async transformProduct(product, baseUrl) {
-        const categories = await Category.find({ _id: { $in: product.categoryIds } });
-        const categoryLinks = linkUtils.createCategoryLinks(categories);
-        const categoryLinksForProduct = categories.map(category => categoryLinks[category._id]);
-
-        const transformer = new ProductTransformer(baseUrl);
-        return transformer.transform(product, categoryLinksForProduct, baseUrl);
-    }
 }
 
-module.exports = new ProductService();
+module.exports = ProductService;

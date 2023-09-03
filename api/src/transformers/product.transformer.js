@@ -2,9 +2,6 @@
 const linkUtils = require('../utils/linkUtils');
 
 class ProductTransformer {
-  constructor(baseUrl) {
-    this.baseUrl = baseUrl;
-  }
 
   /**
    * Transforms a raw product object from the database into a populated Product model object
@@ -14,8 +11,8 @@ class ProductTransformer {
    * @param {Object} categoryLinks - An object containing links to related categories.
    * @returns {Object} A populated Product model object.
    */
-  transform(product, categoryLinks) {
-    const selfLink = linkUtils.createSelfLink(this.baseUrl, product._id);
+  static transform(product, categoryLinks, baseUrl) {
+    const selfLink = linkUtils.createSelfLink(baseUrl, product.id);
     const combinedLinks = linkUtils.combineLinks(selfLink);
 
     // helper method to convert the category links to a hal+json compliant list
@@ -32,7 +29,7 @@ class ProductTransformer {
     };
 
     return {
-      id: product._id,
+      id: product.id,
       name: product.name,
       description: product.description,
       price: product.price,
@@ -43,6 +40,7 @@ class ProductTransformer {
       },
     };
   }
+
 }
 
 module.exports = ProductTransformer;

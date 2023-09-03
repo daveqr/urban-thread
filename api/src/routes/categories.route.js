@@ -4,6 +4,7 @@ const router = express.Router();
 require('../schemas/edition.schema');
 const CategoryTransformer = require('../transformers/category.transformer');
 const CategoryModel = require('../models/category.model');
+const CategoryService = require('../services/category.service');
 
 router.use((req, res, next) => {
     if (req.method === 'GET') {
@@ -31,21 +32,11 @@ router.use((req, res, next) => {
  */
 router.get('/', async (req, res) => {
     try {
-        const { detailed } = req.query;
+        const { isDetailed } = req.query;
 
-        if (detailed) {
-            const categories = await CategoryModel.find();
-            // TODO transform these categories
-            res.json(categories);
-            return;
-        }
+        const categories = await CategoryService.getAllCategories(isDetailed, req.baseUrl);
 
-        const categories = await CategoryModel.findWithMinProductsAndProductLinks();
-
-        const transformedCategories = categories.map(category =>
-            new CategoryTransformer(req.baseUrl).transform(category));
-
-        res.json(transformedCategories);
+        res.json(categories);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching categories: ' + error.message, error });
     }
@@ -62,15 +53,13 @@ router.get('/', async (req, res) => {
  */
 router.get('/:id', async (req, res) => {
     try {
-        const category = await CategoryModel.findByIdWithProductLinks(req.params.id);
+        const category = await CategoryService.getCategoryById(req.params.id, req.baseUrl);
 
         if (!category) {
             return res.status(404).json({ message: 'Category not found' });
         }
 
-        const transformedCategory = new CategoryTransformer(req.baseUrl).transform(category);
-
-        res.json(transformedCategory);
+        res.json(category);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching category: ' + error.message, error });
     }
