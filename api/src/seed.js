@@ -55,6 +55,7 @@ const insertEditions = async () => {
 };
 
 const insertProduct = async (productData) => {
+    // TODO replace with service
     const product = await Product.create(productData);
     return product;
 };
@@ -62,11 +63,15 @@ const insertProduct = async (productData) => {
 const insertCategory = async (name, editionId, description, products) => {
     const productIds = products.map(product => product._id);
     const categoryData = createCategoryData(name, editionId, description, productIds);
+
+    // TODO replace with service
     const category = await Category.create(categoryData);
     console.log('Inserted category: ' + category.name);
 
     for (const product of products) {
         product.categoryIds.push(category._id);
+
+        // TODO replace with service
         await product.save();
     }
 
