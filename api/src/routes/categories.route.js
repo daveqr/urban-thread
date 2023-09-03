@@ -2,8 +2,7 @@
 const express = require('express');
 const router = express.Router();
 require('../schemas/edition.schema');
-const basicTransformer = require('../transformers/category.basic.transformer');
-const detailedTransformer = require('../transformers/category.detailed.transformer');
+const CategoryTransformer = require('../transformers/category.transformer');
 const categoryService = require('../services/category.service');
 const linkUtils = require('../utils/linkUtils');
 
@@ -42,10 +41,10 @@ router.get('/', async (req, res) => {
             res.json(categories);
         } else {
             const productLinksByCategory = linkUtils.groupProductLinksByCategory(categories);
+            const categoryTransformer = new CategoryTransformer(req.baseUrl);
             const basicCategories = categories.map(category =>
-                basicTransformer.transform(
+                categoryTransformer.transform(
                     category,
-                    req.baseUrl,
                     productLinksByCategory[category._id]));
             res.json(basicCategories);
         }
@@ -72,9 +71,9 @@ router.get('/:id', async (req, res) => {
         }
 
         const productLinksByCategory = linkUtils.groupProductLinksByCategory([category]);
-        const transformedCategory = detailedTransformer.transform(
+        const categoryTransformer = new CategoryTransformer(req.baseUrl);
+        const transformedCategory = categoryTransformer.transform(
             category,
-            req.baseUrl,
             productLinksByCategory[category._id]);
 
         res.json(transformedCategory);

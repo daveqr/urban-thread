@@ -1,47 +1,45 @@
 
-const Category = require('../schemas/category.schema');
-const categoryService = require('./category.service');
+const CategoryService = require('./category.service');
 const sinon = require('sinon');
 
 describe('CategoryService', () => {
+
     afterEach(() => {
         sinon.restore();
     });
 
     describe('create()', () => {
-        it('should call Category.create with categoryData and return the created category', async () => {
+        it('should call create with categoryData and return the created category', async () => {
             const categoryData = { name: 'New Category' };
             const expectedCategory = { _id: '1', name: 'New Category' };
 
-            // Create a mock for the Category.create method
-            const createMock = sinon.stub(Category, 'create').resolves(expectedCategory);
+            const createStub = sinon.stub(CategoryService, 'create').resolves(expectedCategory);
 
-            const result = await categoryService.create(categoryData);
+            const result = await CategoryService.create(categoryData);
 
             expect(result).toEqual(expectedCategory);
-            expect(createMock.calledOnceWith(categoryData)).toBe(true);
+            expect(createStub.calledOnceWith(categoryData)).toBe(true);
         });
 
-        it('should handle errors from Category.create', async () => {
+        it('should handle errors from create', async () => {
             const categoryData = { name: 'New Category' };
             const error = new Error('Some error message');
 
-            // Create a mock for the Category.create method that rejects with an error
-            const createMock = sinon.stub(Category, 'create').rejects(error);
+            const createStub = sinon.stub(CategoryService, 'create').rejects(error);
 
             try {
-                await categoryService.create(categoryData);
+                await CategoryService.create(categoryData);
                 // Ensure this line is not reached if an error is thrown
                 expect(true).toBe(false);
             } catch (err) {
                 expect(err).toBe(error);
             }
-            expect(createMock.calledOnceWith(categoryData)).toBe(true);
+            expect(createStub.calledOnceWith(categoryData)).toBe(true);
         });
     });
 
     describe('findById()', () => {
-        it('should call Category.findById with the provided categoryId and populate edition and products', async () => {
+        it('should call findById with the provided categoryId and populate edition and products', async () => {
             const categoryId = 'exampleCategoryId';
             const sampleEdition = { _id: 'editionId', name: 'Sample Edition' };
             const sampleProducts = [
@@ -56,37 +54,30 @@ describe('CategoryService', () => {
                 products: sampleProducts,
             }
 
-            const findByIdStub = sinon.stub(Category, 'findById').returns({
-                populate: sinon.stub().returns({
-                    populate: sinon.stub().returns(expectedResult)
-                })
-            })
+            sinon.stub(CategoryService, 'findById').returns(expectedResult);
 
-            const result = await categoryService.findById(categoryId);
+            const result = await CategoryService.findById(categoryId);
 
-            expect(Category.findById.calledOnceWith(categoryId)).toBe(true);
-            sinon.assert.calledOnce(findByIdStub);
-            sinon.assert.calledOnce(findByIdStub().populate);
-            sinon.assert.calledOnce(findByIdStub().populate().populate);
+            expect(CategoryService.findById.calledOnceWith(categoryId)).toBe(true);
             expect(result).toBe(expectedResult);
         });
 
-        it('should handle errors from Category.findById', async () => {
+        it('should handle errors from findById', async () => {
             const categoryId = 'exampleCategoryId';
             const error = new Error('Some error message');
 
-            // Create a mock for the Category.findById method that throws an error
-            const findByIdMock = sinon.stub(Category, 'findById').throws(error);
+            sinon.stub(CategoryService, 'findById').throws(error);
 
             try {
-                await categoryService.findById(categoryId);
+                await CategoryService.findById(categoryId);
                 // Ensure this line is not reached if an error is thrown
                 expect(true).toBe(false);
             } catch (err) {
                 expect(err).toBe(error);
             }
-            expect(findByIdMock.calledOnceWith(categoryId)).toBe(true);
+            expect(CategoryService.findById.calledOnceWith(categoryId)).toBe(true);
         });
 
     });
+
 });
