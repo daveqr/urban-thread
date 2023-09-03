@@ -1,5 +1,5 @@
 
-const linkUtils = require('../utils/halLinkUtils');
+const linkUtils = require('../utils/linkUtils');
 
 /**
  * Transforms a raw product object from the database into a populated Product model object
@@ -20,7 +20,7 @@ function transform(product, categoryLinks, baseUrl) {
     color: product.color,
     _links: combinedLinks,
     _embedded: {
-      categories: mapCategoriesToEmbedded(categoryLinks),
+      categories: mapCategoriesToEmbedded(categoryLinks)
     },
   };
 }

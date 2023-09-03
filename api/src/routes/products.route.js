@@ -1,10 +1,7 @@
 
 const express = require('express');
 const router = express.Router();
-const Category = require('../schemas/category.schema');
-const detailedTransformer = require('../transformers/product.detailed.transformer');
 const productService = require('../services/product.service');
-const categoryService = require('../services/category.service');
 
 router.use((req, res, next) => {
     if (req.method === 'GET') {
@@ -25,18 +22,7 @@ router.use((req, res, next) => {
 router.get('/', async (req, res) => {
     try {
         const products = await productService.find();
-
-        const categoryIds = Array.from(new Set(products.flatMap(product => product.categoryIds)));
-        // TODO see about moving find creating cat links and all this logic somewhere else
-        // const transformedProducts = await productService.getTransformedProducts(req.baseUrl);
-        const categories = await categoryService.find(categoryIds);
-        const categoryLinks = createCategoryLinksMap(categories);
-
-        const transformedProducts = await Promise.all(products.map(async (product) => {
-            const categoryIdsForProduct = product.categoryIds;
-            const categoryLinksForProduct = categoryIdsForProduct.map(id => categoryLinks[id]);
-            return detailedTransformer.transform(product, categoryLinksForProduct, req.baseUrl);
-        }));
+        const transformedProducts = await productService.transformProducts(products, req.baseUrl);
 
         res.status(200).json(transformedProducts);
     } catch (error) {
@@ -102,32 +88,12 @@ router.get('/:id', async (req, res) => {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        const categories = await Category.find({ _id: { $in: product.categoryIds } });
-        const categoryLinks = createCategoryLinks(categories);
-        const transformedProduct = detailedTransformer.transform(product, categoryLinks, req.baseUrl);
+        const transformedProduct = await productService.transformProduct(product, req.baseUrl);
 
         res.json(transformedProduct);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching product: ' + error.message, error });
     }
 });
-
-// TODO move this to halLinkUtils
-function createCategoryLinks(categories) {
-    return categories.map(category => ({
-        rel: 'category',
-        href: `/categories/${category.id}`,
-        name: category.name,
-    }));
-}
-
-function createCategoryLinksMap(categories) {
-    const categoryLinks = {};
-    for (const category of categories) {
-        categoryLinks[category._id] = createCategoryLinks([category])[0];
-    }
-
-    return categoryLinks;
-}
 
 module.exports = router;

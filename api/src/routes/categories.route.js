@@ -5,6 +5,7 @@ require('../schemas/edition.schema');
 const basicTransformer = require('../transformers/category.basic.transformer');
 const detailedTransformer = require('../transformers/category.detailed.transformer');
 const categoryService = require('../services/category.service');
+const linkUtils = require('../utils/linkUtils');
 
 router.use((req, res, next) => {
     if (req.method === 'GET') {
@@ -34,13 +35,13 @@ router.get('/', async (req, res) => {
     try {
         const { detailed } = req.query;
         const categories = detailed ?
-            await categoryService.getCategories() :
-            await categoryService.getCategoriesWithMinProducts();
+            await categoryService.find() :
+            await categoryService.findWithMinProducts();
 
         if (detailed) {
             res.json(categories);
         } else {
-            const productLinksByCategory = groupProductLinksByCategory(categories);
+            const productLinksByCategory = linkUtils.groupProductLinksByCategory(categories);
             const basicCategories = categories.map(category =>
                 basicTransformer.transform(
                     category,
@@ -64,13 +65,13 @@ router.get('/', async (req, res) => {
  */
 router.get('/:id', async (req, res) => {
     try {
-        const category = await categoryService.getCategoryById(req.params.id);
+        const category = await categoryService.findById(req.params.id);
 
         if (!category) {
             return res.status(404).json({ message: 'Category not found' });
         }
 
-        const productLinksByCategory = groupProductLinksByCategory([category]);
+        const productLinksByCategory = linkUtils.groupProductLinksByCategory([category]);
         const transformedCategory = detailedTransformer.transform(
             category,
             req.baseUrl,
@@ -81,34 +82,5 @@ router.get('/:id', async (req, res) => {
         res.status(500).json({ message: 'Error fetching category: ' + error.message, error });
     }
 });
-
-function groupProductLinksByCategory(categories) {
-    const result = {};
-
-    for (const category of categories) {
-        const categoryId = category._id.toString();
-        const hasNoProducts = !category.products || category.products.length === 0;
-
-        if (hasNoProducts) {
-            result[categoryId] = [];
-        } else {
-            const isNewCategory = !result[categoryId];
-
-            if (isNewCategory) {
-                result[categoryId] = [];
-            }
-
-            for (const product of category.products) {
-                result[categoryId].push({
-                    rel: 'product',
-                    href: `/products/${product._id}`,
-                    name: product.name,
-                });
-            }
-        }
-    }
-
-    return result;
-}
 
 module.exports = router;

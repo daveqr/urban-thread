@@ -1,5 +1,5 @@
 
-const linkUtils = require('../utils/halLinkUtils');
+const linkUtils = require('../utils/linkUtils');
 
 /**
  * Transforms a category object into a simplified format.

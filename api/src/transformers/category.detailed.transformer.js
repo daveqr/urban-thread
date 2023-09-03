@@ -1,5 +1,5 @@
 
-const linkUtils = require('../utils/halLinkUtils');
+const linkUtils = require('../utils/linkUtils');
 
 /**
  * Converts a category object into a HAL JSON-compliant populated category,
