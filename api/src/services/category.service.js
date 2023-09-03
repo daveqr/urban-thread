@@ -3,7 +3,7 @@ const CategoryModel = require('../models/category.model');
 const CategoryTransformer = require('../transformers/category.transformer');
 
 class CategoryService {
-    static async getAllCategories(isDetailed, baseUrl) {
+    static async getAllCategories(isDetailed) {
 
         if (isDetailed) {
             const categories = await CategoryModel.find();
@@ -14,12 +14,12 @@ class CategoryService {
         const categories = await CategoryModel.findWithMinProductsAndProductLinks();
 
         const transformedCategories = categories.map(category =>
-            new CategoryTransformer(baseUrl).transform(category));
+            CategoryTransformer.transform(category));
 
         return transformedCategories;
     }
 
-    static async getCategoryById(categoryId, baseUrl) {
+    static async getCategoryById(categoryId) {
         try {
             const category = await CategoryModel.findByIdWithProductLinks(categoryId);
 
@@ -27,7 +27,7 @@ class CategoryService {
                 return null;
             }
 
-            const transformedCategory = new CategoryTransformer(baseUrl).transform(category);
+            const transformedCategory = CategoryTransformer.transform(category);
 
             return transformedCategory;
         } catch (error) {

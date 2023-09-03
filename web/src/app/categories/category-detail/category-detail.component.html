@@ -1,26 +1,26 @@
 <div class="container mt-5">
   <h3>{{ category.name }}</h3>
-  <p>{{ category.edition.name }} – {{ category.edition.description }}</p>
+  <p>{{ category.editionName }} – {{ category.editionDescription }}</p>
   <div class="row mt-5">
 
-
-    <div *ngFor="let product of category.products" class="col-md-6 col-lg-3">
+    <div *ngFor="let product of category._embedded.products" class="col-md-6 col-lg-3">
       <div class="card card-product border mb-5 shadow-xs border-radius-lg">
 
-        <a [routerLink]="['/products', product.id]">
-          <div class="height-350"><img class="w-100 h-100 p-4 rounded-top" src="./Astro Ecommerce_files/suit-3.jpg"
-              alt="watch-image"></div>
-          <div class="card-body text-center">
-            <h6 class="text-md mb-1 text-body">8 colors</h6>
-            <h4 class="font-weight-bold">{{ product.description }}</h4>
-            <p class="text-body">That's the main thing people are controlled by! Thoughts- their perception of
-              themselves!</p>
-            <div><span class="badge filter rounded-4 bg-red"></span><span
-                class="badge filter rounded-4 bg-blue"></span><span class="badge filter rounded-4 bg-green"></span>
-            </div>
-            <h4 class="mb-0 text-lg mt-1 mb-3">$<!-- -->399</h4>
+
+        <div class="height-350"><img class="w-100 h-100 p-4 rounded-top" src="./assets/products/product7.jpg"
+            alt="watch-image"></div>
+        <div class="card-body text-center">
+          <h6 class="text-md mb-1 text-body">8 colors</h6>
+          <h4 class="font-weight-bold">
+            <a [routerLink]="[product.href]">{{ product.name }}
+            </a>
+          </h4>
+          <p class="text-body">{{ product.description }}</p>
+          <div><span class="badge filter rounded-4 bg-red"></span><span
+              class="badge filter rounded-4 bg-blue"></span><span class="badge filter rounded-4 bg-green"></span>
           </div>
-        </a>
+          <h4 class="mb-0 text-lg mt-1 mb-3">$<!-- -->399</h4>
+        </div>
 
       </div>
     </div>

@@ -22,7 +22,7 @@ router.use((req, res, next) => {
  */
 router.get('/', async (req, res) => {
     try {
-        const transformedProducts = await ProductService.getAllProducts(req.baseUrl);
+        const transformedProducts = await ProductService.getAllProducts();
 
         res.json(transformedProducts);
     } catch (error) {
@@ -82,7 +82,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const productId = req.params.id;
-        const transformedProduct = await ProductService.getProductById(productId, req.baseUrl);
+        const transformedProduct = await ProductService.getProductById(productId);
 
         if (!transformedProduct) {
             return res.status(404).json({ message: 'Product not found' });

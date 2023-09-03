@@ -13,17 +13,16 @@ export class CategoryDetail implements OnInit {
     id: '',
     name: '',
     description: '',
-    edition: {
-      id: '',
-      name: '',
-      description: ''
+    editionName: '',
+    editionDescription: '',
+    _links: {
+      self: {
+        href: ''
+      }
     },
-    products: [{
-      id: '',
-      description: '',
-      price: '',
-      color: ''
-    }]
+    _embedded: {
+      products: []
+    }
   };
   id: string | null = null;
 

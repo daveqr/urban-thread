@@ -1,6 +1,7 @@
 
 const Category = require('../schemas/category.schema');
-const linkUtils = require('../utils/linkUtils');
+// const linkUtils = require('../utils/linkUtils');
+const ProductTransformer = require('../transformers/product.transformer');
 
 class CategoryModel {
     constructor(category) {
@@ -73,7 +74,7 @@ class CategoryModel {
     static async findWithMinProductsAndProductLinks() {
         const categories = await CategoryModel.findWithMinProducts();
 
-        const productLinksByCategory = linkUtils.groupProductLinksByCategory(categories);
+        const productLinksByCategory = ProductTransformer.groupProductLinksByCategory(categories);
 
         const categoriesWithProductLinks = categories.map(category => {
             category.productLinks = productLinksByCategory[category.id];
@@ -93,7 +94,7 @@ class CategoryModel {
             return null;
         }
 
-        const productLinksByCategory = linkUtils.groupProductLinksByCategory([category]);
+        const productLinksByCategory = ProductTransformer.groupProductLinksByCategory([category]);
 
         const categoryModel = new CategoryModel(category);
         categoryModel.productLinks = productLinksByCategory[category._id];

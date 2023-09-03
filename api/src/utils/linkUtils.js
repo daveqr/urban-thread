@@ -27,38 +27,8 @@ function createCategoryLinks(categories) {
     return categoryLinks;
 }
 
-function groupProductLinksByCategory(categories) {
-    const result = {};
-
-    for (const category of categories) {
-        const categoryId = category.id;
-        const hasNoProducts = !category.products || category.products.length === 0;
-
-        if (hasNoProducts) {
-            result[categoryId] = [];
-        } else {
-            const isNewCategory = !result[categoryId];
-
-            if (isNewCategory) {
-                result[categoryId] = [];
-            }
-
-            for (const product of category.products) {
-                result[categoryId].push({
-                    rel: 'product',
-                    href: `/products/${product._id}`,
-                    name: product.name,
-                });
-            }
-        }
-    }
-
-    return result;
-}
-
 module.exports = {
     createSelfLink,
     combineLinks,
     createCategoryLinks,
-    groupProductLinksByCategory
 };

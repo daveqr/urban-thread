@@ -1,16 +1,14 @@
 
 const linkUtils = require('../utils/linkUtils');
+const { CATEGORY_BASE_URL } = require('../config');
 
 class CategoryTransformer {
-  constructor(baseUrl) {
-    this.baseUrl = baseUrl;
-  }
 
   /**
    * Converts a category object into a HAL JSON-compliant populated category,
    * enhanced with embedded product details.
    *
-   * @param {Object} category - The category object to be transformed.
+   * @param {Object} categoryModel - The category object to be transformed.
    * @param {Object} productLinks - An object containing links to related products.
    * @returns {Object} The transformed category object with specific formatting.
    *
@@ -23,7 +21,7 @@ class CategoryTransformer {
    *   edition_description: 'Collection for the fall season.',
    *   _links: {
    *     self: {
-   *       href: 'https://api.example.com/categories/64f37a6038d4bb6edd24a07e'
+   *       href: '/categories/64f37a6038d4bb6edd24a07e'
    *     }
    *   },
    *   _embedded: {
@@ -35,19 +33,19 @@ class CategoryTransformer {
    *   }
    * }
    */
-  transform(category) {
-    const selfLink = linkUtils.createSelfLink(this.baseUrl, category.id);
+  static transform(categoryModel) {
+    const selfLink = linkUtils.createSelfLink(CATEGORY_BASE_URL, categoryModel.id);
     const combinedLinks = linkUtils.combineLinks(selfLink);
 
     return {
-      id: category.id,
-      name: category.name,
-      description: category.description,
-      edition_name: category.edition_name,
-      edition_description: category.edition_description,
+      id: categoryModel.id,
+      name: categoryModel.name,
+      description: categoryModel.description,
+      editionName: categoryModel.category.edition.name,
+      editionDescription: categoryModel.category.edition.description,
       _links: combinedLinks,
       _embedded: {
-        products: category.productLinks
+        products: categoryModel.productLinks
       },
     };
   }
