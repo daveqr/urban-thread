@@ -27,6 +27,8 @@ router.get('/', async (req, res) => {
         const products = await productService.find();
 
         const categoryIds = Array.from(new Set(products.flatMap(product => product.categoryIds)));
+        // TODO see about moving find creating cat links and all this logic somewhere else
+        // const transformedProducts = await productService.getTransformedProducts(req.baseUrl);
         const categories = await categoryService.find(categoryIds);
         const categoryLinks = createCategoryLinksMap(categories);
 
@@ -110,6 +112,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// TODO move this to halLinkUtils
 function createCategoryLinks(categories) {
     return categories.map(category => ({
         rel: 'category',
