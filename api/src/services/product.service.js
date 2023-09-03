@@ -2,31 +2,13 @@
 const Product = require('../schemas/product.schema');
 
 class ProductService {
-    // async createCategory(categoryData) {
-    //     return await Category.create(categoryData);
-    // }
+    async findById(productId) {
+        return await Product.findById(productId);
+    }
 
-    // async getCategoryById(categoryId) {
-    //     return await Category.findById(categoryId)
-    //         .populate('edition')
-    //         .populate('products');
-    // }
-
-    // async getCategoriesWithMinProducts() {
-    //     let query = Category.find();
-    //     query.populate('products', '_id name');
-    //     query.populate('edition');
-
-    //     return await query.exec();
-    // }
-
-    // async getCategories() {
-    //     let query = Category.find();
-    //     query.populate('products');
-    //     query.populate('edition');
-
-    //     return await query.exec();
-    // }
+    async find() {
+        return await Product.find();
+    }
 }
 
 module.exports = new ProductService();

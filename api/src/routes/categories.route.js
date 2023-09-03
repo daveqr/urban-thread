@@ -6,6 +6,13 @@ const basicTransformer = require('../transformers/category.basic.transformer');
 const detailedTransformer = require('../transformers/category.detailed.transformer');
 const categoryService = require('../services/category.service');
 
+router.use((req, res, next) => {
+    if (req.method === 'GET') {
+        res.setHeader('Content-Type', 'application/hal+json');
+    }
+    next();
+});
+
 /**
  * GET request handler for retrieving categories.
  * 

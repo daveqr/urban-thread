@@ -1,9 +1,17 @@
 
 const express = require('express');
 const router = express.Router();
-const Product = require('../schemas/product.schema');
 const Category = require('../schemas/category.schema');
-const ProductDetailedTransformer = require('../transformers/product.detailed.transformer');
+const detailedTransformer = require('../transformers/product.detailed.transformer');
+const productService = require('../services/product.service');
+const categoryService = require('../services/category.service');
+
+router.use((req, res, next) => {
+    if (req.method === 'GET') {
+        res.setHeader('Content-Type', 'application/hal+json');
+    }
+    next();
+});
 
 /**
  * Fetch all products.
@@ -15,10 +23,20 @@ const ProductDetailedTransformer = require('../transformers/product.detailed.tra
  *                  fetch products.
  */
 router.get('/', async (req, res) => {
-    // TODO need to do something about this method. Can't be returning all the products.
     try {
-        const products = await Product.find();
-        res.status(200).json(products);
+        const products = await productService.find();
+
+        const categoryIds = Array.from(new Set(products.flatMap(product => product.categoryIds)));
+        const categories = await categoryService.find(categoryIds);
+        const categoryLinks = createCategoryLinksMap(categories);
+
+        const transformedProducts = await Promise.all(products.map(async (product) => {
+            const categoryIdsForProduct = product.categoryIds;
+            const categoryLinksForProduct = categoryIdsForProduct.map(id => categoryLinks[id]);
+            return detailedTransformer.transform(product, categoryLinksForProduct, req.baseUrl);
+        }));
+
+        res.status(200).json(transformedProducts);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch products' });
     }
@@ -76,7 +94,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const productId = req.params.id;
-        const product = await Product.findById(productId);
+        const product = await productService.findById(productId);
 
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
@@ -84,11 +102,9 @@ router.get('/:id', async (req, res) => {
 
         const categories = await Category.find({ _id: { $in: product.categoryIds } });
         const categoryLinks = createCategoryLinks(categories);
-        const transformedProduct = ProductDetailedTransformer.transform(product, categoryLinks, req.baseUrl);
+        const transformedProduct = detailedTransformer.transform(product, categoryLinks, req.baseUrl);
 
-        res.setHeader('Content-Type', 'application/hal+json');
         res.json(transformedProduct);
-
     } catch (error) {
         res.status(500).json({ message: 'Error fetching product: ' + error.message, error });
     }
@@ -100,6 +116,15 @@ function createCategoryLinks(categories) {
         href: `/categories/${category.id}`,
         name: category.name,
     }));
+}
+
+function createCategoryLinksMap(categories) {
+    const categoryLinks = {};
+    for (const category of categories) {
+        categoryLinks[category._id] = createCategoryLinks([category])[0];
+    }
+
+    return categoryLinks;
 }
 
 module.exports = router;
