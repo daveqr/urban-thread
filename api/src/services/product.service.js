@@ -1,7 +1,7 @@
 
 const Product = require('../schemas/product.schema');
 const Category = require('../schemas/category.schema');
-const categoryService = require('../services/category.service');
+const CategoryModel = require('../models/category.model');
 const linkUtils = require('../utils/linkUtils');
 const ProductTransformer = require('../transformers/product.transformer');
 
@@ -16,7 +16,7 @@ class ProductService {
 
     async transformProducts(products, baseUrl) {
         const categoryIds = Array.from(new Set(products.flatMap(product => product.categoryIds)));
-        const categories = await categoryService.find(categoryIds);
+        const categories = await CategoryModel.find(categoryIds);
         const categoryLinks = linkUtils.createCategoryLinks(categories);
 
         const transformedProducts = await Promise.all(products.map(async (product) => {

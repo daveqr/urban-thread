@@ -35,19 +35,19 @@ class CategoryTransformer {
    *   }
    * }
    */
-  transform(category, productLinks) {
-    const selfLink = linkUtils.createSelfLink(this.baseUrl, category._id);
+  transform(category) {
+    const selfLink = linkUtils.createSelfLink(this.baseUrl, category.id);
     const combinedLinks = linkUtils.combineLinks(selfLink);
 
     return {
-      id: category._id,
+      id: category.id,
       name: category.name,
       description: category.description,
-      edition_name: category.edition.name,
-      edition_description: category.edition.description,
+      edition_name: category.edition_name,
+      edition_description: category.edition_description,
       _links: combinedLinks,
       _embedded: {
-        products: productLinks
+        products: category.productLinks
       },
     };
   }

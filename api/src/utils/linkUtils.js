@@ -31,7 +31,7 @@ function groupProductLinksByCategory(categories) {
     const result = {};
 
     for (const category of categories) {
-        const categoryId = category._id.toString();
+        const categoryId = category.id;
         const hasNoProducts = !category.products || category.products.length === 0;
 
         if (hasNoProducts) {

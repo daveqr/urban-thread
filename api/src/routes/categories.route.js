@@ -3,8 +3,7 @@ const express = require('express');
 const router = express.Router();
 require('../schemas/edition.schema');
 const CategoryTransformer = require('../transformers/category.transformer');
-const categoryService = require('../services/category.service');
-const linkUtils = require('../utils/linkUtils');
+const CategoryModel = require('../models/category.model');
 
 router.use((req, res, next) => {
     if (req.method === 'GET') {
@@ -33,21 +32,20 @@ router.use((req, res, next) => {
 router.get('/', async (req, res) => {
     try {
         const { detailed } = req.query;
-        const categories = detailed ?
-            await categoryService.find() :
-            await categoryService.findWithMinProducts();
 
         if (detailed) {
+            const categories = await CategoryModel.find();
+            // TODO transform these categories
             res.json(categories);
-        } else {
-            const productLinksByCategory = linkUtils.groupProductLinksByCategory(categories);
-            const categoryTransformer = new CategoryTransformer(req.baseUrl);
-            const basicCategories = categories.map(category =>
-                categoryTransformer.transform(
-                    category,
-                    productLinksByCategory[category._id]));
-            res.json(basicCategories);
+            return;
         }
+
+        const categories = await CategoryModel.findWithMinProductsAndProductLinks();
+
+        const transformedCategories = categories.map(category =>
+            new CategoryTransformer(req.baseUrl).transform(category));
+
+        res.json(transformedCategories);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching categories: ' + error.message, error });
     }
@@ -64,17 +62,13 @@ router.get('/', async (req, res) => {
  */
 router.get('/:id', async (req, res) => {
     try {
-        const category = await categoryService.findById(req.params.id);
+        const category = await CategoryModel.findByIdWithProductLinks(req.params.id);
 
         if (!category) {
             return res.status(404).json({ message: 'Category not found' });
         }
 
-        const productLinksByCategory = linkUtils.groupProductLinksByCategory([category]);
-        const categoryTransformer = new CategoryTransformer(req.baseUrl);
-        const transformedCategory = categoryTransformer.transform(
-            category,
-            productLinksByCategory[category._id]);
+        const transformedCategory = new CategoryTransformer(req.baseUrl).transform(category);
 
         res.json(transformedCategory);
     } catch (error) {

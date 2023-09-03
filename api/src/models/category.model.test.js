@@ -1,9 +1,7 @@
-
-const CategoryService = require('./category.service');
+const CategoryModel = require('./category.model'); // Import your CategoryModel
 const sinon = require('sinon');
 
-describe('CategoryService', () => {
-
+describe('CategoryModel', () => {
     afterEach(() => {
         sinon.restore();
     });
@@ -13,9 +11,9 @@ describe('CategoryService', () => {
             const categoryData = { name: 'New Category' };
             const expectedCategory = { _id: '1', name: 'New Category' };
 
-            const createStub = sinon.stub(CategoryService, 'create').resolves(expectedCategory);
+            const createStub = sinon.stub(CategoryModel, 'create').resolves(expectedCategory);
 
-            const result = await CategoryService.create(categoryData);
+            const result = await CategoryModel.create(categoryData);
 
             expect(result).toEqual(expectedCategory);
             expect(createStub.calledOnceWith(categoryData)).toBe(true);
@@ -25,10 +23,10 @@ describe('CategoryService', () => {
             const categoryData = { name: 'New Category' };
             const error = new Error('Some error message');
 
-            const createStub = sinon.stub(CategoryService, 'create').rejects(error);
+            const createStub = sinon.stub(CategoryModel, 'create').rejects(error);
 
             try {
-                await CategoryService.create(categoryData);
+                await CategoryModel.create(categoryData);
                 // Ensure this line is not reached if an error is thrown
                 expect(true).toBe(false);
             } catch (err) {
@@ -52,13 +50,13 @@ describe('CategoryService', () => {
                 name: 'Example Category',
                 edition: sampleEdition,
                 products: sampleProducts,
-            }
+            };
 
-            sinon.stub(CategoryService, 'findById').returns(expectedResult);
+            const findByIdStub = sinon.stub(CategoryModel, 'findById').returns(expectedResult);
 
-            const result = await CategoryService.findById(categoryId);
+            const result = await CategoryModel.findById(categoryId);
 
-            expect(CategoryService.findById.calledOnceWith(categoryId)).toBe(true);
+            expect(findByIdStub.calledOnceWith(categoryId)).toBe(true);
             expect(result).toBe(expectedResult);
         });
 
@@ -66,18 +64,16 @@ describe('CategoryService', () => {
             const categoryId = 'exampleCategoryId';
             const error = new Error('Some error message');
 
-            sinon.stub(CategoryService, 'findById').throws(error);
+            const findByIdStub = sinon.stub(CategoryModel, 'findById').throws(error);
 
             try {
-                await CategoryService.findById(categoryId);
+                await CategoryModel.findById(categoryId);
                 // Ensure this line is not reached if an error is thrown
                 expect(true).toBe(false);
             } catch (err) {
                 expect(err).toBe(error);
             }
-            expect(CategoryService.findById.calledOnceWith(categoryId)).toBe(true);
+            expect(findByIdStub.calledOnceWith(categoryId)).toBe(true);
         });
-
     });
-
 });
