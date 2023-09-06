@@ -1,11 +1,10 @@
-<div class="login-modal" id="login-modal">
+<!-- Sign In Modal -->
+<div class="shared-modal login-modal" id="login-modal" *ngIf="showSignInForm">
   <p class="login-heading small" role="heading" aria-level="2">Sign in</p>
 
-  <!--<div class="error">Error goes here</div>-->
-
-  <div class="login-modal-content">
+  <div class="shared-modal-content">
+    <!-- Form content for Sign In -->
     <div class="form">
-
       <div class="form-field email required">
         <label class="form-label" for="login_email">Email Address<span aria-hidden="true">*</span></label>
         <input class="form-input" name="login_email" id="login_email" type="email" aria-label="Login Email Address">
@@ -13,14 +12,12 @@
       <div class="form-field password required">
         <div class="form-password">
           <label class="form-label" for="login_pass">Password<span aria-hidden="true">*</span></label>
-          <a class="form-label forgot-password" href="/login.php?action=reset_password" target="_parent">Forgot your
-            password?</a>
+          <a class="form-label forgot-password" href="" target="_parent">Forgot your password?</a>
         </div>
         <input class="form-input" id="login_pass" type="password" name="login_pass" autocomplete="off"
           aria-label="Login Password">
         <span aria-hidden="true" class="toggle-password eye-icon"></span>
       </div>
-
       <div class="form-actions">
         <input id="sign-in-submit" type="submit" class="button button--primary sign-in" value="Sign in">
       </div>
@@ -32,11 +29,44 @@
           src="https://cdn11.bigcommerce.com/s-pk4lhtd86v/stencil/1028ad70-23fe-013c-b0df-227e9db98867/e/a4ea4cc0-a828-0137-2c5a-0242ac11003d/icons/google.png" />
       </div>
     </div>
+  </div>
 
-    <div class="new-customer-container">
-      <p class="small new-customer-title">New Customer?</p>
-      <a tabindex="0" role="link" class="label account-btn sign-up-modal-link">Create Account</a>
+  <div class="new-customer-container">
+    <p class="small new-customer-title">New Customer?</p>
+    <a tabindex="0" role="link" class="label account-btn sign-up-modal-link" (click)="toggleSignIn()">Create
+      Account</a>
+  </div>
+</div>
 
+<!-- Create Account Modal -->
+<div class="shared-modal create-account-form" id="create-account-form" *ngIf="!showSignInForm">
+  <p class="login-heading small" role="heading" aria-level="2">Create Account</p>
+
+  <!-- Form content for Create Account -->
+  <div class="shared-modal-content">
+    <div class="form">
+      <div class="form-field email required">
+        <label class="form-label" for="create_email">Email Address<span aria-hidden="true">*</span></label>
+        <input class="form-input" name="create_email" id="create_email" type="email" aria-label="Create Email Address">
+      </div>
+      <div class="form-field password required">
+        <label class="form-label" for="create_pass">Password<span aria-hidden="true">*</span></label>
+        <input class="form-input" id="create_pass" type="password" name="create_pass" autocomplete="off"
+          aria-label="Create Password">
+      </div>
+      <div class="form-field required">
+        <label class="form-label" for="create_name">Name<span aria-hidden="true">*</span></label>
+        <input class="form-input" name="create_name" id="create_name" type="text" aria-label="Create Name">
+      </div>
+      <div class="form-actions">
+        <input id="create-account-submit" type="submit" class="button button--primary create-account"
+          value="Create Account">
+      </div>
     </div>
+  </div>
+
+  <div class="new-customer-container">
+    <p class="small new-customer-title">Already have an account?</p>
+    <a tabindex="0" role="link" class="label account-btn sign-up-modal-link" (click)="toggleSignIn()">Sign In</a>
   </div>
 </div>

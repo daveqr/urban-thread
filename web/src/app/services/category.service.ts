@@ -18,7 +18,6 @@ export class CategoryService {
   /**
    * Retrieves a list of categories from the API.
    *
-   * @returns An Observable that emits the category data when the HTTP request is successful.
    */
   getCategories(): Observable<any> {
     const url = `${this.baseUrl}/categories`;
@@ -28,9 +27,9 @@ export class CategoryService {
   /**
    * Retrieves a single category from the API.
    *
-   * @returns An Observable that emits the category data when the HTTP request is successful.
    */
   getCategoryById(id: string): Observable<any> {
+    // TODO fix the categories link to use the href from the response
     const url = `${this.baseUrl}/categories/${id}`;
     return this.http.get(url);
   }

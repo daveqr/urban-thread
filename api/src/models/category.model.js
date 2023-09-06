@@ -1,6 +1,5 @@
 
 const Category = require('../schemas/category.schema');
-// const linkUtils = require('../utils/linkUtils');
 const ProductTransformer = require('../transformers/product.transformer');
 
 class CategoryModel {

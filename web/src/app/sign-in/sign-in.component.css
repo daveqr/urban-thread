@@ -3,8 +3,8 @@ body {
     font-family: "TT Norms", Arial, Helvetica, sans-serif;
 }
 
-/* Login Modal Styles */
-.login-modal {
+/* Shared Modal Styles for both Sign In and Create Account */
+.shared-modal {
     position: fixed;
     top: 20%;
     left: 0;
@@ -18,12 +18,12 @@ body {
     align-items: center;
 }
 
-.login-modal .login-heading {
+.shared-modal .login-heading {
     font-size: 24px;
     text-align: center;
 }
 
-.login-modal-content {
+.shared-modal-content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -94,6 +94,7 @@ body {
     font-weight: bold;
     transition: background-color 0.3s;
     margin-top: 20px;
+    width: 400px;
 }
 
 .button--primary:hover {
@@ -101,23 +102,25 @@ body {
 }
 
 /* Additional Styles */
-#login-modal input.button,
-#password_reset input.button,
-#signup-modal input.button {
-    padding: 1.25rem 0.64286rem;
-    margin-bottom: 0;
-    width: 100%;
+.new-customer-container {
+    text-align: center;
+    margin-top: 20px;
 }
 
-.form-actions .button,
-.form-actions a,
-.form-actions input {
-    vertical-align: top;
-    width: 100%;
-    -webkit-appearance: button;
+.new-customer-title {
+    display: inline;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.sign-up-modal-link {
+    display: inline;
+    text-decoration: underline;
+    color: #000;
     cursor: pointer;
 }
 
+/* Social Logins */
 .social-logins {
     margin-top: -20px;
     width: 400px;
@@ -146,23 +149,4 @@ body {
 
 .button--primary.google span img {
     margin-left: 5px;
-}
-
-/* New Customer Styles */
-.new-customer-container {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.new-customer-title {
-    display: inline;
-    font-size: 14px;
-    margin-right: 10px;
-}
-
-.sign-up-modal-link {
-    display: inline;
-    text-decoration: underline;
-    color: #000;
-    cursor: pointer;
 }

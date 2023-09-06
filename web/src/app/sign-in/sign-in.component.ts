@@ -12,4 +12,11 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ]),
   ],
 })
-export class SignInComponent {}
+export class SignInComponent {
+  showSignInForm: boolean = true; 
+
+  toggleSignIn() {
+    this.showSignInForm = !this.showSignInForm;
+  }
+
+}
