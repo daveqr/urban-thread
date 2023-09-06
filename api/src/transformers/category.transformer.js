@@ -5,8 +5,7 @@ const { CATEGORY_BASE_URL } = require('../config/urls');
 class CategoryTransformer {
 
   /**
-   * Converts a category object into a HAL JSON-compliant populated category,
-   * enhanced with embedded product details.
+   * Converts a category object into a HAL+JSON object.
    *
    * @param {Object} categoryModel - The category object to be transformed.
    * @param {Object} productLinks - An object containing links to related products.

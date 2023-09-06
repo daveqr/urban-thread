@@ -3,6 +3,11 @@ const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const helmet = require('helmet');
+const compression = require('compression');
+const i18n = require('i18n-2');
+const acceptLanguage = require('accept-language-parser');
+
 const logger = require('./utils/logger');
 require('./config/passport.config');
 const connectDB = require('./config/db.config');
@@ -24,6 +29,23 @@ connectDB();
 // Middleware setup
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(helmet());
+app.use(compression());
+app.use((req, res, next) => {
+  // Determine the user's preferred language based on the Accept-Language header
+  const acceptedLanguages = req.headers['accept-language'];
+  const languages = acceptLanguage.parse(acceptedLanguages);
+  req.locale = languages.length > 0 ? languages[0].code : 'en';
+
+  logger.debug(`Preferred locale: ${req.locale}`);
+  next();
+});
+
+// i18n
+i18n.expressBind(app, {
+  locales: ['en', 'it'],
+  directory: require('path').join(__dirname, 'locales')
+});
 
 // Configure Express Session
 // TODO replace with Redis

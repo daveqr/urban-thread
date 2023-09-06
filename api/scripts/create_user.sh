@@ -5,20 +5,23 @@ password="password"
 fname="John"
 lname="Smith"
 
+preferredLanguage="en"
+
 apiEndpoint="http://localhost:3000/users/register"
 
 show_help() {
-  echo "Usage: $0 [-e <email>] [-p <password>] [-f <first name>] [-l <last name>] [-h]"
+  echo "Usage: $0 [-e <email>] [-p <password>] [-f <first name>] [-l <last name>] [-h] [-g <language>]"
   echo "Options:"
   echo "  -e <email>      Email address of the user (default: 'test@example.com')."
   echo "  -p <password>   Password for the user (default: 'password')."
   echo "  -f <first name> First name of the user (default: 'John')."
   echo "  -l <last name>  Last name of the user (default: 'Smith')."
+  echo "  -g <language>   Preferred language (default: 'en')."
   echo "  -h,             Display this help message."
   exit 0
 }
 
-while getopts "e:p:f:l:h" opt; do
+while getopts "e:p:f:l:g:h" opt; do
   case $opt in
     e)
       email="$OPTARG"
@@ -32,6 +35,9 @@ while getopts "e:p:f:l:h" opt; do
     l)
       lname="$OPTARG"
       ;;
+    g)
+      preferredLanguage="$OPTARG"
+      ;;
     h)
       show_help
       ;;
@@ -42,7 +48,7 @@ while getopts "e:p:f:l:h" opt; do
   esac
 done
 
-response=$(curl -X POST -H "Content-Type: application/json" -d '{
+response=$(curl -X POST -H "Content-Type: application/json" -H "Accept-Language: $preferredLanguage" -d '{
   "email": "'"$email"'",
   "password": "'"$password"'",
   "fname": "'"$fname"'",

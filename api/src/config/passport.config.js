@@ -6,7 +6,6 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const bcrypt = require('bcrypt');
 const User = require('../schemas/user.schema');
 
-
 passport.use(
   new LocalStrategy((username, password, done) => {
     User.findOne({ email: username }, (err, user) => {
