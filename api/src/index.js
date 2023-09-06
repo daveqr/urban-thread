@@ -5,7 +5,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const logger = require('./utils/logger');
 require('./config/passport.config');
-const connectDB = require('./config/db-config');
+const connectDB = require('./config/db.config');
 const routes = require('./config/routes.config');
 
 // Create the express app
