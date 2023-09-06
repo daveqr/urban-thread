@@ -2,12 +2,14 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
 const bcrypt = require('bcrypt');
-const User = require('./schemas/user.schema');
+const User = require('../schemas/user.schema');
+
 
 passport.use(
   new LocalStrategy((username, password, done) => {
-    User.findOne({ username: username }, (err, user) => {
+    User.findOne({ email: username }, (err, user) => {
       if (err) {
         return done(err);
       }
@@ -25,9 +27,17 @@ passport.use(
   })
 );
 
+const jwtOptions = {
+  // TODO make sure Angular is sending the bearer token
+  // Authorization: Bearer eyJhbGciOiJIUzI...
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: 'the_secret_key',
+};
+
 passport.use(
   new JwtStrategy(jwtOptions, async (jwtPayload, done) => {
     try {
+      // TODO wrap User in UserModel
       const user = await User.findById(jwtPayload.userId);
       if (user) {
         return done(null, user);

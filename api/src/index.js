@@ -4,12 +4,9 @@ const session = require('express-session');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const logger = require('./utils/logger');
-require('./passport.config');
-const connectDB = require('./db');
-
-const productRoutes = require('./routes/products.route');
-const categoryRoutes = require('./routes/categories.route');
-const authRoutes = require('./routes/auth.route');
+require('./config/passport.config');
+const connectDB = require('./config/db-config');
+const routes = require('./config/routes.config');
 
 // Create the express app
 const app = express();
@@ -48,9 +45,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Routes
-app.use('/products', productRoutes);
-app.use('/categories', categoryRoutes);
-app.use('/auth', authRoutes);
+app.use('/', routes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

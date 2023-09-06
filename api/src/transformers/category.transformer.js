@@ -1,6 +1,6 @@
 
 const linkUtils = require('../utils/linkUtils');
-const { CATEGORY_BASE_URL } = require('../config');
+const { CATEGORY_BASE_URL } = require('../config/urls');
 
 class CategoryTransformer {
 

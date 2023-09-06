@@ -3,18 +3,19 @@ const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const router = express.Router();
-const User = require('./schemas/user.schema');
+const User = require('../schemas/user.schema');
 
 const jwtService = require('../services/jwt.service');
 
+// Register route
 router.post('/register', async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { email, password, fname, lname } = req.body;
 
         // TODO move all this user stuff to a service.
-        
+
         // Check if the user already exists
-        const existingUser = await User.findOne({ username: username });
+        const existingUser = await User.findOne({ email: email });
 
         if (existingUser) {
             return res.status(400).json({ error: 'User already exists' });
@@ -25,14 +26,16 @@ router.post('/register', async (req, res) => {
 
         // Create a new user
         const newUser = new User({
-            username: username,
+            email: email,
             password: hashedPassword,
+            fname: fname,
+            lname: lname,
         });
 
         // Save the user to the database
         await newUser.save();
 
-        const token = jwtService.generateToken({ userId: newUser._id, username: newUser.username });
+        const token = jwtService.generateToken({ userId: newUser._id, username: newUser.email });
 
         return res.json({ message: 'Registration successful', token });
 

@@ -1,6 +1,6 @@
 
 const linkUtils = require('../utils/linkUtils');
-const { PRODUCT_BASE_URL } = require('../config');
+const { PRODUCT_BASE_URL } = require('../config/urls');
 
 class ProductTransformer {
 
