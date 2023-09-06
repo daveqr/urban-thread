@@ -40,6 +40,27 @@ app.use((req, res, next) => {
   logger.debug(`Preferred locale: ${req.locale}`);
   next();
 });
+// Error handling
+app.use((err, req, res, next) => {
+  // TODO is this being called?
+  logger.error(err.stack);
+  res.status(500).json({ error: req.i18n.__('Internal server error') });
+});
+
+// TODO add content type check
+// app.use((req, res, next) => {
+//   if (req.get('Content-Type') !== 'application/json') {
+//     return res.status(415).json({ error: 'Unsupported Media Type' });
+//   }
+//   next();
+// });
+// TODO add security header check
+// app.use((req, res, next) => {
+//   res.header('Content-Security-Policy', "default-src 'self'");
+//   res.header('X-Content-Type-Options', 'nosniff');
+//   res.header('X-Frame-Options', 'DENY');
+//   next();
+// });
 
 // i18n
 i18n.expressBind(app, {
@@ -68,12 +89,6 @@ app.use(cors(corsOptions));
 
 // Routes
 app.use('/', routes);
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
 
 // Start the server
 const PORT = process.env.PORT || 3000;

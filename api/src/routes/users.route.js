@@ -10,9 +10,20 @@ const { validationResult, check } = require('express-validator');
 const User = require('../schemas/user.schema');
 const logger = require('../utils/logger');
 
+const isEmailUnique = async (value, { req }) => {
+    const userExists = await User.countDocuments({ email: value }) > 0;
+    if (userExists) {
+        const errorMsg = req.i18n.__('User %s already exists', value);
+        throw new Error(errorMsg);
+    }
+    return true;
+};
+
 // Register route
 router.post('/register', [
-    check('email').isEmail().normalizeEmail(),
+    check('email').isEmail()
+        .custom((value, { req }) => isEmailUnique(value, { req }))
+        .normalizeEmail(),
     check('password').isLength({ min: 6 }),
     check('fname').isLength({ min: 2 }),
     check('lname').isLength({ min: 2 }),
@@ -26,23 +37,16 @@ router.post('/register', [
         const { email, password, fname, lname } = req.body;
 
         // TODO move all this user stuff to a service.
-            const userExists = await User.countDocuments({ email: email }) > 0;
-            if (userExists) {
-                const errorMsg = req.i18n.__('User %s already exists', email);
-                logger.debug(errorMsg);
-                return res.status(400).json({ error: errorMsg });
-            }
+        // Create a new user
+        const newUser = new User({
+            email: email,
+            password: await bcrypt.hash(password, 10),
+            fname: fname,
+            lname: lname,
+        });
 
-            // Create a new user
-            const newUser = new User({
-                email: email,
-                password: await bcrypt.hash(password, 10),
-                fname: fname,
-                lname: lname,
-            });
-
-            // Save the user to the database
-            await newUser.save();
+        // Save the user to the database
+        await newUser.save();
         // End move user stuff
 
         const token = jwtService.generateToken({ userId: newUser._id, username: newUser.email });
@@ -76,6 +80,7 @@ router.post('/register', [
         return res.json({ message: req.i18n.__('Registration successful'), token });
 
     } catch (err) {
+        // TODO use middleware to handle this
         return res.status(500).json({ error: req.i18n.__('Internal server error') });
     }
 });
