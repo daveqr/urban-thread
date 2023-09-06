@@ -7,7 +7,18 @@ lname="Smith"
 
 apiEndpoint="http://localhost:3000/users/register"
 
-while getopts "e:p:f:l:" opt; do
+show_help() {
+  echo "Usage: $0 [-e <email>] [-p <password>] [-f <first name>] [-l <last name>] [-h]"
+  echo "Options:"
+  echo "  -e <email>      Email address of the user (default: 'test@example.com')."
+  echo "  -p <password>   Password for the user (default: 'password')."
+  echo "  -f <first name> First name of the user (default: 'John')."
+  echo "  -l <last name>  Last name of the user (default: 'Smith')."
+  echo "  -h,             Display this help message."
+  exit 0
+}
+
+while getopts "e:p:f:l:h" opt; do
   case $opt in
     e)
       email="$OPTARG"
@@ -20,6 +31,13 @@ while getopts "e:p:f:l:" opt; do
       ;;
     l)
       lname="$OPTARG"
+      ;;
+    h)
+      show_help
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      show_help
       ;;
   esac
 done
