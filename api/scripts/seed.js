@@ -4,9 +4,9 @@ const { faker } = require('@faker-js/faker');
 const mongoose = require('mongoose');
 
 const connectDB = require('./db');
-const Edition = require('./schemas/edition.schema');
-const Product = require('./schemas/product.schema');
-const Category = require('./schemas/category.schema');
+const Edition = require('../src/schemas/edition.schema');
+const Product = require('../src/schemas/product.schema');
+const Category = require('../src/schemas/category.schema');
 
 const createProductData = () => ({
     name: faker.commerce.product(),

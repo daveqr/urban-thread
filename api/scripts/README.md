@@ -3,10 +3,11 @@
 Shell scripts for testing and development.
 
 
-## User Registration
+## Users
 
-2. Run the script with the following command:
+### Create a new user
 
-   ```bash
-   $ ./create_user.sh -e "email" -p "password" -f "first name" -l "last name"
-   ```
+```bash
+$ ./create_user.sh -e "email" -p "password" -f "first name" -l "last name"
+```
+

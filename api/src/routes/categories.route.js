@@ -2,8 +2,6 @@
 const express = require('express');
 const router = express.Router();
 require('../schemas/edition.schema');
-const CategoryTransformer = require('../transformers/category.transformer');
-const CategoryModel = require('../models/category.model');
 const CategoryService = require('../services/category.service');
 
 router.use((req, res, next) => {
