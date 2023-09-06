@@ -1,0 +1,152 @@
+/* Base Styles */
+body {
+    font-family: "TT Norms", Arial, Helvetica, sans-serif;
+}
+
+/* Shared Modal Styles for both Sign In and Create Account */
+.shared-modal {
+    position: fixed;
+    top: 20%;
+    left: 0;
+    width: 100%;
+    height: auto;
+    background-color: white;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.shared-modal .login-heading {
+    font-size: 24px;
+    text-align: center;
+}
+
+.shared-modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Form Styles */
+.form {
+    max-width: 800px;
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    border: none;
+}
+
+.form-field {
+    margin-bottom: 20px;
+    width: 400px;
+}
+
+.form-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1.14286rem !important;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-password {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.forgot-password {
+    font-size: 12px;
+    text-decoration: none;
+    color: #777;
+}
+
+.toggle-password {
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.form-actions {
+    text-align: center;
+}
+
+.g-recaptcha {
+    display: inline-block;
+}
+
+/* Button Styles */
+.button--primary {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+    width: 400px;
+}
+
+.button--primary:hover {
+    background-color: #333;
+}
+
+/* Additional Styles */
+.new-customer-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.new-customer-title {
+    display: inline;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.sign-up-modal-link {
+    display: inline;
+    text-decoration: underline;
+    color: #000;
+    cursor: pointer;
+}
+
+/* Social Logins */
+.social-logins {
+    margin-top: -20px;
+    width: 400px;
+}
+
+.button--primary.google {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+    width: 100%;
+}
+
+.social-logins img {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
+
+.button--primary.google span {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.button--primary.google span img {
+    margin-left: 5px;
+}

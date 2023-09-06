@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { LandingPageRoutingModule } from './landing-page-routing.module';
-import { SignInComponent } from '../sign-in/sign-in.component';
+import { AuthenticationModule } from '../authentication/authentication.module';
 
 @NgModule({
-  declarations: [HomeComponent, CategoriesComponent, SignInComponent],
+  declarations: [HomeComponent, CategoriesComponent],
   imports: [
     CommonModule,
     LandingPageRoutingModule,
+    AuthenticationModule
   ],
   exports: [HomeComponent, CategoriesComponent]
 })
