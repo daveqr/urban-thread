@@ -3,46 +3,51 @@ const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const router = express.Router();
+const User = require('./schemas/user.schema');
 
-router.post('/register', (req, res) => {
-    const { username, password } = req.body;
+const jwtService = require('../services/jwt.service');
 
-    // Check if the user already exists
-    User.findOne({ username: username }, (err, existingUser) => {
-        if (err) {
-            return res.status(500).json({ error: 'Internal server error' });
-        }
+router.post('/register', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        // TODO move all this user stuff to a service.
+        
+        // Check if the user already exists
+        const existingUser = await User.findOne({ username: username });
 
         if (existingUser) {
             return res.status(400).json({ error: 'User already exists' });
         }
 
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
         // Create a new user
         const newUser = new User({
             username: username,
-            password: password,
+            password: hashedPassword,
         });
 
         // Save the user to the database
-        newUser.save((err) => {
-            if (err) {
-                return res.status(500).json({ error: 'Error saving user' });
-            }
+        await newUser.save();
 
-            // Log the user in after registration
-            req.login(newUser, (err) => {
-                if (err) {
-                    return res.status(500).json({ error: 'Error logging in after registration' });
-                }
-                return res.json({ message: 'Registration successful', user: newUser });
-            });
-        });
-    });
+        const token = jwtService.generateToken({ userId: newUser._id, username: newUser.username });
+
+        return res.json({ message: 'Registration successful', token });
+
+    } catch (err) {
+        return res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
 // Login route
 router.post('/login', passport.authenticate('local'), (req, res) => {
-    res.json({ message: 'Login successful', user: req.user });
+    const user = req.user;
+
+    const token = jwtService.generateToken({ userId: user._id, username: user.username });
+
+    res.json({ message: 'Login successful', token });
 });
 
 // Logout route
