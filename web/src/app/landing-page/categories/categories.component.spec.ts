@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UtilitiesService } from '../../shared/utilities.service';
+import { UtilitiesService } from '../../services/utilities.service';
 import { SimplifiedCategory } from '../../models/simplified-category.model';
 import { CategoriesComponent } from './categories.component';
 

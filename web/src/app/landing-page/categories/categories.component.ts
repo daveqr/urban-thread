@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UtilitiesService } from '../../shared/utilities.service';
+import { UtilitiesService } from '../../services/utilities.service';
 import { SimplifiedCategory } from '../../models/simplified-category.model';
 
 @Component({
