@@ -18,4 +18,8 @@ export class SignInComponent {
   toggleSignIn() {
     this.toggleService.toggleForm();
   }
+
+  signIn() {
+    throw new Error('Method not implemented.');
+  }  
 }

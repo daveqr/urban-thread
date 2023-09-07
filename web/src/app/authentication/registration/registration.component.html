@@ -2,9 +2,8 @@
 <div class="shared-modal create-account-form" id="create-account-form">
   <p class="login-heading small" role="heading" aria-level="2">Create Account</p>
 
-  <!-- Form content for Create Account -->
   <div class="shared-modal-content">
-    <div class="form">
+    <form (ngSubmit)="createUser()">
       <div class="form-field email required">
         <label class="form-label" for="email">Email Address<span aria-hidden="true">*</span></label>
         <input class="form-input" name="email" id="email" type="email" aria-label="Create Email Address"
@@ -30,10 +29,12 @@
       </div>
 
       <div class="form-actions">
-        <input id="create-account-submit" type="submit" class="button button--primary create-account"
-          value="Create Account" (click)="createUser()">
+        <button type="submit" class="button button--primary create-account">
+          Create Account
+        </button>
       </div>
-    </div>
+
+    </form>
   </div>
 
   <!-- Sign-in link -->
