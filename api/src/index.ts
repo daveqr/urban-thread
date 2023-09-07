@@ -1,5 +1,4 @@
-
-const express = require('express');
+import express, { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
 const session = require('express-session');
 const cors = require('cors');
 const dotenv = require('dotenv');
@@ -11,7 +10,7 @@ const acceptLanguage = require('accept-language-parser');
 const logger = require('./utils/logger');
 require('./config/passport.config');
 const connectDB = require('./config/db.config');
-const routes = require('./config/routes.config');
+import routes from './config/routes.config';
 
 // Create the express app
 const app = express();
@@ -26,23 +25,43 @@ if (process.env.NODE_ENV === 'development') {
 // Connect to the MongoDB database
 connectDB();
 
+export type Language = 'en' | 'it';
+export interface LanguageRequest extends Request {
+  i18n: typeof i18n,
+  locale: Language
+}
+
 // Middleware setup
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(compression());
-app.use((req, res, next) => {
+
+app.use((req: LanguageRequest, res: any, next: any) => {
   // Determine the user's preferred language based on the Accept-Language header
   const acceptedLanguages = req.headers['accept-language'];
   const languages = acceptLanguage.parse(acceptedLanguages);
   req.locale = languages.length > 0 ? languages[0].code : 'en';
 
+  req.i18n = i18n;
   logger.debug(`Preferred locale: ${req.locale}`);
   next();
 });
+
 // Error handling
-app.use((err, req, res, next) => {
-  // TODO is this being called?
+const errorHandler: ErrorRequestHandler = (
+  err: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  console.error(err);
+};
+
+app.use(errorHandler);
+
+app.use((err: any, req: any, res: Response, next: NextFunction) => {
+  // Handle the error here
   logger.error(err.stack);
   res.status(500).json({ error: req.i18n.__('Internal server error') });
 });

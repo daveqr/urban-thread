@@ -1,10 +1,10 @@
 
-const express = require('express');
+import express, { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
 const router = express.Router();
 const ProductModel = require('../models/product.model');
 const ProductService = require('../services/product.service');
 
-router.use((req, res, next) => {
+router.use((req: Request, res: Response, next: NextFunction) => {
     if (req.method === 'GET') {
         res.setHeader('Content-Type', 'application/hal+json');
     }
@@ -20,7 +20,7 @@ router.use((req, res, next) => {
  *                  The 'error' field contains an error message indicating the failure to 
  *                  fetch products.
  */
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
     try {
         const transformedProducts = await ProductService.getAllProducts();
 
@@ -79,7 +79,7 @@ router.get('/', async (req, res) => {
  *   "error": "Error fetching product: 1"
  * }
  */
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req: Request, res: Response) => {
     try {
         const productId = req.params.id;
         const transformedProduct = await ProductService.getProductById(productId);
@@ -89,7 +89,7 @@ router.get('/:id', async (req, res) => {
         }
 
         res.json(transformedProduct);
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).json({ message: 'Error fetching product: ' + error.message, error });
     }
 });

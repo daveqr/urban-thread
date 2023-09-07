@@ -1,25 +1,28 @@
+import { PRODUCT_BASE_URL } from '../config/urls';
+import * as linkUtils from '../utils/linkUtils'; // Assuming you have a linkUtils module
 
-const linkUtils = require('../utils/linkUtils');
-const { PRODUCT_BASE_URL } = require('../config/urls');
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  color: string;
+}
 
-class ProductTransformer {
+interface CategoryLink {
+  id: string;
+  name: string;
+  href: string;
+}
 
-  /**
-   * Transforms a raw product object from the database into a populated Product model object
-   * adhering to the HAL JSON standard. Contains embedded category resources.
-   * 
-   * @param {Object} product - The raw product object retrieved from the database.
-   * @param {Object} categoryLinks - An object containing links to related categories.
-   * @returns {Object} A populated Product model object.
-   */
-  static transform(product, categoryLinks, extended) {
+export class ProductTransformer {
+  static transform(product: Product, categoryLinks: CategoryLink[], extended?: boolean): any {
     const selfLink = linkUtils.createSelfLink(PRODUCT_BASE_URL, product.id);
     const combinedLinks = linkUtils.combineLinks(selfLink);
 
     if (extended) {
-      // Extended transformation
-      const mapCategoriesToEmbedded = (categoryLinks) => {
-        return categoryLinks.map(link => ({
+      const mapCategoriesToEmbedded = (categoryLinks: CategoryLink[]) => {
+        return categoryLinks.map((link) => ({
           categoryId: link.id,
           name: link.name,
           _links: {
@@ -38,24 +41,23 @@ class ProductTransformer {
         color: product.color,
         _links: combinedLinks,
         _embedded: {
-          categories: mapCategoriesToEmbedded(categoryLinks)
+          categories: mapCategoriesToEmbedded(categoryLinks),
         },
         rel: 'product',
-        href: `${PRODUCT_BASE_URL}/${product._id}`,
+        href: `${PRODUCT_BASE_URL}/${product.id}`,
       };
     } else {
-      // Basic transformation
       return {
         rel: 'product',
-        href: `${PRODUCT_BASE_URL}/${product._id}`,
+        href: `${PRODUCT_BASE_URL}/${product.id}`,
         name: product.name,
         description: product.description,
       };
     }
   }
 
-  static groupProductLinksByCategory(categories) {
-    const result = {};
+  static groupProductLinksByCategory(categories: any): Record<string, any[]> {
+    const result: Record<string, any[]> = {};
 
     for (const category of categories) {
       const categoryId = category.id;
@@ -70,14 +72,10 @@ class ProductTransformer {
           result[categoryId] = [];
         }
 
-        const extended = false;
-        const categoryLinks = [];
+        const extended = false; // Adjust this as needed
+        const categoryLinks: CategoryLink[] = [];
         for (const product of category.products) {
-          const productLink = ProductTransformer.transform(
-            product,
-            categoryLinks,
-            extended
-          );
+          const productLink = ProductTransformer.transform(product, categoryLinks, extended);
           result[categoryId].push(productLink);
         }
       }
@@ -85,8 +83,4 @@ class ProductTransformer {
 
     return result;
   }
-
-
 }
-
-module.exports = ProductTransformer;

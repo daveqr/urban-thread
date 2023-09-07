@@ -1,7 +1,7 @@
-
 const CategoryModel = require('../models/category.model');
-const ProductModel = require('../models/product.model');
-const ProductTransformer = require('../transformers/product.transformer');
+import ProductModel from '../models/product.model';
+import { ProductTransformer } from '../transformers/product.transformer';
+
 const linkUtils = require('../utils/linkUtils');
 
 class ProductService {
@@ -11,7 +11,7 @@ class ProductService {
         return await ProductService.transformProducts(products);
     }
 
-    static async getProductById(productId) {
+    static async getProductById(productId: string) {
         const product = await ProductModel.findById(productId);
 
         if (!product) {
@@ -21,21 +21,21 @@ class ProductService {
         return await ProductService.transformProduct(product);
     }
 
-    static async transformProduct(product) {
-        const categories = await CategoryModel.find(product.categoryIds);
+    static async transformProduct(product: any) {
+        const categories = await CategoryModel.findByIds(product.categoryIds);
         const categoryLinks = linkUtils.createCategoryLinks(categories);
-        const categoryLinksForProduct = categories.map(category => categoryLinks[category.id]);
+        const categoryLinksForProduct = categories.map((category: { id: string; }) => categoryLinks[category.id]);
 
         return ProductTransformer.transform(product, categoryLinksForProduct);
     }
 
-    static async transformProducts(products) {
-        const categoryIds = Array.from(new Set(products.flatMap(product => product.categoryIds)));
-        const categories = await CategoryModel.find(categoryIds);
+    static async transformProducts(products: any) {
+        const categoryIds = Array.from(new Set(products.flatMap((product: { categoryIds: any; }) => product.categoryIds)));
+        const categories = await CategoryModel.findByIds(categoryIds);
         const categoryLinks = linkUtils.createCategoryLinks(categories);
 
-        const transformedProducts = await Promise.all(products.map(async (product) => {
-            const categoryLinksForProduct = product.categoryIds.map(id => categoryLinks[id]);
+        const transformedProducts = await Promise.all(products.map(async (product: any) => {
+            const categoryLinksForProduct = product.categoryIds.map((id: string) => categoryLinks[id]);
 
             const retVal = ProductTransformer.transform(product, categoryLinksForProduct);
 

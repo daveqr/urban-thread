@@ -1,10 +1,9 @@
-
 const express = require('express');
 const router = express.Router();
 require('../schemas/edition.schema');
 const CategoryService = require('../services/category.service');
 
-router.use((req, res, next) => {
+router.use((req: any, res: any, next: any) => {
     if (req.method === 'GET') {
         res.setHeader('Content-Type', 'application/hal+json');
     }
@@ -28,14 +27,14 @@ router.use((req, res, next) => {
  * @returns {Promise<void>} A promise indicating the completion of the request handling.
  * @throws {Error} If there's an issue with fetching the categories.
  */
-router.get('/', async (req, res) => {
+router.get('/', async (req: any, res: any) => {
     try {
         const { isDetailed } = req.query;
 
         const categories = await CategoryService.getAllCategories(isDetailed);
 
         res.json(categories);
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).json({ message: 'Error fetching categories: ' + error.message, error });
     }
 });
@@ -49,7 +48,7 @@ router.get('/', async (req, res) => {
  * @returns {Promise<void>} A promise indicating the completion of the request handling.
  * @throws {Error} If there's an issue with fetching the category.
  */
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req: any, res: any) => {
     try {
         const category = await CategoryService.getCategoryById(req.params.id);
 
@@ -58,7 +57,7 @@ router.get('/:id', async (req, res) => {
         }
 
         res.json(category);
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).json({ message: 'Error fetching category: ' + error.message, error });
     }
 });

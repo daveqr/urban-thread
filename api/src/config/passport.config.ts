@@ -1,4 +1,3 @@
-
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
@@ -7,8 +6,8 @@ const bcrypt = require('bcrypt');
 const User = require('../schemas/user.schema');
 
 passport.use(
-  new LocalStrategy((username, password, done) => {
-    User.findOne({ email: username }, (err, user) => {
+  new LocalStrategy((username: any, password: any, done: any) => {
+    User.findOne({ email: username }, (err: any, user: any) => {
       if (err) {
         return done(err);
       }
@@ -34,7 +33,7 @@ const jwtOptions = {
 };
 
 passport.use(
-  new JwtStrategy(jwtOptions, async (jwtPayload, done) => {
+  new JwtStrategy(jwtOptions, async (jwtPayload: any, done: any) => {
     try {
       // TODO wrap User in UserModel
       const user = await User.findById(jwtPayload.userId);

@@ -1,5 +1,4 @@
-
-function createSelfLink(baseUrl, resourceId) {
+function createSelfLink(baseUrl: string, resourceId: string) {
     const selfLink = {
         self: {
             href: `${baseUrl}/${resourceId}`,
@@ -8,16 +7,16 @@ function createSelfLink(baseUrl, resourceId) {
     return selfLink;
 }
 
-function combineLinks(...links) {
+function combineLinks(...links: Record<string, any>[]) {
     return links.reduce((combined, link) => {
         return { ...combined, ...link };
     }, {});
 }
 
-function createCategoryLinks(categories) {
-    const categoryLinks = {};
+function createCategoryLinks(categories: { id: string; name: string }[]) {
+    const categoryLinks: Record<string, any> = {};
     for (const category of categories) {
-        const categoryId = category.id;
+        const categoryId: string = category.id;
         categoryLinks[categoryId] = {
             rel: 'category',
             href: `/categories/${categoryId}`,
@@ -27,7 +26,7 @@ function createCategoryLinks(categories) {
     return categoryLinks;
 }
 
-module.exports = {
+export {
     createSelfLink,
     combineLinks,
     createCategoryLinks,

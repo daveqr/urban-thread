@@ -1,5 +1,4 @@
-
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 /**
  * Represents a product category.
@@ -12,7 +11,7 @@ const mongoose = require('mongoose');
 const categorySchema = new mongoose.Schema({
 
   name: { type: String, required: true },
-  edition: { type: mongoose.Schema.Types.ObjectId, ref: 'Edition', required: true }, 
+  edition: { type: mongoose.Schema.Types.ObjectId, ref: 'Edition', required: true },
   description: { type: String, required: true },
   products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
 });

@@ -1,6 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const passport = require('passport');
+import express, { Router } from 'express';
+import passport from 'passport';
+
+const router = Router();
 
 // TODO placeholder to demonstrate jwt authentication
 router.get('/cart', passport.authenticate('jwt', { session: false }), (req, res) => {

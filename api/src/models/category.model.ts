@@ -1,9 +1,13 @@
 
 const Category = require('../schemas/category.schema');
-const ProductTransformer = require('../transformers/product.transformer');
+// const ProductTransformer = require('../transformers/product.transformer');
+import { ProductTransformer } from '../transformers/product.transformer';
 
 class CategoryModel {
-    constructor(category) {
+    category: any;
+    productLinks: any[] = [];
+
+    constructor(category: any) {
         this.category = category;
     }
 
@@ -31,26 +35,26 @@ class CategoryModel {
         return this.category.products;
     }
 
-    static async create(categoryData) {
+    static async create(categoryData: any) {
         const createdCategory = await Category.create(categoryData);
         return new CategoryModel(createdCategory);
     }
 
-    static async find() {
+    static async findAll() {
         const categories = await Category.find()
             .populate('edition')
             .populate('products');
 
-        return categories.map(category => new CategoryModel(category));
+        return categories.map((category: any) => new CategoryModel(category));
     }
 
-    static async find(categoryIds) {
+    static async findByIds(categoryIds: any) {
         const categories = await Category.find({ _id: { $in: categoryIds } });
 
-        return categories.map(category => new CategoryModel(category));
+        return categories.map((category: any) => new CategoryModel(category));
     }
 
-    static async findById(categoryId) {
+    static async findById(categoryId: any) {
         const category = await Category.findById(categoryId)
             .populate('edition')
             .populate('products');
@@ -67,7 +71,7 @@ class CategoryModel {
             .populate('products', '_id name')
             .populate('edition');
 
-        return categories.map(category => new CategoryModel(category));
+        return categories.map((category: any) => new CategoryModel(category));
     }
 
     static async findWithMinProductsAndProductLinks() {
@@ -75,7 +79,7 @@ class CategoryModel {
 
         const productLinksByCategory = ProductTransformer.groupProductLinksByCategory(categories);
 
-        const categoriesWithProductLinks = categories.map(category => {
+        const categoriesWithProductLinks = categories.map((category: any) => {
             category.productLinks = productLinksByCategory[category.id];
 
             return category;
@@ -84,7 +88,7 @@ class CategoryModel {
         return categoriesWithProductLinks;
     }
 
-    static async findByIdWithProductLinks(categoryId) {
+    static async findByIdWithProductLinks(categoryId: any) {
         const category = await Category.findById(categoryId)
             .populate('edition')
             .populate('products');
