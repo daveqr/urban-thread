@@ -1,37 +1,46 @@
 <!-- Create Account Modal -->
 <div class="shared-modal create-account-form" id="create-account-form">
-    <p class="login-heading small" role="heading" aria-level="2">Create Account</p>
-  
-    <!-- Form content for Create Account -->
-    <div class="shared-modal-content">
-      <div class="form">
-        <div class="form-field email required">
-          <label class="form-label" for="email">Email Address<span aria-hidden="true">*</span></label>
-          <input class="form-input" name="email" id="email" type="email" aria-label="Create Email Address">
-        </div>
-        <div class="form-field password required">
-          <label class="form-label" for="password">Password<span aria-hidden="true">*</span></label>
-          <input class="form-input" id="password" type="password" name="password" autocomplete="off"
-            aria-label="Create Password">
-        </div>
-        <div class="form-field required">
-          <label class="form-label" for="fname">First Name<span aria-hidden="true">*</span></label>
-          <input class="form-input" name="fname" id="fname" type="text" aria-label="Create First Name">
-        </div>
-        <div class="form-field required">
-          <label class="form-label" for="lname">Last Name<span aria-hidden="true">*</span></label>
-          <input class="form-input" name="lname" id="lname" type="text" aria-label="Create First Name">
-        </div>
-        <div class="form-actions">
-          <input id="create-account-submit" type="submit" class="button button--primary create-account"
-            value="Create Account" (click)="createUser()">
-        </div>
+  <p class="login-heading small" role="heading" aria-level="2">Create Account</p>
+
+  <!-- Form content for Create Account -->
+  <div class="shared-modal-content">
+    <div class="form">
+      <div class="form-field email required">
+        <label class="form-label" for="email">Email Address<span aria-hidden="true">*</span></label>
+        <input class="form-input" name="email" id="email" type="email" aria-label="Create Email Address"
+          [(ngModel)]="user.email">
+      </div>
+
+      <div class="form-field password required">
+        <label class="form-label" for="password">Password<span aria-hidden="true">*</span></label>
+        <input class="form-input" id="password" type="password" name="password" autocomplete="off"
+          aria-label="Create Password" [(ngModel)]="user.password">
+      </div>
+
+      <div class="form-field required">
+        <label class="form-label" for="fname">First Name<span aria-hidden="true">*</span></label>
+        <input class="form-input" name="fname" id="fname" type="text" aria-label="Create First Name"
+          [(ngModel)]="user.fname">
+      </div>
+
+      <div class="form-field required">
+        <label class="form-label" for="lname">Last Name<span aria-hidden="true">*</span></label>
+        <input class="form-input" name="lname" id="lname" type="text" aria-label="Create Last Name"
+          [(ngModel)]="user.lname">
+      </div>
+
+      <div class="form-actions">
+        <input id="create-account-submit" type="submit" class="button button--primary create-account"
+          value="Create Account" (click)="createUser()">
       </div>
     </div>
-  
-    <!-- Link to Sign In-->
-    <div class="new-customer-container">
-      <p class="small new-customer-title">Already have an account?</p>
-      <a tabindex="0" role="link" class="label account-btn sign-up-modal-link" (click)="toggleSignIn()">Sign In</a>
-    </div>
   </div>
+
+  <!-- Sign-in link -->
+  <div class="new-customer-container">
+    <p class="small new-customer-title">Already have an account?</p>
+    <a tabindex="0" role="link" class="label account-btn sign-up-modal-link" (click)="toggleSignIn()">Sign In</a>
+  </div>
+
+  <app-loading *ngIf="isLoading"></app-loading>
+</div>

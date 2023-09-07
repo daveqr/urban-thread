@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, Observer } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class UserService {
-  constructor() {}
+  private apiUrl = 'http://localhost:3000/users/register'
+
+  constructor(private http: HttpClient) { }
 
   createUser(userData: any): Observable<any> {
-    const mockUser = {
-      id: 1,
-      username: 'john_doe',
-      email: 'john@example.com',
-    };
-
-    return of(mockUser);
+    return this.http.post(`${this.apiUrl}`, userData);
   }
 }
