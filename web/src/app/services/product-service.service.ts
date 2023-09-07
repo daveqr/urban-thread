@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProductServiceService {
+  // TODO get from env config
   private baseUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) { }
@@ -16,7 +17,7 @@ export class ProductServiceService {
    * @returns An Observable that emits the product data when the HTTP request is successful.
    */
   getProductById(id: string): Observable<any> {
-    const url = `${this.baseUrl}/products/${id}`;
+    const url = `${this.baseUrl}/api/store/products/${id}`;
     return this.http.get(url);
   }
 }

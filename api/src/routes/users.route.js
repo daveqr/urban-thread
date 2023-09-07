@@ -1,6 +1,5 @@
 
 const express = require('express');
-const passport = require('passport');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 const nodemailer = require('nodemailer');
@@ -19,8 +18,8 @@ const isEmailUnique = async (value, { req }) => {
     return true;
 };
 
-// Register route
-router.post('/register', [
+// Create
+router.post('/', [
     check('email').isEmail()
         .custom((value, { req }) => isEmailUnique(value, { req }))
         .normalizeEmail(),
@@ -85,19 +84,13 @@ router.post('/register', [
     }
 });
 
-// Login route
-router.post('/login', passport.authenticate('local'), (req, res) => {
-    const user = req.user;
+// Get user
+// router.get('/users/:id', (req, res) => {
 
-    const token = jwtService.generateToken({ userId: user._id, username: user.username });
+// Update user
+// router.put('/users/:id', (req, res) => {
 
-    res.json({ message: req.i18n.__('Login successful'), token });
-});
-
-// Logout route
-router.get('/logout', (req, res) => {
-    req.logout();
-    res.json({ message: 'Logout successful' });
-});
+// Delete user
+// router.delete('/users/:id', (req, res) => {
 
 module.exports = router;
