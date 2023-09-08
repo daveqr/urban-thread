@@ -3,19 +3,20 @@ import Product, { ProductInterface } from '../schemas/product.schema';
 class ProductModel {
     product: ProductInterface;
 
+    // TODO make this private
     constructor(product: ProductInterface) {
         this.product = product;
     }
 
-    get id() {
+    get id(): string {
         return this.product._id;
     }
 
-    get name() {
+    get name(): string {
         return this.product.get('name');
     }
 
-    get description() {
+    get description(): string {
         return this.product.get('description');
     }
 
@@ -23,7 +24,7 @@ class ProductModel {
         return this.product.get('price');
     }
 
-    get color() {
+    get color(): string {
         return this.product.get('color');
     }
 

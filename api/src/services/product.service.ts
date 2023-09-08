@@ -1,6 +1,6 @@
-const CategoryModel = require('../models/category.model');
+import CategoryModel from '../models/category.model';
 import ProductModel from '../models/product.model';
-import { ProductTransformer } from '../transformers/product.transformer';
+import ProductTransformer from '../transformers/product.transformer';
 
 import { createCategoryLinks } from '../utils/linkUtils';
 
@@ -23,6 +23,7 @@ class ProductService {
 
     static async transformProduct(product: ProductModel) {
         const categories = await CategoryModel.findByIds(product.categoryIds);
+
         const categoryLinks = createCategoryLinks(categories);
         const categoryLinksForProduct = categories.map((category: { id: string; }) => categoryLinks[category.id]);
 

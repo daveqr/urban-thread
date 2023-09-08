@@ -1,11 +1,12 @@
 import mongoose, { Document } from 'mongoose';
 import { EditionInterface } from './edition.schema';
+import { ProductInterface } from './product.schema';
 
 export interface CategoryInterface extends Document {
   name: string;
   edition: EditionInterface;
   description: string;
-  products: mongoose.Types.ObjectId[];
+  products: ProductInterface[];
 }
 
 const categorySchema = new mongoose.Schema({

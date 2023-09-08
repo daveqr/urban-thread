@@ -1,44 +1,46 @@
 import Category, { CategoryInterface } from '../schemas/category.schema';
-import { ProductTransformer } from '../transformers/product.transformer';
+import ProductTransformer  from '../transformers/product.transformer';
+import ProductModel from './product.model';
 
 class CategoryModel {
     private category: CategoryInterface;
     productLinks: any[] = [];
 
-    constructor(category: CategoryInterface) {
+    // TODO make this private
+    private constructor(category: CategoryInterface) {
         this.category = category;
     }
 
-    get id() {
+    get id(): string {
         return this.category._id;
     }
 
-    get name() {
+    get name(): string {
         return this.category.name;
     }
 
-    get description() {
+    get description(): string {
         return this.category.description;
     }
 
-    get editionName() {
+    get editionName(): string {
         return this.category.edition.name;
     }
 
-    get editionDescription() {
+    get editionDescription(): string {
         return this.category.edition.description;
     }
 
     get products() {
-        return this.category.products;
+        return this.category.products.map(product => new ProductModel(product));
     }
 
-    static async create(categoryData: any) {
+    static async create(categoryData: any): Promise<CategoryModel> {
         const createdCategory = await Category.create(categoryData);
         return new CategoryModel(createdCategory);
     }
 
-    static async findAll() {
+    static async findAll(): Promise<CategoryModel[]> {
         const categories = await Category.find()
             .populate('edition')
             .populate('products');
@@ -46,13 +48,13 @@ class CategoryModel {
         return categories.map((category: CategoryInterface) => new CategoryModel(category));
     }
 
-    static async findByIds(categoryIds: any) {
+    static async findByIds(categoryIds: string[]): Promise<CategoryModel[]> {
         const categories = await Category.find({ _id: { $in: categoryIds } });
 
         return categories.map((category: any) => new CategoryModel(category));
     }
 
-    static async findById(categoryId: any) {
+    static async findById(categoryId: any): Promise<CategoryModel | null> {
         const category = await Category.findById(categoryId)
             .populate('edition')
             .populate('products');
@@ -64,20 +66,20 @@ class CategoryModel {
         return new CategoryModel(category);
     }
 
-    static async findWithMinProducts() {
+    static async findWithMinProducts(): Promise<CategoryModel[]> {
         const categories = await Category.find()
             .populate('products', '_id name')
             .populate('edition');
 
-        return categories.map((category: any) => new CategoryModel(category));
+        return categories.map((category: CategoryInterface) => new CategoryModel(category));
     }
 
-    static async findWithMinProductsAndProductLinks() {
+    static async findWithMinProductsAndProductLinks(): Promise<CategoryModel[]> {
         const categories = await CategoryModel.findWithMinProducts();
 
         const productLinksByCategory = ProductTransformer.groupProductLinksByCategory(categories);
 
-        const categoriesWithProductLinks = categories.map((category: any) => {
+        const categoriesWithProductLinks = categories.map((category: CategoryModel) => {
             category.productLinks = productLinksByCategory[category.id];
 
             return category;
@@ -86,23 +88,20 @@ class CategoryModel {
         return categoriesWithProductLinks;
     }
 
-    static async findByIdWithProductLinks(categoryId: any) {
-        const category = await Category.findById(categoryId)
-            .populate('edition')
-            .populate('products');
+    static async findByIdWithProductLinks(categoryId: string) {
+        const categoryModel = await CategoryModel.findById(categoryId);
 
-        if (!category) {
+        if (!categoryModel) {
             return null;
         }
 
-        const productLinksByCategory = ProductTransformer.groupProductLinksByCategory([category]);
+        const productLinksByCategory = ProductTransformer.groupProductLinksByCategory([categoryModel]);
 
-        const categoryModel = new CategoryModel(category);
-        categoryModel.productLinks = productLinksByCategory[category._id];
+        categoryModel.productLinks = productLinksByCategory[categoryModel.id];
 
         return categoryModel;
     }
 
 }
 
-module.exports = CategoryModel;
+export default CategoryModel;

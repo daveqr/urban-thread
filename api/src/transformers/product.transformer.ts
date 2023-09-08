@@ -1,13 +1,7 @@
 import { PRODUCT_BASE_URL } from '../config/urls';
-import * as linkUtils from '../utils/linkUtils'; // Assuming you have a linkUtils module
-
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  color: string;
-}
+import ProductModel from '../models/product.model';
+import CategoryModel from '../models/category.model';
+import { createSelfLink, combineLinks } from '../utils/linkUtils';
 
 interface CategoryLink {
   id: string;
@@ -15,10 +9,10 @@ interface CategoryLink {
   href: string;
 }
 
-export class ProductTransformer {
-  static transform(product: Product, categoryLinks: CategoryLink[], extended?: boolean): any {
-    const selfLink = linkUtils.createSelfLink(PRODUCT_BASE_URL, product.id);
-    const combinedLinks = linkUtils.combineLinks(selfLink);
+class ProductTransformer {
+  static transform(product: ProductModel, categoryLinks: CategoryLink[], extended?: boolean): any {
+    const selfLink = createSelfLink(PRODUCT_BASE_URL, product.id);
+    const combinedLinks = combineLinks(selfLink);
 
     if (extended) {
       const mapCategoriesToEmbedded = (categoryLinks: CategoryLink[]) => {
@@ -56,7 +50,7 @@ export class ProductTransformer {
     }
   }
 
-  static groupProductLinksByCategory(categories: any): Record<string, any[]> {
+  static groupProductLinksByCategory(categories: CategoryModel[]): Record<string, any[]> {
     const result: Record<string, any[]> = {};
 
     for (const category of categories) {
@@ -72,7 +66,7 @@ export class ProductTransformer {
           result[categoryId] = [];
         }
 
-        const extended = false; // Adjust this as needed
+        const extended = false;
         const categoryLinks: CategoryLink[] = [];
         for (const product of category.products) {
           const productLink = ProductTransformer.transform(product, categoryLinks, extended);
@@ -84,3 +78,5 @@ export class ProductTransformer {
     return result;
   }
 }
+
+export default ProductTransformer;

@@ -1,5 +1,4 @@
-
-const CategoryModel = require('../models/category.model');
+import CategoryModel from '../models/category.model';
 import { CategoryTransformer } from '../transformers/category.transformer';
 
 class CategoryService {
@@ -19,7 +18,7 @@ class CategoryService {
         return transformedCategories;
     }
 
-    static async getCategoryById(categoryId: any) {
+    static async getCategoryById(categoryId: string) {
         try {
             const category = await CategoryModel.findByIdWithProductLinks(categoryId);
 
