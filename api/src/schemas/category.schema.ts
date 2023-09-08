@@ -1,19 +1,18 @@
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
+import { EditionInterface } from './edition.schema';
 
-/**
- * Represents a product category.
- * @typedef {Object} Category
- * @property {string} name - The name of the category.
- * @property {mongoose.Schema.Types.ObjectId} edition - The reference to an Edition for the category.
- * @property {string} description - A description of the category.
- */
+export interface CategoryInterface extends Document {
+  name: string;
+  edition: EditionInterface;
+  description: string;
+  products: mongoose.Types.ObjectId[];
+}
 
 const categorySchema = new mongoose.Schema({
-
   name: { type: String, required: true },
   edition: { type: mongoose.Schema.Types.ObjectId, ref: 'Edition', required: true },
   description: { type: String, required: true },
   products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
 });
 
-module.exports = mongoose.model('Category', categorySchema);
+export default mongoose.model<CategoryInterface>('Category', categorySchema);

@@ -1,13 +1,11 @@
-
-const Category = require('../schemas/category.schema');
-// const ProductTransformer = require('../transformers/product.transformer');
+import Category, { CategoryInterface } from '../schemas/category.schema';
 import { ProductTransformer } from '../transformers/product.transformer';
 
 class CategoryModel {
-    category: any;
+    private category: CategoryInterface;
     productLinks: any[] = [];
 
-    constructor(category: any) {
+    constructor(category: CategoryInterface) {
         this.category = category;
     }
 
@@ -45,7 +43,7 @@ class CategoryModel {
             .populate('edition')
             .populate('products');
 
-        return categories.map((category: any) => new CategoryModel(category));
+        return categories.map((category: CategoryInterface) => new CategoryModel(category));
     }
 
     static async findByIds(categoryIds: any) {
