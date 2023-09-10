@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 require('../schemas/edition.schema');
-const CategoryService = require('../services/category.service');
+import CategoryService from '../services/category.service';
 
 router.use((req: any, res: any, next: any) => {
     if (req.method === 'GET') {
@@ -10,23 +10,6 @@ router.use((req: any, res: any, next: any) => {
     next();
 });
 
-/**
- * GET request handler for retrieving categories.
- * 
- * This route allows you to retrieve a list of categories, with the option
- * to request fully populated categories (with 'edition' data) or simplified
- * categories by specifying the 'detailed' query parameter in the URL.
- *  
- * @route GET /categories
- * @param {express.Request} req - The Express request object.
- * @param {express.Response} res - The Express response object.
- * 
- * @queryparam {boolean} detailed - Optional. Set to 'true' to retrieve the detailed categories.
- *                             Omit or set to 'false' (default) to retrieve basic categories.
- * 
- * @returns {Promise<void>} A promise indicating the completion of the request handling.
- * @throws {Error} If there's an issue with fetching the categories.
- */
 router.get('/', async (req: any, res: any) => {
     try {
         const { isDetailed } = req.query;
@@ -39,15 +22,6 @@ router.get('/', async (req: any, res: any) => {
     }
 });
 
-/**
- * GET request handler for retrieving a cateogry by its ID.
- * 
- * @route GET /categories/:id
- * @param {express.Request} req - The Express request object.
- * @param {express.Response} res - The Express response object.
- * @returns {Promise<void>} A promise indicating the completion of the request handling.
- * @throws {Error} If there's an issue with fetching the category.
- */
 router.get('/:id', async (req: any, res: any) => {
     try {
         const category = await CategoryService.getCategoryById(req.params.id);

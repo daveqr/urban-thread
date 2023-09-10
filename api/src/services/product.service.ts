@@ -11,23 +11,31 @@ class ProductService {
         return await ProductService.transformProducts(products);
     }
 
-    static async getProductById(productId: string) {
+    static async getProductById(productId: string, extended?: boolean) {
         const product = await ProductModel.findById(productId);
 
         if (!product) {
             return null;
         }
 
-        return await ProductService.transformProduct(product);
+        return await ProductService.transformProduct(product, extended);
     }
 
-    static async transformProduct(product: ProductModel) {
+    static async getFullProductById(productId: string) {
+        return await ProductService.getProductById(productId, true);
+    }
+
+    static async getBasicProductById(productId: string) {
+        return await ProductService.getProductById(productId, false);
+    }
+
+    static async transformProduct(product: ProductModel, extended?: boolean) {
         const categories = await CategoryModel.findByIds(product.categoryIds);
 
         const categoryLinks = createCategoryLinks(categories);
         const categoryLinksForProduct = categories.map((category: { id: string; }) => categoryLinks[category.id]);
 
-        return ProductTransformer.transform(product, categoryLinksForProduct);
+        return ProductTransformer.transform(product, categoryLinksForProduct, extended);
     }
 
     static async transformProducts(products: ProductModel[]) {
@@ -47,4 +55,4 @@ class ProductService {
     }
 }
 
-module.exports = ProductService;
+export default ProductService;

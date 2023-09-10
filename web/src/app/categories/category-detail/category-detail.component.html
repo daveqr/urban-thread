@@ -12,8 +12,7 @@
         <div class="card-body text-center">
           <h6 class="text-md mb-1 text-body">8 colors</h6>
           <h4 class="font-weight-bold">
-            <a [routerLink]="[product.href]">{{ product.name }}
-            </a>
+            <a [routerLink]="['/products', product.id]">{{ product.name }}</a>
           </h4>
           <p class="text-body">{{ product.description }}</p>
           <div><span class="badge filter rounded-4 bg-red"></span><span

@@ -42,6 +42,7 @@ class ProductTransformer {
       };
     } else {
       return {
+        id: product.id,
         rel: 'product',
         href: `${PRODUCT_BASE_URL}/${product.id}`,
         name: product.name,

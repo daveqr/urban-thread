@@ -8,6 +8,18 @@ class ProductModel {
         this.product = product;
     }
 
+    // TODO use this to make the constructor private
+    // constructor(productOrProperties: ProductInterface | { id: string }) {
+    //     if ('id' in productOrProperties) {
+    //         // Handle the case where properties are passed as an object
+    //         this.product = { _id: productOrProperties.id } as ProductInterface;
+    //         // Set other properties here if needed
+    //     } else {
+    //         // Handle the case where a ProductInterface object is passed
+    //         this.product = productOrProperties;
+    //     }
+    // }
+
     get id(): string {
         return this.product._id;
     }

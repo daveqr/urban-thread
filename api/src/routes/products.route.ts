@@ -1,8 +1,7 @@
 
 import express, { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
 const router = express.Router();
-const ProductModel = require('../models/product.model');
-const ProductService = require('../services/product.service');
+import ProductService from '../services/product.service';
 
 router.use((req: Request, res: Response, next: NextFunction) => {
     if (req.method === 'GET') {
@@ -11,15 +10,6 @@ router.use((req: Request, res: Response, next: NextFunction) => {
     next();
 });
 
-/**
- * Fetch all products.
- * 
- * @route GET /product
- * @returns {Object} An array of all products.
- * @throws {Object} If an error occurs, an object with an 'error' field will be returned.
- *                  The 'error' field contains an error message indicating the failure to 
- *                  fetch products.
- */
 router.get('/', async (req: Request, res: Response) => {
     try {
         const transformedProducts = await ProductService.getAllProducts();
@@ -32,12 +22,6 @@ router.get('/', async (req: Request, res: Response) => {
 
 /**
  * Fetch a product by id.
- * 
- * @route GET /product/:id
- * @returns {Object} The product object with HATEOAS links.
- * @throws {Object} If an error occurs, an object with an 'error' field will be returned.
- *                  The 'error' field contains an error message indicating the failure to
- *                  fetch the product.
  * 
  * @example <caption>Success response.</caption>
  *
@@ -82,7 +66,13 @@ router.get('/', async (req: Request, res: Response) => {
 router.get('/:id', async (req: Request, res: Response) => {
     try {
         const productId = req.params.id;
-        const transformedProduct = await ProductService.getProductById(productId);
+        const basic = req.query.basic
+
+        const isBasic = basic === 't';
+
+        const transformedProduct = isBasic ?
+            await ProductService.getBasicProductById(productId) :
+            await ProductService.getFullProductById(productId);
 
         if (!transformedProduct) {
             return res.status(404).json({ message: 'Product not found' });

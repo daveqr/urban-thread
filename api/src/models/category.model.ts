@@ -6,7 +6,6 @@ class CategoryModel {
     private category: CategoryInterface;
     productLinks: any[] = [];
 
-    // TODO make this private
     private constructor(category: CategoryInterface) {
         this.category = category;
     }
