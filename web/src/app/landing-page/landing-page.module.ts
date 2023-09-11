@@ -4,13 +4,15 @@ import { HomeComponent } from './home/home.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { LandingPageRoutingModule } from './landing-page-routing.module';
 import { AuthenticationModule } from '../authentication/authentication.module';
+import { NavigationModule } from '../navigation/navigation.module';
 
 @NgModule({
   declarations: [HomeComponent, CategoriesComponent],
   imports: [
     CommonModule,
     LandingPageRoutingModule,
-    AuthenticationModule
+    AuthenticationModule,
+    NavigationModule
   ],
   exports: [HomeComponent, CategoriesComponent]
 })

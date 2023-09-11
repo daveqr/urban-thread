@@ -1,8 +1,7 @@
-
-<div *ngIf="isSignInFormVisible()">
-    <app-sign-in></app-sign-in>
+<div *ngIf="isRegistrationFormVisible()">
+    <app-registration></app-registration>
 </div>
 
-<div *ngIf="!isSignInFormVisible()">
-    <app-registration></app-registration>
+<div *ngIf="!isRegistrationFormVisible()">
+    <app-sign-in></app-sign-in>
 </div>

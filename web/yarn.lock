@@ -1425,6 +1425,34 @@
   dependencies:
     tslib "^2.3.0"
 
+"@ngrx/effects@^16.2.0":
+  version "16.2.0"
+  resolved "https://registry.npmjs.org/@ngrx/effects/-/effects-16.2.0.tgz#90a3572aa5c7bcc3ffc9d55795d0e48f62c51708"
+  integrity sha512-zZfq47LNoiRK+uS66Xm36mN07zm11AER1D9lTalX/G6jrV0bywgnAaukNNav9E33ZRrPEnCD8uu9BXZoboEYgA==
+  dependencies:
+    tslib "^2.0.0"
+
+"@ngrx/entity@^16.2.0":
+  version "16.2.0"
+  resolved "https://registry.npmjs.org/@ngrx/entity/-/entity-16.2.0.tgz#2c6af77f8a3a887971993807623e4e1c4c6defcc"
+  integrity sha512-n8Vsz48/u14R8S7akLO7TWmqXGcvCYacCIS106hC3FVkOwAOflhcstGYu6oShbqOVuu0Vcw7s/amc2oAJV4YkQ==
+  dependencies:
+    tslib "^2.0.0"
+
+"@ngrx/store-devtools@^16.2.0":
+  version "16.2.0"
+  resolved "https://registry.npmjs.org/@ngrx/store-devtools/-/store-devtools-16.2.0.tgz#908a649f7f95d76972d72ba2a441ef344a44f95d"
+  integrity sha512-m7mkNpIIp8fA8yNG5T0ZKm1RCP2fE0IVBEtcbj2Z/88fW4vyvobVBdBqha6zgYTuA5X4m28npMra9GPNPsuDLA==
+  dependencies:
+    tslib "^2.0.0"
+
+"@ngrx/store@^16.2.0":
+  version "16.2.0"
+  resolved "https://registry.npmjs.org/@ngrx/store/-/store-16.2.0.tgz#2e3a336740e472b751f3f0765e09a429019c3523"
+  integrity sha512-C7oIUC87xXV+1dTGUwYG/L4p0IZdYv/Ou1nTL/LffyAHllmmygTA5gzLB87abLOhucAxlFIQMQ8t/GSxdk/+QA==
+  dependencies:
+    tslib "^2.0.0"
+
 "@ngtools/webpack@16.2.0":
   version "16.2.0"
   resolved "https://registry.npmjs.org/@ngtools/webpack/-/webpack-16.2.0.tgz"
@@ -5994,6 +6022,11 @@ tslib@2.6.1, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0:
   version "2.6.1"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.6.1.tgz"
   integrity sha512-t0hLfiEKfMUoqhG+U1oid7Pva4bbDPHYfJNiB7BiIjRkj1pyC++4N3huJfqY6aRH6VTB0rvtzQwjM4K6qpfOig==
+
+tslib@^2.0.0:
+  version "2.6.2"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.6.2.tgz#703ac29425e7b37cd6fd456e92404d46d1f3e4ae"
+  integrity sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==
 
 tuf-js@^1.1.7:
   version "1.1.7"

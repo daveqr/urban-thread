@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+
 import { UserService } from '../../services/user.service';
-import { ToggleService } from '../services/toggle.service';
+import { ToggleService } from 'src/app/services/toggle.service';
+import { SIGN_IN_TOGGLE_SERVICE } from 'src/app/services/toggle.service.token';
 
 @Component({
   selector: 'app-registration',
@@ -19,11 +21,11 @@ export class RegistrationComponent {
 
   constructor(
     private userService: UserService,
-    private toggleService: ToggleService
+    @Inject(SIGN_IN_TOGGLE_SERVICE) private toggleService: ToggleService
   ) { }
 
   toggleSignIn() {
-    this.toggleService.toggleForm();
+    this.toggleService.toggle();
   }
 
   createUser() {

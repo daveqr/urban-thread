@@ -1,26 +1,23 @@
-import { Component } from '@angular/core';
-import { ToggleService } from '../services/toggle.service';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Component, Inject } from '@angular/core';
+import { ToggleService } from 'src/app/services/toggle.service';
+import { SIGN_IN_TOGGLE_SERVICE } from 'src/app/services/toggle.service.token';
 
 @Component({
   selector: 'app-authentication-home',
   templateUrl: './authentication-home.component.html',
-  styleUrls: ['./authentication-home.component.css'],
-  animations: [
-    trigger('fadeInOut', [
-      state('void', style({ opacity: 0 })),
-      transition('void <=> *', animate(300)),
-    ]),
-  ],  
+  styleUrls: ['./authentication-home.component.css']
 })
 export class AuthenticationHomeComponent {
-  constructor(private toggleService: ToggleService) {}
-
-  isSignInFormVisible(): boolean {
-    return this.toggleService.isSignInFormVisible();
+  constructor(@Inject(SIGN_IN_TOGGLE_SERVICE) private toggleService: ToggleService) {
   }
 
-  toggleForm(): void {
-    this.toggleService.toggleForm();
+  isRegistrationFormVisible(): boolean {
+    console.log(this.toggleService.isToggledState())
+    return this.toggleService.isToggledState();
+  }
+
+  toggleSignIn() {
+    console.log(this.toggleService.isToggledState())
+    this.toggleService.toggle();
   }
 }
