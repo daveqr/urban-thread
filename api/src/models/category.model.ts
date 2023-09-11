@@ -1,3 +1,5 @@
+import { List } from 'immutable';
+
 import Category, { CategoryInterface } from '../schemas/category.schema';
 import ProductTransformer  from '../transformers/product.transformer';
 import ProductModel from './product.model';
@@ -39,12 +41,12 @@ class CategoryModel {
         return new CategoryModel(createdCategory);
     }
 
-    static async findAll(): Promise<CategoryModel[]> {
+    static async findAll(): Promise<List<CategoryModel>> {
         const categories = await Category.find()
             .populate('edition')
             .populate('products');
 
-        return categories.map((category: CategoryInterface) => new CategoryModel(category));
+        return List(categories).map((category: CategoryInterface) => new CategoryModel(category));
     }
 
     static async findByIds(categoryIds: string[]): Promise<CategoryModel[]> {
