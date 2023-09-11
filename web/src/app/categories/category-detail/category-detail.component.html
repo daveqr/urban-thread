@@ -1,14 +1,15 @@
 <div class="container mt-5">
+  
   <h3>{{ category.name }}</h3>
   <p>{{ category.editionName }} – {{ category.editionDescription }}</p>
+  
   <div class="row mt-5">
 
     <div *ngFor="let product of category._embedded.products" class="col-md-6 col-lg-3">
       <div class="card card-product border mb-5 shadow-xs border-radius-lg">
-
-
-        <div class="height-350"><img class="w-100 h-100 p-4 rounded-top" src="./assets/products/product7.jpg"
-            alt="watch-image"></div>
+        <div class="height-350">
+          <img class="w-100 h-100 p-4 rounded-top" src="./assets/products/product7.jpg" alt="watch-image">
+        </div>
         <div class="card-body text-center">
           <h6 class="text-md mb-1 text-body">8 colors</h6>
           <h4 class="font-weight-bold">
@@ -18,84 +19,11 @@
           <div><span class="badge filter rounded-4 bg-red"></span><span
               class="badge filter rounded-4 bg-blue"></span><span class="badge filter rounded-4 bg-green"></span>
           </div>
-          <h4 class="mb-0 text-lg mt-1 mb-3">$<!-- -->399</h4>
+          <h4 class="mb-0 text-lg mt-1 mb-3">$399</h4>
         </div>
 
       </div>
     </div>
 
-    <!-- <div class="col-md-6 col-lg-3">
-      <div class="card card-product border mb-5 shadow-xs border-radius-lg"><a
-          href="https://demos.creative-tim.com/astro-ecommerce/#">
-          <div class="height-350"><img class="w-100 h-100 p-4 rounded-top" src="./Astro Ecommerce_files/suit-1.jpg"
-              alt="watch-image"></div>
-          <div class="card-body text-center">
-            <h6 class="text-md mb-1 text-body">Black</h6>
-            <h4 class="font-weight-bold">Pink Blouse</h4>
-            <p class="text-body">That's the main thing people are controlled by! Thoughts- their perception of
-              themselves!</p>
-            <div><span class="badge filter rounded-4 bg-black"></span><span
-                class="badge filter rounded-4 bg-green"></span><span class="badge filter rounded-4 bg-white"></span>
-            </div>
-            <h4 class="mb-0 text-lg mt-1 mb-3">$1,490</h4>
-          </div>
-        </a></div>
-    </div> -->
-
-    <!-- <div class="col-md-6 col-lg-3">
-      <div class="card card-product border mb-5 shadow-xs border-radius-lg"><a
-          href="https://demos.creative-tim.com/astro-ecommerce/#">
-          <div class="height-350"><img class="w-100 h-100 p-4 rounded-top" src="./Astro Ecommerce_files/suit-2.jpg"
-              alt="iMac-image"></div>
-          <div class="card-body text-center">
-            <h6 class="text-md mb-1 text-body">Yellow</h6>
-            <h4 class="font-weight-bold">Premium Suit</h4>
-            <p class="text-body">There's nothing I really wanted to do in life that I wasn't able to get good at.</p>
-            <div><span class="badge filter rounded-4 bg-SpaceGray"></span></div>
-            <h4 class="mb-0 text-lg mt-1 mb-3">$1,399</h4>
-          </div>
-        </a></div>
-    </div> -->
-
-    <!-- <div class="col-md-6 col-lg-3">
-      <div class="card card-product border mb-5 shadow-xs border-radius-lg"><a
-          href="https://demos.creative-tim.com/astro-ecommerce/#">
-          <div class="height-350"><img class="w-100 h-100 p-4 rounded-top" src="./Astro Ecommerce_files/suit-5.jpg"
-              alt="iPhone_thumb"></div>
-          <div class="card-body text-center">
-            <h6 class="text-md mb-1 text-body">Blue</h6>
-            <h4 class="font-weight-bold">iPhone</h4>
-            <p class="text-body">That's the main thing people are controlled by! Thoughts- their perception of
-              themselves!</p>
-            <h4 class="mb-0 text-lg mt-1 mb-3">$1,599</h4>
-          </div>
-        </a></div>
-    </div> -->
   </div>
-
-  <!-- <div>
-    <h2>Category Details</h2>
-    <ul>
-      <li><strong>ID:</strong> {{ category.id }}</li>
-      <li><strong>Name:</strong> {{ category.name }}</li>
-      <li><strong>Description:</strong> {{ category.description }}</li>
-      <li>
-        <strong>Edition:</strong>
-        <ul>
-          <li><strong>ID:</strong> {{ category.edition.id }}</li>
-          <li><strong>Name:</strong> {{ category.edition.name }}</li>
-          <li><strong>Description:</strong> {{ category.edition.description }}</li>
-        </ul>
-      </li>
-    </ul>
-
-    <h3>Products:</h3>
-    <ul>
-      <li *ngFor="let product of category.products">
-        <strong>ID:</strong> {{ product.id }} |
-        <strong>Description:</strong> {{ product.description }} |
-        <a [routerLink]="['/products', product.id]">View Product</a>
-      </li>
-    </ul>
-  </div>
-   -->
+</div>
