@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+// TODO should this be moved to products module and not root?
 @Injectable({
   providedIn: 'root'
 })

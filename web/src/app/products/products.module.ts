@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { ProductsRoutingModule } from './products-routing.module';
+import { ProductsRoutingModule } from '../routing/products-routing.module';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';

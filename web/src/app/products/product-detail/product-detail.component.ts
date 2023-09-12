@@ -68,5 +68,6 @@ export class ProductDetailComponent implements OnInit {
 
   addToCart(item: CartItem) {
     this.store.dispatch(CartActions.addItemToCart({ item }));
+    this.router.navigate(['/cart']);
   }
 }

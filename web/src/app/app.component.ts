@@ -10,6 +10,7 @@ export class AppComponent {
   constructor(private titleService: Title) {}
 
   ngOnInit() {
+    // TODO need to give this a name
     this.titleService.setTitle('Apparel Ecommerce');
   }
 }

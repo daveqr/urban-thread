@@ -12,5 +12,7 @@ export class CartHomeComponent {
   totalItems$ = this.store.select(CartSelectors.selectCartTotalItems);
   totalPrice$ = this.store.select(CartSelectors.selectCartTotalPrice);
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) {
+    console.log('int the cart')
+  }
 }
