@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+
 import { ProductServiceService as ProductService } from '../../services/product-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../models/product.model'
+import { CartItem } from 'src/app/state/cart.state';
+import { CartActions } from 'src/app/state/cart.actions';
 
 @Component({
   selector: 'app-product-detail',
@@ -18,11 +22,23 @@ export class ProductDetailComponent implements OnInit {
     color: ''
   };
 
+  item: CartItem;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService,
-  ) { }
+    private store: Store,
+    private productService: ProductService
+  ) {
+
+    this.item = {
+      id: 1,
+      name: 'Sample Product',
+      price: 10.99,
+      quantity: 1
+    };
+
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -48,5 +64,9 @@ export class ProductDetailComponent implements OnInit {
         this.router.navigate(['/error']);
       }
     });
+  }
+
+  addToCart(item: CartItem) {
+    this.store.dispatch(CartActions.addItemToCart({ item }));
   }
 }

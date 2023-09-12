@@ -1,6 +1,5 @@
-import { StoreModule } from '@ngrx/store';
 import { createReducer, on } from '@ngrx/store';
-import * as CartActions from './cart.actions';
+import { CartActions } from './cart.actions';
 import { initialCartState } from './cart.state';
 
 export const cartReducer = createReducer(
@@ -8,5 +7,10 @@ export const cartReducer = createReducer(
     on(CartActions.initCart, (state) => ({
         ...state,
         items: [],
+    })),
+    
+    on(CartActions.addItemToCart, (state, { item }) => ({
+        ...state,
+        items: [...state.items, item],
     }))
 );
