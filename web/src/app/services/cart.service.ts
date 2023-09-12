@@ -12,7 +12,6 @@ export class CartService {
   addToCart(item: CartItem): Observable<void> {
     // TODO this is a dummy list for now. need to implement the call to the api
     this.cartItems.push(item);
-    console.log("the item: " + item);
 
     return of(undefined);
   }
