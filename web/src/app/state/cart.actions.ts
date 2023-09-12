@@ -1,9 +1,12 @@
 import { createAction, props } from '@ngrx/store';
-import { CartItem } from './cart.state';
+import { CartItem } from '../models/cart.model';
 
 export class CartActions {
 
-  static initCart = createAction('[Cart] Init');
+  static initCart = createAction(
+    '[Cart] Init Cart',
+    props<{ items: CartItem[] }>()
+  );
 
   static addItemToCart = createAction(
     '[Cart] Add Item to Cart',

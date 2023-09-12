@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { switchMap, map, catchError, tap } from 'rxjs/operators';
+import { switchMap, map, catchError, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 import { CartActions } from './cart.actions';
@@ -22,12 +22,13 @@ export class CartEffects {
         )
     );
 
-    // TODO this is a temporary effect for demonstration. Need to get rid of it.
-    addItemToCart2$ = createEffect(() =>
+    // TODO demonstration, need to get rid of it.
+    addItemToCartLog$ = createEffect(() =>
         this.actions$.pipe(
             ofType(CartActions.addItemToCart),
-            tap(action => {
+            mergeMap(action => {
                 console.log('Item added to cart:', action.item);
+                return [];
             })
         ), { dispatch: false }
     );

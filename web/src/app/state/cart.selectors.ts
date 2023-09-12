@@ -6,7 +6,7 @@ export class CartSelectors {
 
     static selectCartItems = createSelector(
         CartSelectors.selectCartFeature,
-        (state: CartState) => state.items
+        (state: CartState) => state.cart.items
     );
 
     static selectCartTotalItems = createSelector(

@@ -1,14 +1,11 @@
-export interface CartItem {
-    id: number;
-    name: string;
-    price: number;
-    quantity: number;
-}
+import { Cart } from "../models/cart.model";
 
 export interface CartState {
-    items: CartItem[];
+    cart: Cart
 }
 
 export const initialCartState: CartState = {
-    items: [],
+    cart: {
+        items: [],
+    }
 };
