@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
-import { EMPTY, empty, of } from 'rxjs';
+import { of } from 'rxjs';
 
 import { CartActions } from './cart.actions';
 import { CartService } from '../services/cart.service';
