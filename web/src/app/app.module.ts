@@ -11,6 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { JwtInterceptor } from './JwtInterceptor';
+import { cartReducer } from './state/cart.reducer';
+import { metaReducers } from './state/local-storage.reducer';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,10 @@ import { JwtInterceptor } from './JwtInterceptor';
     BrowserAnimationsModule,
     HttpClientModule,
     EffectsModule.forRoot([]),
-    StoreModule.forRoot([]),
+    StoreModule.forRoot(
+      cartReducer,
+      { metaReducers }
+    ),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: !isDevMode(),
