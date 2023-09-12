@@ -8,6 +8,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { cartReducer } from '../state/cart.reducer';
 import { CartEffects } from '../state/cart.effects';
 
+
 @NgModule({
   declarations: [
     CartHomeComponent
@@ -15,6 +16,7 @@ import { CartEffects } from '../state/cart.effects';
   imports: [
     CommonModule,
     CartRoutingModule,
+    
     StoreModule.forFeature('cart', cartReducer),
     EffectsModule.forFeature([CartEffects])
   ]

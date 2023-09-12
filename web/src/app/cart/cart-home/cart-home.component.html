@@ -1,16 +1,17 @@
 <div class="cart-container">
-    <a href="/">home</a>
-    <h2>Your Shopping Cart</h2>
-  
-    <ul>
-      <ng-container *ngIf="(cartItems$ | async) as cartItems; else loadingItems">
-        <li *ngFor="let item of cartItems">{{ item.name }} - ${{ item.price }}</li>
-      </ng-container>
-      <ng-template #loadingItems>Loading cart items...</ng-template>
-    </ul>
-  
-    <p>Total Items: {{ totalItems$ | async }}</p>
-  
-    <p>Total Price: ${{ totalPrice$ | async }}</p>
-  </div>
-  
+
+  <a [routerLink]="['/']">Home</a>
+
+  <h2>Your Shopping Cart</h2>
+
+  <ul>
+    <ng-container *ngIf="(cartItems$ | async) as cartItems; else loadingItems">
+      <li *ngFor="let item of cartItems">{{ item.name }} - ${{ item.price }}</li>
+    </ng-container>
+    <ng-template #loadingItems>Loading cart items...</ng-template>
+  </ul>
+
+  <p>Total Items: {{ totalItems$ | async }}</p>
+
+  <p>Total Price: ${{ totalPrice$ | async }}</p>
+</div>

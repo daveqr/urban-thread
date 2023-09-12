@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+
 import { CartSelectors } from 'src/app/state/cart.selectors';
 
 @Component({
@@ -12,7 +13,5 @@ export class CartHomeComponent {
   totalItems$ = this.store.select(CartSelectors.selectCartTotalItems);
   totalPrice$ = this.store.select(CartSelectors.selectCartTotalPrice);
 
-  constructor(private store: Store) {
-    console.log('int the cart')
-  }
+  constructor(private store: Store) { }
 }

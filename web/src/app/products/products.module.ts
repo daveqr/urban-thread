@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { ProductsRoutingModule } from '../routing/products-routing.module';
-
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { cartReducer } from 'src/app/state/cart.reducer';
-import { CartEffects } from 'src/app/state/cart.effects';
-import { CartActions } from 'src/app/state/cart.actions';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { ProductsRoutingModule } from '../routing/products-routing.module';
+
+import { cartReducer } from '../state/cart.reducer';
+import { CartEffects } from '../state/cart.effects';
+import { CartActions } from '../state/cart.actions';
 
 @NgModule({
   declarations: [ProductDetailComponent],

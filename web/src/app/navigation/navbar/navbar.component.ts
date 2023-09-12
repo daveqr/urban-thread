@@ -1,5 +1,6 @@
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -16,7 +17,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class NavbarComponent {
   showSignIn: boolean = false;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   toggleOverlay() {
     this.showSignIn = !this.showSignIn;

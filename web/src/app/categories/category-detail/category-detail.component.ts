@@ -35,7 +35,6 @@ export class CategoryDetail implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
-      console.log('Category ID:', this.id);
     });
 
     if (this.id !== null) {

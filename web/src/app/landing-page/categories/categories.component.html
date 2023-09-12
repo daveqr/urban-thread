@@ -18,8 +18,8 @@
                     <p class="text-white font-weight-bold mb-1">{{ category.editionName }}</p>
                     <h4 class="text-white font-weight-bolder">{{ category.name }}</h4>
                     <!-- </a> -->
-
-                    <a href="/categories/{{ category.id }}" class="text-white text-sm font-weight-semibold mb-0">
+                    
+                    <a [routerLink]="['/categories', category.id]" class="text-white text-sm font-weight-semibold mb-0">
                         See products&gt;
                     </a>
 

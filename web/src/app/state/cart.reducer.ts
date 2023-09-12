@@ -7,6 +7,7 @@ export const cartReducer = createReducer(
 
     on(CartActions.initCart, (state) => {
         if (state.items.length === 0) {
+            console.log('initCart action dispatched');
             return {
                 ...state,
                 items: [],
@@ -16,8 +17,11 @@ export const cartReducer = createReducer(
         return state;
     }),
 
-    on(CartActions.addItemToCart, (state, { item }) => ({
-        ...state,
-        items: [...state.items, item],
-    }))
+    on(CartActions.addItemToCart, (state, { item }) => {
+        console.log('addItemToCart action dispatched');
+        return {
+            ...state,
+            items: [...state.items, item],
+        };
+    })
 );
