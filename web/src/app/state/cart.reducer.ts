@@ -6,13 +6,10 @@ export const cartReducer = createReducer(
     initialCartState,
 
     on(CartActions.initCart, (state) => {
-        if (state.cart.items.length === 0) {
+        if (state.items.length === 0) {
             return {
                 ...state,
-                cart: {
-                    ...state.cart,
-                    items: [],
-                },
+                items: [],
             };
         }
 
@@ -21,9 +18,6 @@ export const cartReducer = createReducer(
 
     on(CartActions.addItemToCart, (state, { item }) => ({
         ...state,
-        cart: {
-            ...state.cart,
-            items: [...state.cart.items, item],
-        },
+        items: [...state.items, item],
     }))
 );

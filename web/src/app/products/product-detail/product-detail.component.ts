@@ -5,7 +5,7 @@ import { ProductServiceService as ProductService } from '../../services/product-
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../models/product.model'
 import { CartActions } from 'src/app/state/cart.actions';
-import { CartItem } from 'src/app/models/cart.model';
+import { CartItem } from 'src/app/models/cart-item.model';
 
 @Component({
   selector: 'app-product-detail',
@@ -22,7 +22,7 @@ export class ProductDetailComponent implements OnInit {
     color: ''
   };
 
-  cartItem: CartItem;
+  item: CartItem;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,7 +31,7 @@ export class ProductDetailComponent implements OnInit {
     private productService: ProductService
   ) {
 
-    this.cartItem = {
+    this.item = {
       id: 1,
       name: 'Sample Product',
       price: 10.99,

@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { Cart } from '../models/cart.model';
-import { CartItem } from '../models/cart.model';
+import { CartItem } from '../models/cart-item.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private cart: Cart = { items: [] };
+  private items: CartItem[] = [];
 
   addToCart(item: CartItem): Observable<void> {
     // TODO this is a dummy list for now. need to implement the call to the api
-    this.cart.items.push(item);
+    this.items.push(item);
 
     return of(undefined);
   }
