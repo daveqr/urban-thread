@@ -1,12 +1,10 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import LandingPageHome from './components/LandingPageHome/LandingPageHome';
+import "./App.css";
+import Landing from "./components/Landing/Landing";
 
 function App() {
   return (
     <div className="App">
-      <LandingPageHome />
+      <Landing />
     </div>
   );
 }

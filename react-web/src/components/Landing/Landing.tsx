@@ -1,11 +1,11 @@
 import React, { FC } from "react";
-import { LandingPageHomeWrapper } from "./LandingPageHome.styled";
-import "./LandingPageHome.css";
+import { LandingWrapper } from "./Landing.styled";
+import "./Landing.css";
 import "./index.b2c62b4c.css";
-interface LandingPageHomeProps {}
+interface LandingProps {}
 
-const LandingPageHome: FC<LandingPageHomeProps> = () => (
-  <LandingPageHomeWrapper data-testid="LandingPageHome">
+const Landing: FC<LandingProps> = () => (
+  <LandingWrapper data-testid="Landing">
     <>
       <main>
         <nav className="navbar navbar-expand-lg blur border-radius-sm top-0 z-index-3 shadow position-sticky py-3 start-0 end-0">
@@ -832,7 +832,7 @@ const LandingPageHome: FC<LandingPageHomeProps> = () => (
         </footer>
       </main>
     </>
-  </LandingPageHomeWrapper>
+  </LandingWrapper>
 );
 
-export default LandingPageHome;
+export default Landing;
