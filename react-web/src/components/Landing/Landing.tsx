@@ -2,11 +2,12 @@ import { FC, useEffect, useState } from "react";
 import { List } from "immutable";
 
 import { LandingWrapper } from "./Landing.styled";
-import Categories from "./categories/Categories";
+import CategoryList from "./categoryList/CategoryList";
 import Category from "../../models/Category";
 import "./Landing.css";
 import "./index.b2c62b4c.css";
 import { fetchCategories } from "../../services/categoriesService";
+import { Link } from "react-router-dom";
 
 const Landing: FC = () => {
   // TODO replace with redux
@@ -49,16 +50,25 @@ const Landing: FC = () => {
               </button>
               <div className="collapse navbar-collapse" id="navigation">
                 <ul className="navbar-nav ms-auto">
+                <li className="nav-item">
+                    <a
+                      className="nav-link text-dark font-weight-bold d-flex align-items-center me-2 "
+                      aria-current="page"
+                      href="https://www.creative-tim.com/learning-lab/astro/overview/astro-ecommerce"
+                    >
+                      Home
+                    </a>
+                  </li>                  
                   <li className="nav-item">
                     <a
                       className="nav-link text-dark font-weight-bold d-flex align-items-center me-2 "
                       aria-current="page"
                       href="https://demos.creative-tim.com/astro-ecommerce/"
                     >
-                      All Components
+                      <Link to={`/cart`}>Cart</Link>
                     </a>
                   </li>
-                  <li className="nav-item dropdown">
+                  {/* <li className="nav-item dropdown">
                     <a
                       className="nav-link text-dark dropdown-toggle font-weight-bold d-flex align-items-center me-2 "
                       aria-current="page"
@@ -97,17 +107,8 @@ const Landing: FC = () => {
                         </a>
                       </li>
                     </ul>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="nav-link text-dark font-weight-bold d-flex align-items-center me-2 "
-                      aria-current="page"
-                      href="https://www.creative-tim.com/learning-lab/astro/overview/astro-ecommerce"
-                    >
-                      Documentation
-                    </a>
-                  </li>
-                  <li className="nav-item">
+                  </li> */}
+                  {/* <li className="nav-item">
                     <a
                       className="nav-link text-dark font-weight-bold d-flex align-items-center me-2 "
                       aria-current="page"
@@ -132,7 +133,7 @@ const Landing: FC = () => {
                         aria-hidden="true"
                       ></i>
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>
@@ -165,7 +166,7 @@ const Landing: FC = () => {
             </div>
           </section>
 
-          <Categories categories={categories} />
+          <CategoryList categories={categories} />
 
           {/* TODO need to set the width of this */}
           <section className="mb-8">
