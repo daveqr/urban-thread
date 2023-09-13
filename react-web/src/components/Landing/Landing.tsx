@@ -2,6 +2,9 @@ import React, { FC } from "react";
 import { LandingWrapper } from "./Landing.styled";
 import "./Landing.css";
 import "./index.b2c62b4c.css";
+import "./categories/Categories"
+import Categories from "./categories/Categories";
+
 interface LandingProps {}
 
 const Landing: FC<LandingProps> = () => (
@@ -143,6 +146,9 @@ const Landing: FC<LandingProps> = () => (
           </div>
         </section>
 
+        <Categories />
+
+{/* 
         <div className="container my-5">
           <div className="d-block text-center mb-5">
             <h3>Shop by category</h3>
@@ -154,6 +160,7 @@ const Landing: FC<LandingProps> = () => (
             </a>
           </div>
           <div className="row mb-5">
+
             <div className="col-md-6 col-lg-3">
               <a href="https://demos.creative-tim.com/astro-ecommerce/landing/#"></a>
               <div className="card card-background align-items-start mb-4 mb-lg-0 undefined">
@@ -187,6 +194,7 @@ const Landing: FC<LandingProps> = () => (
                 </div>
               </div>
             </div>
+
             <div className="col-md-6 col-lg-3">
               <a href="https://demos.creative-tim.com/astro-ecommerce/landing/#"></a>
               <div className="card card-background align-items-start mb-4 mb-lg-0 undefined">
@@ -218,6 +226,7 @@ const Landing: FC<LandingProps> = () => (
                 </div>
               </div>
             </div>
+
             <div className="col-md-6 col-lg-3">
               <a href="https://demos.creative-tim.com/astro-ecommerce/landing/#"></a>
               <div className="card card-background align-items-start mb-4 mb-lg-0 undefined">
@@ -249,6 +258,7 @@ const Landing: FC<LandingProps> = () => (
                 </div>
               </div>
             </div>
+
             <div className="col-md-6 col-lg-3">
               <a href="https://demos.creative-tim.com/astro-ecommerce/landing/#"></a>
               <div className="card card-background align-items-start mb-4 mb-lg-0 undefined">
@@ -280,8 +290,10 @@ const Landing: FC<LandingProps> = () => (
                 </div>
               </div>
             </div>
+
+
           </div>
-        </div>
+        </div> */}
 
         {/* TODO need to set the width of this */}
         <section className="mb-8">
