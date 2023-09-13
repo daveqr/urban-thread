@@ -1,25 +1,22 @@
-# Apparel Ecommerce Demo
+# E-commerce Sample Project
 
-MEAN stack ecommerce demo.
+This project is a basic work-in-progress e-commerce example with two frontend implementations: one using Angular and the other using React. Both offer the same functionality. The backend, built with Express.js and MongoDB, serves as a REST API returning HAL+JSON, facilitating integration with various clients.
 
-This is an active work-in-progress and is not yet feature-complete. I believe it's better to iterate often to gather feedback.
+## Project Structure
 
-Run quick reference
-```BASH
-$ cd web
-$ yarn install
-$ ng serve &
+### Frontend
 
-$ cd backend
-$ yarn install
-$ yarn start &
-```
+* **Angular**: Located in the `/web` directory.
+* **React**: Located in the `/react-web` directory.
 
-Database quick reference
+### Backend
+- **Backend**: Located in the `/api` directory.
 
-```
-$ mongosh
-> use apparel
-> show collections
-> db.categories.find()
-```
+## Features
+
+This project includes key e-commerce features such as:
+
+- User authentication: register, login, and logout.
+- Product catalog: browse and search for products.
+- Shopping cart: add and remove items.
+- Checkout process: review and complete orders.
