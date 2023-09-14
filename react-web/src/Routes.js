@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import Home from './components/home/Home';
 import Categories from './components/categories.tsx/Categories';
-import Error from "./Error";
+import Error from "./components/Error";
 import Cart from "./components/cart/Cart";
 
 const router = createBrowserRouter([
