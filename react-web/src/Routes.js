@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import Home from './components/home/Home';
-import Categories from './components/categories.tsx/Categories';
+import Categories from "./components/categories/Categories";
 import Products from "./components/products/Products";
 import Error from "./components/Error";
 import Cart from "./components/cart/Cart";

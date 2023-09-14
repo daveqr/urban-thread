@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { List } from "immutable";
+import { Link } from "react-router-dom";
 
 import { HomeWrapper } from "./Home.styled";
 import CategoryList from "./categoryList/CategoryList";
@@ -7,10 +8,27 @@ import Category from "../../models/Category";
 import "./Home.css";
 import "./index.b2c62b4c.css";
 import { fetchCategories } from "../../services/categoriesService";
-import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Home: FC = () => {
   const [categories, setCategories] = useState<List<Category>>(List());
+
+  const { user, login, logout } = useAuth();
+
+  const handleLogin = () => {
+    // TODO replace this with a real call
+    login({
+      id: "1",
+      fname: "John",
+      lname: "Thompson",
+      email: "user@example.com",
+    });
+  };
+
+  const handleLogout = () => {
+    // Simulate a logout action
+    logout();
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -49,7 +67,7 @@ const Home: FC = () => {
               </button>
               <div className="collapse navbar-collapse" id="navigation">
                 <ul className="navbar-nav ms-auto">
-                <li className="nav-item">
+                  <li className="nav-item">
                     <a
                       className="nav-link text-dark font-weight-bold d-flex align-items-center me-2 "
                       aria-current="page"
@@ -57,7 +75,28 @@ const Home: FC = () => {
                     >
                       Home
                     </a>
-                  </li>                  
+                  </li>
+
+                  <li className="nav-item">
+                    {user ? (
+                      // If logged in, show logout
+                      <span
+                        className="nav-link text-dark font-weight-bold d-flex align-items-center me-2"
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </span>
+                    ) : (
+                      // If logged out, show login
+                      <span
+                        className="nav-link text-dark font-weight-bold d-flex align-items-center me-2"
+                        onClick={handleLogin}
+                      >
+                        Login
+                      </span>
+                    )}
+                  </li>
+
                   <li className="nav-item">
                     <a
                       className="nav-link text-dark font-weight-bold d-flex align-items-center me-2 "
