@@ -10,7 +10,6 @@ import { fetchCategories } from "../../services/categoriesService";
 import { Link } from "react-router-dom";
 
 const Landing: FC = () => {
-  // TODO replace with redux
   const [categories, setCategories] = useState<List<Category>>(List());
 
   useEffect(() => {

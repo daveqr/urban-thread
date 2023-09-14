@@ -3,6 +3,7 @@ import { List } from "immutable";
 
 import Category from "../../../models/Category";
 import { Link } from "react-router-dom";
+import { generateSlug } from "../../../services/utilitiesService";
 
 interface CategoryListProps {
   categories: List<Category>;
@@ -29,7 +30,9 @@ const CategoryList: FC<CategoryListProps> = ({ categories }) => {
                 <div
                   className="full-background"
                   style={{
-                    backgroundImage: `url(${require("../images/category1.jpg")})`,
+                    backgroundImage: `url(${require("../images/" +
+                      generateSlug(category.name) +
+                      ".jpg")})`,
                     backgroundSize: "cover",
                   }}
                 ></div>
@@ -45,13 +48,13 @@ const CategoryList: FC<CategoryListProps> = ({ categories }) => {
                       {category.name}
                     </h4>
                   </a>
-                  {/* <a
-                    href="https://demos.creative-tim.com/astro-ecommerce/landing/#"
+
+                  <Link
+                    to={`/categories/${category.id}`}
                     className="text-white text-sm font-weight-semibold mb-0"
                   >
                     See products &gt;
-                  </a> */}
-                  <Link to={`/categories/${category.id}`} className="text-white text-sm font-weight-semibold mb-0">See products &gt;</Link>
+                  </Link>
                 </div>
               </div>
             </div>
