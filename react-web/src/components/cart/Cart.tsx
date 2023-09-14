@@ -1,11 +1,12 @@
 import { FC } from "react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import { useCart } from "../../contexts/CartContext";
 import { CartItem } from "../../models/CartItem";
+import { RootState } from "../../state/types/types";
 
 const Cart: FC = () => {
-  const { cartItems, emptyCart } = useCart();
+  const cartItems = useSelector((state: RootState) => state.cart.cartItems);
 
   return (
     <div>
@@ -14,9 +15,7 @@ const Cart: FC = () => {
         <Link to={`/`}>Home</Link>
       </p>
 
-      <button onClick={emptyCart}>Empty Cart</button>
-
-      {cartItems.size === 0 ? (
+      {cartItems.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
         <ul>

@@ -1,8 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import { useCart } from "../../contexts/CartContext";
 import { CartItem } from "../../models/CartItem";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../state/reducers/cartReducer";
 
 const product = {
   id: "64f37a6038d4bb6edd24a07c",
@@ -34,24 +35,22 @@ const product = {
 
 const ProductDetail = () => {
   const { productId } = useParams();
-  const { addToCart } = useCart();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const tempProductId: string = productId ? productId : "";
   const cartItem: CartItem = new CartItem(tempProductId, "Vest", 12.23, 1);
 
-  const handleAddToCart = () => {
-    if (cartItem) {
-      addToCart(cartItem);
-      navigate("/cart");
-    }
+  const handleAddToCart = (item: CartItem) => {
+    dispatch(addToCart(item));
+    navigate("/cart");
   };
 
   return (
     <div>
       <h2>Product Detail</h2>
       <div>{product ? `Product ID: ${product.id}` : "Product not found"}</div>
-      <button onClick={handleAddToCart}>Add to Cart</button>
+      <button onClick={() => handleAddToCart(cartItem)}>Add to Cart</button>
     </div>
   );
 };
