@@ -7,7 +7,7 @@ import "./index.css";
 import App from "./components/app/App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "./contexts/AuthContext";
-import { store, persistor } from "./state/store/store";
+import { store, persistor } from "./state/store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { CartItem } from "../../models/CartItem";
-import { RootState } from "../../state/types/types";
+import { RootState } from "../../state/state";
 
 const Cart: FC = () => {
   const cartItems = useSelector((state: RootState) => state.cart.cartItems);
