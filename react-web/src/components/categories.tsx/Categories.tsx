@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 // TODO create a model
@@ -55,7 +55,7 @@ const Categories = () => {
               <div className="card card-product border mb-5 shadow-xs border-radius-lg">
                 {/* TODO get the local href */}
                 {/* <a href={product._links.href}> */}
-                <a href="http://example.com">
+                <a href="http://localhost:3030/products/64f37a6038d4bb6edd24a07c">
                   <div className="height-350">
                     <img
                       className="w-100 h-100 p-4 rounded-top"
