@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-// TODO create a model
+// TODO extract model
 interface Product {
   id: string;
   rel: string;
@@ -18,7 +18,7 @@ interface Data {
   };
 }
 
-const Categories = () => {
+const ProductList = () => {
   const { categoryId } = useParams();
   const [data, setData] = useState<Data | null>(null);
 
@@ -42,10 +42,7 @@ const Categories = () => {
 
   return (
     <div>
-      <h2>Category Details</h2>
-      <p>ID: {categoryId}</p>
-
-      <h3>Product Lists</h3>
+      <h3>Product List</h3>
       <p>Cards with full details</p>
       <div className="row">
         {data &&
@@ -55,7 +52,7 @@ const Categories = () => {
               <div className="card card-product border mb-5 shadow-xs border-radius-lg">
                 {/* TODO get the local href */}
                 {/* <a href={product._links.href}> */}
-                <a href="http://localhost:3030/products/64f37a6038d4bb6edd24a07c">
+                <Link to={`/products/3`}>
                   <div className="height-350">
                     <img
                       className="w-100 h-100 p-4 rounded-top"
@@ -70,7 +67,7 @@ const Categories = () => {
                     {/* TODO get the price on the product */}
                     <h4 className="mb-0 text-lg mt-1 mb-3">${product.price}</h4>
                   </div>
-                </a>
+                </Link>
               </div>
             </div>
           ))}
@@ -79,4 +76,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default ProductList;
