@@ -8,8 +8,8 @@ interface Product {
   name: string;
   description: string;
   _links: { href: string };
-  imageSrc: string; // Add the image source property
-  price: number; // Add the price property
+  imageSrc: string;
+  price: number;
 }
 
 interface Data {
@@ -26,7 +26,9 @@ const Categories = () => {
     // TODO extract this to a service
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/store/categories/${categoryId}`);
+        const response = await fetch(
+          `http://localhost:3000/api/store/categories/${categoryId}`
+        );
         const jsonData = await response.json();
         setData(jsonData);
         console.log(jsonData);
