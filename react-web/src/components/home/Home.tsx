@@ -1,15 +1,15 @@
 import { FC, useEffect, useState } from "react";
 import { List } from "immutable";
 
-import { LandingWrapper } from "./Landing.styled";
+import { HomeWrapper } from "./Home.styled";
 import CategoryList from "./categoryList/CategoryList";
 import Category from "../../models/Category";
-import "./Landing.css";
+import "./Home.css";
 import "./index.b2c62b4c.css";
 import { fetchCategories } from "../../services/categoriesService";
 import { Link } from "react-router-dom";
 
-const Landing: FC = () => {
+const Home: FC = () => {
   const [categories, setCategories] = useState<List<Category>>(List());
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const Landing: FC = () => {
   }, []);
 
   return (
-    <LandingWrapper data-testid="Landing">
+    <HomeWrapper data-testid="Home">
       <>
         <main>
           <nav className="navbar navbar-expand-lg blur border-radius-sm top-0 z-index-3 shadow position-sticky py-3 start-0 end-0">
@@ -716,8 +716,8 @@ const Landing: FC = () => {
           </footer>
         </main>
       </>
-    </LandingWrapper>
+    </HomeWrapper>
   );
 };
 
-export default Landing;
+export default Home;

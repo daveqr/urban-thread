@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import Landing from './components/landing/Landing';
+import Home from './components/home/Home';
 import Categories from './components/categories.tsx/Categories';
 import Error from "./Error";
 import Cart from "./components/cart/Cart";
@@ -8,7 +8,7 @@ import Cart from "./components/cart/Cart";
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Landing />,
+        element: <Home />,
         errorElement: <Error />,
     },
     {
