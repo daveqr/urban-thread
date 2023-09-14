@@ -98,13 +98,21 @@ app.use(
 );
 
 // Allow cross-origin requests
-const corsOptions = {
-  origin: process.env.CORS_ORIGIN,
+const corsOptionsAngular = {
+  origin: process.env.CORS_ORIGIN_ANGULAR,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   optionsSuccessStatus: 204,
   credentials: true,
 };
-app.use(cors(corsOptions));
+app.use(cors(corsOptionsAngular));
+
+const corsOptionsReact = {
+  origin: process.env.CORS_ORIGIN_REACT,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  optionsSuccessStatus: 204,
+  credentials: true,
+};
+app.use(cors(corsOptionsReact));
 
 // Routes
 app.use('/', routes);
