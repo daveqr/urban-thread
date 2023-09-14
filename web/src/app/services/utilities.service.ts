@@ -19,6 +19,7 @@ export class UtilitiesService {
    * ``` 
    */
   createSlug(input: string): string {
+    // TODO replace this with sluggify
     return input
       .toLowerCase()
       .replace(/ /g, '_')
