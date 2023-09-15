@@ -6,7 +6,8 @@ import { CartItem } from "../../models/CartItem";
 import { RootState } from "../../state/state";
 
 const Cart: FC = () => {
-  const cartItems = useSelector((state: RootState) => state.cart.cartItems);
+  const cartItemsObj = useSelector((state: RootState) => state.cart.cartItems);
+  const cartItems = cartItemsObj.map((item) => CartItem.of(item));
 
   return (
     <div>
@@ -21,7 +22,8 @@ const Cart: FC = () => {
         <ul>
           {cartItems.map((item: CartItem) => (
             <li key={item.id}>
-              {item.name} - Quantity: {item.quantity} - Price: {item.price}
+              {item.name} - Quantity: {item.quantity} - Price: {item.price} -
+              Total: {item.getTotalCost()}
             </li>
           ))}
         </ul>

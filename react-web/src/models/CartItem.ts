@@ -10,7 +10,17 @@ export class CartItem {
     return this.price * this.quantity;
   }
 
-  copy(item: CartItem): CartItem {
+  static copy(item: CartItem): CartItem {
     return new CartItem(item.id, item.name, item.price, item.quantity);
+  }
+
+  static of(itemObject: {
+    id: string;
+    name: string;
+    price: number;
+    quantity?: number;
+  }): CartItem {
+    const { id, name, price, quantity = 1 } = itemObject;
+    return new CartItem(id, name, price, quantity);
   }
 }

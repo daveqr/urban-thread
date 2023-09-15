@@ -24,6 +24,7 @@ const ProductList = () => {
 
   useEffect(() => {
     // TODO extract this to a service
+    // use RTK Query data fetching API
     const fetchData = async () => {
       try {
         const response = await fetch(

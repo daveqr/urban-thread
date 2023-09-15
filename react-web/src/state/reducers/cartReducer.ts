@@ -16,7 +16,21 @@ export const cartSlice = createSlice({
         builder
             .addCase(addToCart, (state, action) => {
                 const cartItem = action.payload as CartItem;
-                state.cartItems = [...state.cartItems, cartItem];
+                const existingItemIndex = state.cartItems.findIndex((item) => item.id === cartItem.id);
+
+                if (existingItemIndex !== -1) {
+                    const existingItem = state.cartItems[existingItemIndex];
+                    const updatedItem = new CartItem(
+                        existingItem.id,
+                        existingItem.name,
+                        cartItem.price,
+                        existingItem.quantity + 1
+                    );
+
+                    state.cartItems[existingItemIndex] = updatedItem;
+                } else {
+                    state.cartItems.push(cartItem);
+                }
             })
             .addCase(removeFromCart, (state, action) => {
                 const id = action.payload;
