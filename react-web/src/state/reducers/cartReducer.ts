@@ -48,10 +48,7 @@ export const cartSlice = createSlice({
                 const existingItemIndex = state.cartItems.findIndex((item) => item.id === cartItem.id);
 
                 if (existingItemIndex !== -1) {
-                    const existingItem = state.cartItems[existingItemIndex];
-                    const updatedItem = adjustQuantity(existingItem, 1)
-
-                    state.cartItems[existingItemIndex] = updatedItem;
+                    state.cartItems = handleCartAdjustment(state.cartItems, cartItem.id, 1);
                 } else {
                     state.cartItems.push(cartItem);
                 }
