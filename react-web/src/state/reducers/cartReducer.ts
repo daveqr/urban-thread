@@ -3,9 +3,38 @@ import { CartItem } from '../../models/CartItem';
 import { createAction } from '@reduxjs/toolkit';
 
 // Actions
-export const addToCart = createAction<CartItem>('ADD_TO_CART');
-export const removeFromCart = createAction<string>('REMOVE_FROM_CART');
-export const clearCart = createAction('CLEAR_CART');
+export const addToCartAction = createAction<CartItem>('ADD_TO_CART');
+export const removeFromCartAction = createAction<string>('REMOVE_FROM_CART');
+export const incrementCartItemAction = createAction<string>('INCREMENT_CART_ITEM');
+export const decrementCartItemAction = createAction<string>('DECREMENT_CART_ITEM');
+export const clearCartAction = createAction('CLEAR_CART');
+
+const adjustQuantity = (cartItem: CartItem, amount: number) => {
+    return new CartItem(
+        cartItem.id,
+        cartItem.name,
+        cartItem.price,
+        cartItem.quantity + amount
+    );
+};
+
+const handleCartAdjustment = (cartItems: ReadonlyArray<CartItem>, cartItemId: string, adjustmentAmount: number) => {
+    const existingItemIndex = cartItems.findIndex((item) => item.id === cartItemId);
+
+    let updatedCartItems: CartItem[] = [...cartItems]
+    if (existingItemIndex !== -1) {
+        const adjustedCartItems = cartItems.map((item, index) => {
+            if (index === existingItemIndex) {
+                return adjustQuantity(item, adjustmentAmount);
+            }
+            return item;
+        });
+
+        updatedCartItems = adjustedCartItems.filter((item) => item.quantity > 0);
+    }
+
+    return updatedCartItems;
+};
 
 // Slice
 export const cartSlice = createSlice({
@@ -14,7 +43,7 @@ export const cartSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(addToCart, (state, action) => {
+            .addCase(addToCartAction, (state, action) => {
                 const cartItem = action.payload as CartItem;
                 const existingItemIndex = state.cartItems.findIndex((item) => item.id === cartItem.id);
 
@@ -32,11 +61,17 @@ export const cartSlice = createSlice({
                     state.cartItems.push(cartItem);
                 }
             })
-            .addCase(removeFromCart, (state, action) => {
+            .addCase(incrementCartItemAction, (state, action) => {
+                state.cartItems = handleCartAdjustment(state.cartItems, action.payload, 1);
+            })
+            .addCase(decrementCartItemAction, (state, action) => {
+                state.cartItems = handleCartAdjustment(state.cartItems, action.payload, -1);
+            })
+            .addCase(removeFromCartAction, (state, action) => {
                 const id = action.payload;
                 state.cartItems = state.cartItems.filter((item) => item.id !== id);
             })
-            .addCase(clearCart, (state, _action) => {
+            .addCase(clearCartAction, (state, _action) => {
                 state.cartItems = [];
             });
     },

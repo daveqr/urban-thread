@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { CartItem } from "../../models/CartItem";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../state/reducers/cartReducer";
+import { addToCartAction } from "../../state/reducers/cartReducer";
 
 const product = {
   id: "64f37a6038d4bb6edd24a07c",
@@ -42,7 +42,7 @@ const ProductDetail = () => {
   const cartItem: CartItem = new CartItem(tempProductId, "Vest", 12.23, 1);
 
   const handleAddToCart = (item: CartItem) => {
-    dispatch(addToCart(item));
+    dispatch(addToCartAction(item));
     navigate("/cart");
   };
 

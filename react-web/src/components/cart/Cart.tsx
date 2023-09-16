@@ -1,13 +1,27 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { CartItem } from "../../models/CartItem";
 import { RootState } from "../../state/state";
+import {
+  decrementCartItemAction,
+  incrementCartItemAction,
+} from "../../state/reducers/cartReducer";
 
 const Cart: FC = () => {
+  const dispatch = useDispatch();
+
   const cartItemsObj = useSelector((state: RootState) => state.cart.cartItems);
-  const cartItems = cartItemsObj.map((item) => CartItem.of(item));
+  const cartItems = cartItemsObj.map((item) => CartItem.copy(item));
+
+  const incrementCartItemQuantity = (id: string) => {
+    dispatch(incrementCartItemAction(id));
+  };
+
+  const decrementCartItemQuantity = (id: string) => {
+    dispatch(decrementCartItemAction(id));
+  };
 
   return (
     <div>
@@ -24,6 +38,12 @@ const Cart: FC = () => {
             <li key={item.id}>
               {item.name} - Quantity: {item.quantity} - Price: {item.price} -
               Total: {item.getTotalCost()}
+              <button onClick={() => decrementCartItemQuantity(item.id)}>
+                -
+              </button>
+              <button onClick={() => incrementCartItemQuantity(item.id)}>
+                +
+              </button>
             </li>
           ))}
         </ul>

@@ -11,6 +11,8 @@
     "@types/node": "^16.18.50",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
+    "add": "^2.0.6",
+    "dinero.js": "^2.0.0-alpha.14",
     "immutable": "^5.0.0-beta.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -23,7 +25,8 @@
     "slugify": "^1.6.6",
     "styled-components": "^6.0.7",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yarn": "^1.22.19"
   },
   "scripts": {
     "start": "PORT=3030 react-scripts start",
