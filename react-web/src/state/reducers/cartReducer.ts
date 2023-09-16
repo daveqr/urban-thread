@@ -49,12 +49,7 @@ export const cartSlice = createSlice({
 
                 if (existingItemIndex !== -1) {
                     const existingItem = state.cartItems[existingItemIndex];
-                    const updatedItem = new CartItem(
-                        existingItem.id,
-                        existingItem.name,
-                        cartItem.price,
-                        existingItem.quantity + 1
-                    );
+                    const updatedItem = adjustQuantity(existingItem, 1)
 
                     state.cartItems[existingItemIndex] = updatedItem;
                 } else {
