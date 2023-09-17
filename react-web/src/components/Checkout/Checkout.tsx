@@ -8,7 +8,7 @@ import {
   calculateCartTotal,
   calculateTotalCostForItem,
 } from "../../services/cartCalculator";
-import Dinero from "dinero.js";
+import Money from "dinero.js";
 
 const Checkout: FC = () => {
   const cartItems = useSelector(selectCartItems$);
@@ -142,7 +142,7 @@ const Checkout: FC = () => {
         <div className="col-12 col-lg-6 p-3 p-md-5 bg-dark bg-gradient rounded-end">
           <p className="text-white opacity-6 mb-0 text-end">Amount</p>
           <h3 className="text-white mb-4 text-end">
-            {Dinero({
+            {Money({
               amount: cartTotal,
               currency: "USD",
             }).toFormat()}
@@ -163,7 +163,7 @@ const Checkout: FC = () => {
               </div>
               <div className="w-10 text-end">
                 <p className="text-white mb-0 ">
-                  {Dinero({
+                  {Money({
                     amount: calculateTotalCostForItem(item),
                     currency: "USD",
                   }).toFormat()}
@@ -177,7 +177,7 @@ const Checkout: FC = () => {
               <div className="d-flex justify-content-between">
                 <p className="opacity-8 text-white">Subtotal</p>
                 <p className="fw-bold opacity-8 text-white">
-                  {Dinero({
+                  {Money({
                     amount: cartSubtotal,
                     currency: "USD",
                   }).toFormat()}
@@ -231,7 +231,7 @@ const Checkout: FC = () => {
               <div className="d-flex justify-content-between">
                 <h5 className=" text-white">Total</h5>
                 <h5 className=" text-white">
-                  {Dinero({
+                  {Money({
                     amount: cartSubtotal,
                     currency: "USD",
                   }).toFormat()}

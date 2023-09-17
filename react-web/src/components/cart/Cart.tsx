@@ -13,6 +13,7 @@ import {
 import { calculateCartSubtotal } from "../../services/cartCalculator";
 import { calculateTotalCostForItem } from "../../services/cartCalculator";
 import { calculateCartTotal } from "../../services/cartCalculator";
+import Money from "dinero.js";
 
 const Cart: FC = () => {
   const dispatch = useDispatch();
@@ -76,7 +77,10 @@ const Cart: FC = () => {
                       <p className="mb-0">Medium</p>
                     </div>
                     <h6 className="mb-1 mt-5">
-                      ${calculateTotalCostForItem(item)}
+                      {Money({
+                        amount: calculateTotalCostForItem(item),
+                        currency: "USD",
+                      }).toFormat()}
                     </h6>
                   </div>
                   <div className="w-40 w-md-5 pt-4 ms-auto me-4">
@@ -123,7 +127,10 @@ const Cart: FC = () => {
                     <div className="d-flex justify-content-between">
                       <p className="opacity-8">Subtotal</p>
                       <p className="fw-bold opacity-8">
-                       ${cartSubtotal}
+                        {Money({
+                          amount: cartSubtotal,
+                          currency: "USD",
+                        }).toFormat()}
                       </p>
                     </div>
                   </li>
@@ -172,7 +179,12 @@ const Cart: FC = () => {
                   <li className="mt-4">
                     <div className="d-flex justify-content-between">
                       <h5 className="">Total</h5>
-                      <h5 className="">$${cartTotal.toFixed(2)}</h5>
+                      <h5 className="">
+                        {Money({
+                          amount: cartTotal,
+                          currency: "USD",
+                        }).toFormat()}
+                      </h5>
                     </div>
                   </li>
                 </ul>
