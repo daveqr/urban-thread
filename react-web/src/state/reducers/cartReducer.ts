@@ -1,8 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { CartItem } from '../../models/CartItem';
 import { createAction } from '@reduxjs/toolkit';
+import { createSelector } from '@reduxjs/toolkit';
 
-// Actions
+import { CartItem } from '../../models/CartItem';
+import { RootState } from '../state';
+
+
+/* Actions */
 export const addToCartAction = createAction<CartItem>('ADD_TO_CART');
 export const removeFromCartAction = createAction<string>('REMOVE_FROM_CART');
 export const incrementCartItemAction = createAction<string>('INCREMENT_CART_ITEM');
@@ -23,7 +27,7 @@ const handleCartAdjustment = (cartItems: ReadonlyArray<CartItem>, cartItemId: st
 
     let updatedCartItems: CartItem[] = [...cartItems]
     const cartItemExists = existingItemIndex !== -1;
-    
+
     if (cartItemExists) {
         const adjustedCartItems = cartItems.map((item, index) => {
             if (index === existingItemIndex) {
@@ -38,7 +42,7 @@ const handleCartAdjustment = (cartItems: ReadonlyArray<CartItem>, cartItemId: st
     return updatedCartItems;
 };
 
-// Slice
+/* Slice (Reducers) */
 export const cartSlice = createSlice({
     name: 'cart',
     initialState: { cartItems: [] as ReadonlyArray<CartItem> },
@@ -72,3 +76,11 @@ export const cartSlice = createSlice({
 });
 
 export default cartSlice.reducer;
+
+
+/* Selectors */
+
+export const selectCartItemsWithCopy$ = createSelector(
+    (state: RootState) => state.cart.cartItems,
+    (cartItems) => cartItems.map((item) => item)
+);
