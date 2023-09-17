@@ -1,6 +1,10 @@
 import { List } from "immutable";
 
 import Category from "../models/Category";
+import { Product } from "../models/Product";
+
+const BASE_CATEGORIES_URL = "http://localhost:3000/api/store/categories";
+const BASE_PRODUCTS_URL = "http://localhost:3000/api/store/products";
 
 const tempCats: Category[] = [
     {
@@ -38,4 +42,32 @@ export const fetchCategories = (): Promise<List<Category>> => {
     return new Promise<List<Category>>((resolve) => {
         resolve(List(tempCats));
     });
+};
+
+// TODO need to make this return a Category model
+export const fetchCategory = async (categoryId: string) => {
+    try {
+        const response = await fetch(`${BASE_CATEGORIES_URL}/${categoryId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP Error! Status: ${response.status}`);
+        }
+        const jsonData = await response.json();
+        return jsonData;
+    } catch (error) {
+        throw new Error(`Error fetching data: ${error}`);
+    }
+};
+
+export const fetchProductById = async (productId: string) => {
+    try {
+        const response = await fetch(`${BASE_PRODUCTS_URL}/${productId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP Error! Status: ${response.status}`);
+        }
+        const productData = await response.json();
+        // TODO casting this now but need to make it a local Product
+        return productData as Product;
+    } catch (error) {
+        throw new Error(`Error fetching product data: ${error}`);
+    }
 };

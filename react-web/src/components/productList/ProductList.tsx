@@ -1,16 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-// TODO extract model
-interface Product {
-  id: string;
-  rel: string;
-  name: string;
-  description: string;
-  _links: { href: string };
-  imageSrc: string;
-  price: number;
-}
+import { fetchCategory } from "../../services/apiService";
+import { Product } from "../../models/Product";
 
 interface Data {
   _embedded: {
@@ -20,17 +13,18 @@ interface Data {
 
 const ProductList = () => {
   const { categoryId } = useParams();
+  const navigate = useNavigate();
   const [data, setData] = useState<Data | null>(null);
 
   useEffect(() => {
-    // TODO extract this to a service
-    // use RTK Query data fetching API
+    if (!categoryId) {
+      navigate("/error");
+      return;
+    }
+
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/api/store/categories/${categoryId}`
-        );
-        const jsonData = await response.json();
+        const jsonData = await fetchCategory(categoryId);
         setData(jsonData);
         console.log(jsonData);
       } catch (error) {
@@ -51,9 +45,7 @@ const ProductList = () => {
           data._embedded.products.map((product) => (
             <div className="col-md-6 col-lg-3" key={product.id}>
               <div className="card card-product border mb-5 shadow-xs border-radius-lg">
-                {/* TODO get the local href */}
-                {/* <a href={product._links.href}> */}
-                <Link to={`/products/3`}>
+                <Link to={`/products/${product.id}`}>
                   <div className="height-350">
                     <img
                       className="w-100 h-100 p-4 rounded-top"
@@ -65,7 +57,6 @@ const ProductList = () => {
                     <h6 className="text-md mb-1 text-body">{product.rel}</h6>
                     <h4 className="font-weight-bold">{product.name}</h4>
                     <p className="text-body">{product.description}</p>
-                    {/* TODO get the price on the product */}
                     <h4 className="mb-0 text-lg mt-1 mb-3">${product.price}</h4>
                   </div>
                 </Link>

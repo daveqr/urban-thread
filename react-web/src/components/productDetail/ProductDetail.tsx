@@ -1,56 +1,60 @@
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
-import { CartItem } from "../../models/CartItem";
 import { useDispatch } from "react-redux";
-import { addToCartAction } from "../../state/reducers/cartReducer";
+import { useEffect, useState } from "react";
 
-const product = {
-  id: "64f37a6038d4bb6edd24a07c",
-  name: "Soap",
-  description:
-    "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
-  price: 789,
-  color: "pink",
-  _links: {
-    self: {
-      href: "/api/store/products/64f37a6038d4bb6edd24a07c",
-    },
-  },
-  _embedded: {
-    categories: [
-      {
-        name: "Showroom",
-        _links: {
-          self: {
-            href: "/categories/64f37a6038d4bb6edd24a08a",
-          },
-        },
-      },
-    ],
-  },
-  rel: "product",
-  href: "/api/store/products/64f37a6038d4bb6edd24a07c",
-};
+import { addToCartAction } from "../../state/reducers/cartReducer";
+import { fetchProductById } from "../../services/apiService";
+import { Product } from "../../models/Product";
+import { CartItem } from "../../models/CartItem";
 
 const ProductDetail = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const tempProductId: string = productId ? productId : "";
-  const cartItem: CartItem = new CartItem(tempProductId, "Vest", 12.23, 1);
+  const [product, setProduct] = useState<Product | null>(null);
 
-  const handleAddToCart = (item: CartItem) => {
-    dispatch(addToCartAction(item));
+  useEffect(() => {
+    if (productId) {
+      fetchProductData(productId);
+    }
+  }, [productId]);
+
+  const fetchProductData = async (productId: string) => {
+    try {
+      const productData = await fetchProductById(productId);
+      setProduct(productData);
+    } catch (error) {
+      console.error("Error fetching product data:", error);
+    }
+  };
+
+  const handleAddToCart = (product: Product) => {
+    const cartItem: CartItem = new CartItem(
+      product.id,
+      product.name,
+      product.price
+    );
+
+    dispatch(addToCartAction(cartItem));
     navigate("/cart");
   };
 
   return (
     <div>
       <h2>Product Detail</h2>
-      <div>{product ? `Product ID: ${product.id}` : "Product not found"}</div>
-      <button onClick={() => handleAddToCart(cartItem)}>Add to Cart</button>
+      {product ? (
+        <div>
+          <div>Product ID: {product.id}</div>
+          <div>Name: {product.name}</div>
+          <div>Description: {product.description}</div>
+          <div>Price: ${product.price}</div>
+          <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
+        </div>
+      ) : (
+        <div>Product not found</div>
+      )}
     </div>
   );
 };

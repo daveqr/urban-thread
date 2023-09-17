@@ -22,7 +22,9 @@ const handleCartAdjustment = (cartItems: ReadonlyArray<CartItem>, cartItemId: st
     const existingItemIndex = cartItems.findIndex((item) => item.id === cartItemId);
 
     let updatedCartItems: CartItem[] = [...cartItems]
-    if (existingItemIndex !== -1) {
+    const cartItemExists = existingItemIndex !== -1;
+    
+    if (cartItemExists) {
         const adjustedCartItems = cartItems.map((item, index) => {
             if (index === existingItemIndex) {
                 return adjustQuantity(item, adjustmentAmount);

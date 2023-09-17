@@ -7,7 +7,7 @@ import CategoryList from "./categoryList/CategoryList";
 import Category from "../../models/Category";
 import "./Home.css";
 import "./index.b2c62b4c.css";
-import { fetchCategories } from "../../services/categoriesService";
+import { fetchCategories } from "../../services/apiService";
 import { useAuth } from "../../contexts/AuthContext";
 
 const Home: FC = () => {
