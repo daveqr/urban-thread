@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
-import { addToCartAction } from "../../state/reducers/cartReducer";
+import { addToCartAction } from "../../state/store/cartStore";
 import { fetchProductById } from "../../services/apiService";
 import { Product } from "../../models/Product";
 import { CartItem } from "../../models/CartItem";

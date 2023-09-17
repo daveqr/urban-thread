@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 
-import cartReducer from './cartReducer';
-import persistConfig from '../persistConfig';
+import cartReducer from './store/cartStore';
+import persistConfig from './persistConfig';
 
 const rootReducer = combineReducers({
   cart: cartReducer,

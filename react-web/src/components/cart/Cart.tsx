@@ -7,7 +7,7 @@ import {
   incrementCartItemAction,
   removeFromCartAction,
   selectCartItemsWithCopy$,
-} from "../../state/reducers/cartReducer";
+} from "../../state/store/cartStore";
 import { calculateCartSubtotal } from "../../services/cartCalculator";
 import { calculateTotalCostForItem } from "../../services/cartCalculator";
 import { calculateCartTotal } from "../../services/cartCalculator";
