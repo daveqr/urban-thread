@@ -1,6 +1,7 @@
 import React from "react";
 import { FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { CartItem } from "../../models/CartItem";
 import {
@@ -15,6 +16,7 @@ import { calculateCartTotal } from "../../services/cartCalculator";
 
 const Cart: FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems$);
   const cartSubtotal = calculateCartSubtotal(cartItems);
   const cartTotal = calculateCartTotal(cartItems);
@@ -29,6 +31,14 @@ const Cart: FC = () => {
 
   const removeFromCart = (id: string) => {
     dispatch(removeFromCartAction(id));
+  };
+
+  const goHome = () => {
+    navigate("/");
+  };
+
+  const goToCheckout = () => {
+    navigate("/checkout");
   };
 
   return (
@@ -113,7 +123,7 @@ const Cart: FC = () => {
                     <div className="d-flex justify-content-between">
                       <p className="opacity-8">Subtotal</p>
                       <p className="fw-bold opacity-8">
-                        ${cartSubtotal.toFixed(2)}
+                       ${cartSubtotal}
                       </p>
                     </div>
                   </li>
@@ -169,10 +179,16 @@ const Cart: FC = () => {
               </div>
             </div>
             <div className="d-block d-md-flex">
-              <button className="btn btn-white btn-lg w-100 mt-4 me-4">
-                Countinue Shopping
+              <button
+                onClick={() => goHome()}
+                className="btn btn-white btn-lg w-100 mt-4 me-4"
+              >
+                Continue Shopping
               </button>
-              <button className="btn btn-dark btn-lg w-100 mt-md-4">
+              <button
+                onClick={() => goToCheckout()}
+                className="btn btn-dark btn-lg w-100 mt-md-4"
+              >
                 Checkout
               </button>
             </div>

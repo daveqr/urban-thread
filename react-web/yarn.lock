@@ -1307,25 +1307,6 @@
   resolved "https://registry.npmjs.org/@csstools/selector-specificity/-/selector-specificity-2.2.0.tgz#2cbcf822bf3764c9658c4d2e568bd0c0cb748016"
   integrity sha512-+OJ9konv95ClSTOJCmMZqpd5+YGsB2S+x6w3E1oaM8UuR5j8nTNHYSz8c9BEPGDOCMQYIEEGlVPj/VY64iTbGw==
 
-"@dinero.js/calculator-number@2.0.0-alpha.14":
-  version "2.0.0-alpha.14"
-  resolved "https://registry.npmjs.org/@dinero.js/calculator-number/-/calculator-number-2.0.0-alpha.14.tgz#37d28db2e18422f2b3c4d404715e13b4e4692254"
-  integrity sha512-Vmlu6eXNtkFU2cqlrpqfq8KQP9onALf8Es2d34liVa3k3RHjuhizgFUU3V3/tsjOu5WekZq+gYPOr58XVTkB7A==
-  dependencies:
-    "@dinero.js/core" "2.0.0-alpha.14"
-
-"@dinero.js/core@2.0.0-alpha.14":
-  version "2.0.0-alpha.14"
-  resolved "https://registry.npmjs.org/@dinero.js/core/-/core-2.0.0-alpha.14.tgz#2f8ba4da9b3b1af3c4a1477eb190e36b0f94b24d"
-  integrity sha512-CtKELJ783joUbaU62fRM2xDXb4XYSy0MgOuIkPWgVOS3SYKKb6+2Ec9bNlvrW8lsPROz/RsvCuYVTphrZ79twg==
-  dependencies:
-    "@dinero.js/currencies" "2.0.0-alpha.14"
-
-"@dinero.js/currencies@2.0.0-alpha.14":
-  version "2.0.0-alpha.14"
-  resolved "https://registry.npmjs.org/@dinero.js/currencies/-/currencies-2.0.0-alpha.14.tgz#140cfa036520577a6d0b5b303136ffbdc05b2ca2"
-  integrity sha512-Ck5ZLjRI7Pl7Y4VkeOst4WEwiN5vZezv8GHcXWsVLUfTNsmkV37VeLYDRAuTUP4akEJyIry+1o1qHYNtLq3eNw==
-
 "@emotion/is-prop-valid@^1.2.1":
   version "1.2.1"
   resolved "https://registry.npmjs.org/@emotion/is-prop-valid/-/is-prop-valid-1.2.1.tgz#23116cf1ed18bfeac910ec6436561ecb1a3885cc"
@@ -2099,6 +2080,11 @@
   integrity sha512-P63Zd/JUGq+PdrM1lv0Wv5SBYeA2+CORvbrXbngriYY0jzLUWfQMQQxOhjONEz/wlHOAxOdY7CY65rgQdTjq2w==
   dependencies:
     "@types/node" "*"
+
+"@types/dinero.js@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.npmjs.org/@types/dinero.js/-/dinero.js-1.9.0.tgz#e11356764339e3d361d38bd54910282b106dc321"
+  integrity sha512-H2XdE6N/A2wJ/TJhGqeHDMUhCaey2R/Lcq9ichGBncKsFGvqrroXZWPNdDkCcgQOBPoCD4n9QuSBUC/35wuJiw==
 
 "@types/eslint-scope@^3.7.3":
   version "3.7.4"
@@ -3970,14 +3956,10 @@ diff-sequences@^29.6.3:
   resolved "https://registry.npmjs.org/diff-sequences/-/diff-sequences-29.6.3.tgz#4deaf894d11407c51efc8418012f9e70b84ea921"
   integrity sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==
 
-dinero.js@^2.0.0-alpha.14:
-  version "2.0.0-alpha.14"
-  resolved "https://registry.npmjs.org/dinero.js/-/dinero.js-2.0.0-alpha.14.tgz#ba1e4a8a4974d10c96dabff7e37c4e68a18b33c2"
-  integrity sha512-dkURHd9P+2TjuSTMUAnvrB7SsL4GbBYG/WPtIBV8M+L7Xf80x84sJcUUTxIS33S4AlkIbVANlaL86w2g5zdrmg==
-  dependencies:
-    "@dinero.js/calculator-number" "2.0.0-alpha.14"
-    "@dinero.js/core" "2.0.0-alpha.14"
-    "@dinero.js/currencies" "2.0.0-alpha.14"
+dinero.js@^1.9.1:
+  version "1.9.1"
+  resolved "https://registry.npmjs.org/dinero.js/-/dinero.js-1.9.1.tgz#64b10ce7277a07805dac9c8cd6500e9b7d0aee96"
+  integrity sha512-1HXiF2vv3ZeRQ23yr+9lFxj/PbZqutuYWJnE0qfCB9xYBPnuaJ8lXtli1cJM0TvUXW1JTOaePldmqN5JVNxKSA==
 
 dir-glob@^3.0.1:
   version "3.0.1"

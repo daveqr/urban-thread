@@ -1,11 +1,19 @@
 import { CartItem } from "../models/CartItem";
 
+
 export const calculateTotalCostForItem = (item: CartItem) => {
-    return item.price * item.quantity;
+    const amount = item.price * item.quantity;
+
+    return parseFloat(amount.toFixed(2)) * 100;
 };
 
 export const calculateCartSubtotal = (cartItems: CartItem[]) => {
-    return cartItems.reduce((total, item) => total + calculateTotalCostForItem(item), 0);
+    const amount = cartItems.reduce(
+        (total, item) => total + calculateTotalCostForItem(item),
+        0
+    );
+
+    return amount;
 };
 
 // TODO add tax and shipping
