@@ -80,7 +80,4 @@ export default cartSlice.reducer;
 
 /* Selectors */
 
-export const selectCartItemsWithCopy$ = createSelector(
-    (state: RootState) => state.cart.cartItems,
-    (cartItems) => cartItems.map((item) => item)
-);
+export const selectCartItems$ = (state: RootState) => state.cart.cartItems.map((item) => item);

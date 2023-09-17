@@ -1,3 +1,4 @@
+import React from "react";
 import { FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -6,16 +7,15 @@ import {
   decrementCartItemAction,
   incrementCartItemAction,
   removeFromCartAction,
-  selectCartItemsWithCopy$,
+  selectCartItems$,
 } from "../../state/store/cartStore";
 import { calculateCartSubtotal } from "../../services/cartCalculator";
 import { calculateTotalCostForItem } from "../../services/cartCalculator";
 import { calculateCartTotal } from "../../services/cartCalculator";
-import React from "react";
 
 const Cart: FC = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector(selectCartItemsWithCopy$);
+  const cartItems = useSelector(selectCartItems$);
   const cartSubtotal = calculateCartSubtotal(cartItems);
   const cartTotal = calculateCartTotal(cartItems);
 
