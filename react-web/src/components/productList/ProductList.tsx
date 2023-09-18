@@ -1,48 +1,29 @@
-import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import { fetchCategory } from "../../services/apiService";
 import { Product } from "../../models/Product";
-
-interface Data {
-  _embedded: {
-    products: Product[];
-  };
-}
+import { useGetCategoryQuery } from "../../apiSlice";
 
 const ProductList = () => {
   const { categoryId } = useParams();
   const navigate = useNavigate();
-  const [data, setData] = useState<Data | null>(null);
 
-  useEffect(() => {
-    if (!categoryId) {
-      navigate("/error");
-      return;
-    }
+  let content;
+  const { data: category, isError } = useGetCategoryQuery(categoryId);
 
-    const fetchData = async () => {
-      try {
-        const jsonData = await fetchCategory(categoryId);
-        setData(jsonData);
-        console.log(jsonData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [categoryId]);
+  if (isError) {
+    navigate("/error");
+  }
 
   return (
     <div>
+      {content}
       <h3>Product List</h3>
       <p>Cards with full details</p>
       <div className="row">
-        {data &&
-          data._embedded &&
-          data._embedded.products.map((product) => (
+        {category &&
+          category._embedded &&
+          category._embedded.products.map((product: Product) => (
             <div className="col-md-6 col-lg-3" key={product.id}>
               <div className="card card-product border mb-5 shadow-xs border-radius-lg">
                 <Link to={`/products/${product.id}`}>

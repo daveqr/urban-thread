@@ -4,11 +4,12 @@ import storage from 'redux-persist/lib/storage';
 
 import cartReducer from './store/cartStore';
 import { CartItem } from '../models/CartItem';
+import { apiSlice } from '../apiSlice';
 
 /* state */
 export interface RootState {
   cart: {
-      cartItems: Array<CartItem>;
+    cartItems: Array<CartItem>;
   };
   // TODO implement this
   // user: {
@@ -24,11 +25,14 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   cart: cartReducer,
+  [apiSlice.reducerPath]: apiSlice.reducer
 });
 
 /* store */
 const store = configureStore({
   reducer: persistReducer(persistConfig, rootReducer),
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(apiSlice.middleware)
 });
 
 /* persistor */

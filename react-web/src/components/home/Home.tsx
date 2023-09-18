@@ -1,19 +1,33 @@
-import { FC, useEffect, useState } from "react";
-import { List } from "immutable";
+import { FC } from "react";
 import { Link } from "react-router-dom";
 
 import { HomeWrapper } from "./Home.styled";
 import CategoryList from "./categoryList/CategoryList";
-import Category from "../../models/Category";
 import "./Home.css";
 import "./index.b2c62b4c.css";
-import { fetchCategories } from "../../services/apiService";
 import { useAuth } from "../../contexts/AuthContext";
+import { useGetCategoriesQuery } from "../../apiSlice";
 
 const Home: FC = () => {
-  const [categories, setCategories] = useState<List<Category>>(List());
-
   const { user, login, logout } = useAuth();
+
+  const {
+    data: categories = [],
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetCategoriesQuery();
+
+  let content;
+
+  if (isLoading) {
+    content = 'is loading';
+  } else if (isSuccess) {
+    content = <CategoryList categories={categories} />;
+  } else if (isError) {
+    content = <div>{error.toString()}</div>;
+  }
 
   const handleLogin = () => {
     // TODO replace this with a real call
@@ -29,14 +43,6 @@ const Home: FC = () => {
     // Simulate a logout action
     logout();
   };
-
-  useEffect(() => {
-    async function fetchData() {
-      const categories: List<Category> = await fetchCategories();
-      setCategories(categories);
-    }
-    fetchData();
-  }, []);
 
   return (
     <HomeWrapper data-testid="Home">
@@ -176,7 +182,6 @@ const Home: FC = () => {
               </div>
             </div>
           </nav>
-
           <section className="mb-8">
             <div
               className="page-header py-5 py-md-0"
@@ -203,9 +208,8 @@ const Home: FC = () => {
               </div>
             </div>
           </section>
-
-          <CategoryList categories={categories} />
-
+          {/* <CategoryList categories={categories} /> */}
+          {content}
           {/* TODO need to set the width of this */}
           <section className="mb-8">
             <div
@@ -234,7 +238,6 @@ const Home: FC = () => {
               </div>
             </div>
           </section>
-
           <div className="my-5">
             <div className="card card-product card-plain">
               <div className="row">
@@ -360,7 +363,6 @@ const Home: FC = () => {
               </div>
             </div>
           </div>
-
           <div className="mt-5 mb-10">
             <section>
               <div
@@ -695,7 +697,6 @@ const Home: FC = () => {
               </div>
             </section>
           </div>
-
           <footer className="footer pt-3  ">
             <div className="row align-items-center justify-content-lg-between">
               <div className="col-lg-6 mb-lg-0 mb-4">
