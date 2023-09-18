@@ -6,7 +6,7 @@ import CategoryList from "./categoryList/CategoryList";
 import "./Home.css";
 import "./index.b2c62b4c.css";
 import { useAuth } from "../../contexts/AuthContext";
-import { useGetCategoriesQuery } from "../../apiSlice";
+import { useGetCategoriesQuery } from "../../state/apiSlice";
 
 const Home: FC = () => {
   const { user, login, logout } = useAuth();

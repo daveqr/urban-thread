@@ -1,32 +1,53 @@
+import Money from "dinero.js";
 import { CartItem } from "../models/CartItem";
 
-export const calculateTotalCostForItem = (item: CartItem, dineroMultiplier = false) => {
-    const totalPrice = item.price * item.quantity;
+import Dinero from "dinero.js";
 
-    if (dineroMultiplier) {
-        return totalPrice * 100;
+export class MoneyFormatter {
+    convertToCents: boolean;
+    currency: Dinero.Currency;
+
+    private constructor(currency: Dinero.Currency, convertToCents: boolean) {
+        this.currency = currency;
+        Money.defaultCurrency = currency;
+        this.convertToCents = convertToCents;
     }
 
-    return totalPrice;
+    static create(currency: Dinero.Currency = "USD", convertToCents = true) {
+        return new MoneyFormatter(currency, convertToCents);
+    }
+
+    format(amount: number) {
+        const amountInCents = this.convertToCents ? amount * 100 : amount;
+        return Dinero({ amount: amountInCents }).toFormat();
+    }
+}
+
+export const moneyFormatter = MoneyFormatter.create('USD');
+
+export const calculateTotalCostForItem = (item: CartItem) => {
+    const totalPriceInCents = item.price * item.quantity;
+    return totalPriceInCents;
 };
 
 export const calculateCartSubtotal = (cartItems: CartItem[]) => {
     const totalInCents = cartItems.reduce(
         (total, item) =>
-            total + calculateTotalCostForItem(item, true),
+            total + calculateTotalCostForItem(item),
         0
     );
 
-    console.log(totalInCents);
-    return (totalInCents);
+    return totalInCents;
 };
 
 // TODO add tax and shipping
 export const calculateCartTotal = (cartItems: CartItem[]) => {
+
     const totalInCents = cartItems.reduce(
         (total, item) =>
-            total + calculateTotalCostForItem(item, true),
+            total + calculateTotalCostForItem(item),
         0
     );
-    return (totalInCents);
+
+    return totalInCents;
 };

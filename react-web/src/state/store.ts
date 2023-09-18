@@ -4,7 +4,7 @@ import storage from 'redux-persist/lib/storage';
 
 import cartReducer from './cartSlice';
 import { CartItem } from '../models/CartItem';
-import { apiSlice } from '../apiSlice';
+import { apiSlice } from './apiSlice';
 import { useDispatch } from 'react-redux';
 
 /* state */

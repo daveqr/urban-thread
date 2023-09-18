@@ -4,11 +4,13 @@ import { FC } from "react";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "../home/index.b2c62b4c.css";
-import Money from "dinero.js";
 
 import { CartItem } from "../../models/CartItem";
 import { selectCartItems$ } from "../../state/cartSlice";
-import { calculateCartSubtotal } from "../../services/cartCalculator";
+import {
+  calculateCartSubtotal,
+  moneyFormatter,
+} from "../../services/cartCalculator";
 import { calculateCartTotal } from "../../services/cartCalculator";
 import { cartSlice } from "../../state/cartSlice";
 import { useNavigation } from "../../useNavigation";
@@ -17,7 +19,6 @@ import { useAppDispatch, useAppSelector } from "../../state/hooks";
 const Cart: FC = () => {
   const dispatch = useAppDispatch();
   const nav = useNavigation();
-  Money.defaultCurrency = "USD";
 
   const cartItems = useAppSelector(selectCartItems$);
   const cartSubtotal = calculateCartSubtotal(cartItems);
@@ -60,7 +61,6 @@ const Cart: FC = () => {
           </>
         )}
 
-        {/* begin */}
         {cartItems.length >= 1 && (
           <>
             <h5 className="text-center mb-5">
@@ -106,8 +106,7 @@ const Cart: FC = () => {
                           <p className="mb-0">Medium</p>
                         </div>
                         <h6 className="mb-1 mt-5">
-                          {/* TODO do something about this calc */}
-                          {Money({ amount: item.price * 100 }).toFormat()}
+                          {moneyFormatter.format(item.price)}
                         </h6>
                       </div>
 
@@ -165,8 +164,6 @@ const Cart: FC = () => {
                 ))}
               </div>
 
-              {/* end */}
-
               <div className="col-12 col-lg-7 col-md-8 mx-auto mt-4">
                 <div className="card shadow-xs border bg-gray-100">
                   <div className="card-body p-lg-5">
@@ -175,7 +172,7 @@ const Cart: FC = () => {
                         <div className="d-flex justify-content-between">
                           <p className="opacity-8">Subtotal</p>
                           <p className="fw-bold opacity-8">
-                            {Money({ amount: cartSubtotal }).toFormat()}
+                            {moneyFormatter.format(cartSubtotal)}
                           </p>
                         </div>
                       </li>
@@ -225,10 +222,7 @@ const Cart: FC = () => {
                         <div className="d-flex justify-content-between">
                           <h5 className="">Total</h5>
                           <h5 className="">
-                            {Money({
-                              amount: cartTotal,
-                              currency: "USD",
-                            }).toFormat()}
+                            {moneyFormatter.format(cartTotal)}
                           </h5>
                         </div>
                       </li>

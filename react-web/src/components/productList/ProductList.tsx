@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { Product } from "../../models/Product";
-import { useGetCategoryQuery } from "../../apiSlice";
+import { useGetCategoryQuery } from "../../state/apiSlice";
 
 const ProductList = () => {
   const { categoryId } = useParams();

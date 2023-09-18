@@ -6,8 +6,8 @@ import {
   calculateCartSubtotal,
   calculateCartTotal,
   calculateTotalCostForItem,
+  moneyFormatter,
 } from "../../services/cartCalculator";
-import Money from "dinero.js";
 import { useAppSelector } from "../../state/hooks";
 
 const Checkout: FC = () => {
@@ -142,10 +142,7 @@ const Checkout: FC = () => {
         <div className="col-12 col-lg-6 p-3 p-md-5 bg-dark bg-gradient rounded-end">
           <p className="text-white opacity-6 mb-0 text-end">Amount</p>
           <h3 className="text-white mb-4 text-end">
-            {Money({
-              amount: cartTotal,
-              currency: "USD",
-            }).toFormat()}
+            {moneyFormatter.format(cartTotal)}
           </h3>
 
           {cartItems.map((item: CartItem, index: number) => (
@@ -163,10 +160,7 @@ const Checkout: FC = () => {
               </div>
               <div className="w-10 text-end">
                 <p className="text-white mb-0 ">
-                  {Money({
-                    amount: calculateTotalCostForItem(item),
-                    currency: "USD",
-                  }).toFormat()}
+                  {moneyFormatter.format(calculateTotalCostForItem(item))}
                 </p>
               </div>
             </div>
@@ -177,10 +171,7 @@ const Checkout: FC = () => {
               <div className="d-flex justify-content-between">
                 <p className="opacity-8 text-white">Subtotal</p>
                 <p className="fw-bold opacity-8 text-white">
-                  {Money({
-                    amount: cartSubtotal,
-                    currency: "USD",
-                  }).toFormat()}
+                  {moneyFormatter.format(cartSubtotal)}
                 </p>
               </div>
             </li>
@@ -231,10 +222,7 @@ const Checkout: FC = () => {
               <div className="d-flex justify-content-between">
                 <h5 className=" text-white">Total</h5>
                 <h5 className=" text-white">
-                  {Money({
-                    amount: cartSubtotal,
-                    currency: "USD",
-                  }).toFormat()}
+                  {moneyFormatter.format(cartSubtotal)}
                 </h5>
               </div>
             </li>
