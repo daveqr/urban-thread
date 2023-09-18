@@ -1,22 +1,32 @@
 import { CartItem } from "../models/CartItem";
 
+export const calculateTotalCostForItem = (item: CartItem, dineroMultiplier = false) => {
+    const totalPrice = item.price * item.quantity;
 
-export const calculateTotalCostForItem = (item: CartItem) => {
-    const amount = item.price * item.quantity;
+    if (dineroMultiplier) {
+        return totalPrice * 100;
+    }
 
-    return parseFloat(amount.toFixed(2)) * 100;
+    return totalPrice;
 };
 
 export const calculateCartSubtotal = (cartItems: CartItem[]) => {
-    const amount = cartItems.reduce(
-        (total, item) => total + calculateTotalCostForItem(item),
+    const totalInCents = cartItems.reduce(
+        (total, item) =>
+            total + calculateTotalCostForItem(item, true),
         0
     );
 
-    return amount;
+    console.log(totalInCents);
+    return (totalInCents);
 };
 
 // TODO add tax and shipping
 export const calculateCartTotal = (cartItems: CartItem[]) => {
-    return cartItems.reduce((total, item) => total + calculateTotalCostForItem(item), 0);
+    const totalInCents = cartItems.reduce(
+        (total, item) =>
+            total + calculateTotalCostForItem(item, true),
+        0
+    );
+    return (totalInCents);
 };

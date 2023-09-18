@@ -1,17 +1,17 @@
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
-import { addToCartAction } from "../../state/store/cartStore";
 import { fetchProductById } from "../../services/apiService";
 import { Product } from "../../models/Product";
 import { CartItem } from "../../models/CartItem";
+import { cartSlice } from "../../state/cartSlice";
+import { useAppDispatch } from "../../state/hooks";
 
 const ProductDetail = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [product, setProduct] = useState<Product | null>(null);
 
@@ -37,7 +37,7 @@ const ProductDetail = () => {
       product.price
     );
 
-    dispatch(addToCartAction(cartItem));
+    dispatch(cartSlice.actions.addItemToCart(cartItem));
     navigate("/cart");
   };
 

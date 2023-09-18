@@ -1,7 +1,5 @@
 import React from "react";
 import { FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 // TODO get this sorted
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -9,36 +7,28 @@ import "../home/index.b2c62b4c.css";
 import Money from "dinero.js";
 
 import { CartItem } from "../../models/CartItem";
-import {
-  removeFromCartAction,
-  setQuantityAction,
-  selectCartItems$,
-} from "../../state/store/cartStore";
+import { selectCartItems$ } from "../../state/cartSlice";
 import { calculateCartSubtotal } from "../../services/cartCalculator";
 import { calculateCartTotal } from "../../services/cartCalculator";
+import { cartSlice } from "../../state/cartSlice";
+import { useNavigation } from "../../useNavigation";
+import { useAppDispatch, useAppSelector } from "../../state/hooks";
 
 const Cart: FC = () => {
-  const cartItems = useSelector(selectCartItems$);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const nav = useNavigation();
+  Money.defaultCurrency = "USD";
 
+  const cartItems = useAppSelector(selectCartItems$);
   const cartSubtotal = calculateCartSubtotal(cartItems);
   const cartTotal = calculateCartTotal(cartItems);
 
-  const removeFromCart = (id: string) => {
-    dispatch(removeFromCartAction(id));
+  const removeItemFromCart = (itemId: string) => {
+    dispatch(cartSlice.actions.removeItemFromCart(itemId));
   };
 
-  const goHome = () => {
-    navigate("/");
-  };
-
-  const goToCheckout = () => {
-    navigate("/checkout");
-  };
-
-  function setQuantity(id: string, quantity: number): void {
-    dispatch(setQuantityAction({ id, quantity }));
+  function setItemQuantity(id: string, quantity: number): void {
+    dispatch(cartSlice.actions.setItemQuantity({ id, quantity }));
   }
 
   return (
@@ -52,7 +42,7 @@ const Cart: FC = () => {
 
             <div className="d-block d-md-flex">
               <button
-                onClick={() => goHome()}
+                onClick={() => nav.goHome()}
                 className="btn btn-white btn-lg w-100 mt-4 me-4"
               >
                 Continue Shopping
@@ -60,7 +50,7 @@ const Cart: FC = () => {
 
               {cartItems.length > 0 ? (
                 <button
-                  onClick={() => goToCheckout()}
+                  onClick={() => nav.goToCheckout()}
                   className="btn btn-dark btn-lg w-100 mt-md-4"
                 >
                   Checkout
@@ -116,11 +106,8 @@ const Cart: FC = () => {
                           <p className="mb-0">Medium</p>
                         </div>
                         <h6 className="mb-1 mt-5">
-                          {/* TODO fix the price to work with Money */}
-                          {Money({
-                            amount: item.price * 100,
-                            currency: "USD",
-                          }).toFormat()}
+                          {/* TODO do something about this calc */}
+                          {Money({ amount: item.price * 100 }).toFormat()}
                         </h6>
                       </div>
 
@@ -143,7 +130,7 @@ const Cart: FC = () => {
                             <button
                               className="dropdown-item"
                               // key={0}
-                              onClick={() => setQuantity(item.id, 0)}
+                              onClick={() => setItemQuantity(item.id, 0)}
                             >
                               0 (Delete)
                             </button>
@@ -152,7 +139,7 @@ const Cart: FC = () => {
                               <button
                                 className="dropdown-item"
                                 key={i}
-                                onClick={() => setQuantity(item.id, i + 1)}
+                                onClick={() => setItemQuantity(item.id, i + 1)}
                               >
                                 {i + 1}
                               </button>
@@ -164,7 +151,7 @@ const Cart: FC = () => {
                       <div className="w-5 pt-4 mt-1 text-end">
                         <button
                           className="btn btn-link text-dark"
-                          onClick={() => removeFromCart(item.id)}
+                          onClick={() => removeItemFromCart(item.id)}
                         >
                           Remove
                         </button>
@@ -188,10 +175,7 @@ const Cart: FC = () => {
                         <div className="d-flex justify-content-between">
                           <p className="opacity-8">Subtotal</p>
                           <p className="fw-bold opacity-8">
-                            {Money({
-                              amount: cartSubtotal,
-                              currency: "USD",
-                            }).toFormat()}
+                            {Money({ amount: cartSubtotal }).toFormat()}
                           </p>
                         </div>
                       </li>
@@ -254,7 +238,7 @@ const Cart: FC = () => {
 
                 <div className="d-block d-md-flex">
                   <button
-                    onClick={() => goHome()}
+                    onClick={() => nav.goHome()}
                     className="btn btn-white btn-lg w-100 mt-4 me-4"
                   >
                     Continue Shopping
@@ -262,7 +246,7 @@ const Cart: FC = () => {
 
                   {cartItems.length > 0 ? (
                     <button
-                      onClick={() => goToCheckout()}
+                      onClick={() => nav.goToCheckout()}
                       className="btn btn-dark btn-lg w-100 mt-md-4"
                     >
                       Checkout

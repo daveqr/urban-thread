@@ -5,7 +5,7 @@ import ProductList from "./components/productList/ProductList";
 import ProductDetail from "./components/productDetail/ProductDetail";
 import Error from "./components/Error";
 import Cart from "./components/cart/Cart";
-import Checkout from "./components/Checkout/Checkout";
+import Checkout from "./components/checkout/Checkout";
 
 const router = createBrowserRouter([
     {

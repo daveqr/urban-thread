@@ -1,7 +1,6 @@
 import { FC } from "react";
-import { useSelector } from "react-redux";
 
-import { selectCartItems$ } from "../../state/store/cartStore";
+import { selectCartItems$ } from "../../state/cartSlice";
 import { CartItem } from "../../models/CartItem";
 import {
   calculateCartSubtotal,
@@ -9,9 +8,10 @@ import {
   calculateTotalCostForItem,
 } from "../../services/cartCalculator";
 import Money from "dinero.js";
+import { useAppSelector } from "../../state/hooks";
 
 const Checkout: FC = () => {
-  const cartItems = useSelector(selectCartItems$);
+  const cartItems = useAppSelector(selectCartItems$);
   const cartSubtotal = calculateCartSubtotal(cartItems);
   const cartTotal = calculateCartTotal(cartItems);
 

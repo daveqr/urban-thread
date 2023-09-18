@@ -2,9 +2,10 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import cartReducer from './store/cartStore';
+import cartReducer from './cartSlice';
 import { CartItem } from '../models/CartItem';
 import { apiSlice } from '../apiSlice';
+import { useDispatch } from 'react-redux';
 
 /* state */
 export interface RootState {
@@ -39,3 +40,5 @@ const store = configureStore({
 const persistor = persistStore(store);
 
 export { store, persistor };
+
+export type AppDispatch = typeof store.dispatch
