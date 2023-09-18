@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createAction } from '@reduxjs/toolkit';
 
 import { CartItem } from '../../models/CartItem';
-import { RootState } from '../state';
+import { RootState } from '../store';
 
 
 /* Actions */
@@ -12,7 +12,6 @@ export const incrementCartItemAction = createAction<string>('INCREMENT_CART_ITEM
 export const decrementCartItemAction = createAction<string>('DECREMENT_CART_ITEM');
 export const clearCartAction = createAction('CLEAR_CART');
 export const setQuantityAction = createAction<{ id: string, quantity: number }>('SET_QUANTITY');
-
 
 
 const adjustQuantity = (cartItem: CartItem, amount: number) => {
@@ -86,13 +85,6 @@ export const cartSlice = createSlice({
                     return item;
                 }).filter((item): item is CartItem => item !== null);
             });
-
-
-
-
-
-
-
     },
 });
 
@@ -100,5 +92,4 @@ export default cartSlice.reducer;
 
 
 /* Selectors */
-
 export const selectCartItems$ = (state: RootState) => state.cart.cartItems;
