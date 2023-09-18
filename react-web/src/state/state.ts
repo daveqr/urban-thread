@@ -3,7 +3,7 @@ import { CartItem } from "../models/CartItem";
 
 export interface RootState {
     cart: {
-        cartItems: ReadonlyArray<CartItem>;
+        cartItems: Array<CartItem>;
     };
     // TODO implement this
     // user: {

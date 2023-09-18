@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAction } from '@reduxjs/toolkit';
-import { createSelector } from '@reduxjs/toolkit';
 
 import { CartItem } from '../../models/CartItem';
 import { RootState } from '../state';
@@ -12,6 +11,9 @@ export const removeFromCartAction = createAction<string>('REMOVE_FROM_CART');
 export const incrementCartItemAction = createAction<string>('INCREMENT_CART_ITEM');
 export const decrementCartItemAction = createAction<string>('DECREMENT_CART_ITEM');
 export const clearCartAction = createAction('CLEAR_CART');
+export const setQuantityAction = createAction<{ id: string, quantity: number }>('SET_QUANTITY');
+
+
 
 const adjustQuantity = (cartItem: CartItem, amount: number) => {
     return new CartItem(
@@ -22,7 +24,7 @@ const adjustQuantity = (cartItem: CartItem, amount: number) => {
     );
 };
 
-const handleCartAdjustment = (cartItems: ReadonlyArray<CartItem>, cartItemId: string, adjustmentAmount: number) => {
+const handleCartAdjustment = (cartItems: Array<CartItem>, cartItemId: string, adjustmentAmount: number) => {
     const existingItemIndex = cartItems.findIndex((item) => item.id === cartItemId);
 
     let updatedCartItems: CartItem[] = [...cartItems]
@@ -45,7 +47,7 @@ const handleCartAdjustment = (cartItems: ReadonlyArray<CartItem>, cartItemId: st
 /* Slice (Reducers) */
 export const cartSlice = createSlice({
     name: 'cart',
-    initialState: { cartItems: [] as ReadonlyArray<CartItem> },
+    initialState: { cartItems: [] as Array<CartItem> },
     reducers: {},
     extraReducers: (builder) => {
         builder
@@ -71,7 +73,26 @@ export const cartSlice = createSlice({
             })
             .addCase(clearCartAction, (state, _action) => {
                 state.cartItems = [];
+            })
+            .addCase(setQuantityAction, (state, action) => {
+                const { id, quantity } = action.payload;
+                state.cartItems = state.cartItems.map((item) => {
+                    if (item.id === id) {
+                        if (quantity === 0) {
+                            return null;
+                        }
+                        return { ...item, quantity };
+                    }
+                    return item;
+                }).filter((item): item is CartItem => item !== null);
             });
+
+
+
+
+
+
+
     },
 });
 
@@ -80,4 +101,4 @@ export default cartSlice.reducer;
 
 /* Selectors */
 
-export const selectCartItems$ = (state: RootState) => state.cart.cartItems.map((item) => item);
+export const selectCartItems$ = (state: RootState) => state.cart.cartItems;
