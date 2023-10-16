@@ -6,9 +6,9 @@ import {
   calculateCartSubtotal,
   calculateCartTotal,
   calculateTotalCostForItem,
-  moneyFormatter,
 } from "../../services/cartCalculator";
 import { useAppSelector } from "../../state/hooks";
+import { moneyFormatter } from "../../services/moneyFormatter";
 
 const Checkout: FC = () => {
   const cartItems = useAppSelector(selectCartItems$);

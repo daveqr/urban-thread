@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { CartItem } from '../models/CartItem';
 import { RootState } from './store';
-import { useAppSelector } from './hooks';
 
 /* slice */
 export const cartSlice = createSlice({

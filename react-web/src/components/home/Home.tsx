@@ -85,7 +85,7 @@ const Home: FC = () => {
 
                   <li className="nav-item">
                     {user ? (
-                      // If logged in, show logout
+                      // If logged-in, show logout
                       <span
                         className="nav-link text-dark font-weight-bold d-flex align-items-center me-2"
                         onClick={handleLogout}
@@ -93,7 +93,7 @@ const Home: FC = () => {
                         Logout
                       </span>
                     ) : (
-                      // If logged out, show login
+                      // If logged-out, show login
                       <span
                         className="nav-link text-dark font-weight-bold d-flex align-items-center me-2"
                         onClick={handleLogin}
@@ -208,7 +208,6 @@ const Home: FC = () => {
               </div>
             </div>
           </section>
-          {/* <CategoryList categories={categories} /> */}
           {content}
           {/* TODO need to set the width of this */}
           <section className="mb-8">
@@ -506,6 +505,7 @@ const Home: FC = () => {
                             <img
                               src={require("./images/photo-1522075469751-3a6694fb2f61")}
                               className="rounded-circle"
+                              alt="avatar"
                             />
                           </div>
                           <h6 className="mb-0">Alexa Liras</h6>

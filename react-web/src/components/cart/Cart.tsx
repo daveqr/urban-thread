@@ -9,12 +9,12 @@ import { CartItem } from "../../models/CartItem";
 import { selectCartItems$ } from "../../state/cartSlice";
 import {
   calculateCartSubtotal,
-  moneyFormatter,
 } from "../../services/cartCalculator";
 import { calculateCartTotal } from "../../services/cartCalculator";
 import { cartSlice } from "../../state/cartSlice";
 import { useNavigation } from "../../useNavigation";
 import { useAppDispatch, useAppSelector } from "../../state/hooks";
+import { moneyFormatter } from "../../services/moneyFormatter";
 
 const Cart: FC = () => {
   const dispatch = useAppDispatch();
@@ -24,13 +24,13 @@ const Cart: FC = () => {
   const cartSubtotal = calculateCartSubtotal(cartItems);
   const cartTotal = calculateCartTotal(cartItems);
 
+
   const removeItemFromCart = (itemId: string) => {
     dispatch(cartSlice.actions.removeItemFromCart(itemId));
   };
 
-  function setItemQuantity(id: string, quantity: number): void {
+  const setItemQuantity = (id: string, quantity: number) =>
     dispatch(cartSlice.actions.setItemQuantity({ id, quantity }));
-  }
 
   return (
     <div className="my-10">
