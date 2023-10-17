@@ -24,7 +24,6 @@ const Cart: FC = () => {
   const cartSubtotal = calculateCartSubtotal(cartItems);
   const cartTotal = calculateCartTotal(cartItems);
 
-
   const removeItemFromCart = (itemId: string) => {
     dispatch(cartSlice.actions.removeItemFromCart(itemId));
   };
