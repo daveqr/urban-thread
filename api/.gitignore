@@ -180,6 +180,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+.yarnrc.yml
+.yarnrc
 
 ### MEAN.Anglar Stack ###
 ## Angular ##
