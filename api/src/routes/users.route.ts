@@ -64,11 +64,12 @@ router.post('/',
             };
 
             transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                    logger.error(error);
-                } else {
-                    logger.debug('Email sent: ' + info.response);
-                }
+                // TODO log error
+                // if (error) {
+                //     logger.error(error);
+                // } else {
+                //     logger.debug('Email sent: ' + info.response);
+                // }
             });
             // end email stuff
 

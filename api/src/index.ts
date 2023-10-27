@@ -1,15 +1,15 @@
 import express, { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
 const session = require('express-session');
 const cors = require('cors');
-const dotenv = require('dotenv');
-const helmet = require('helmet');
+import dotenv from 'dotenv';
+import helmet from 'helmet';
 const compression = require('compression');
 const i18n = require('i18n-2');
 const acceptLanguage = require('accept-language-parser');
 
-const logger = require('./utils/logger');
+import logger from './utils/logger'
 require('./config/passport.config');
-const connectDB = require('./config/db.config');
+import connectDB from './config/db.config';
 import routes from './config/routes.config';
 
 // Create the express app
