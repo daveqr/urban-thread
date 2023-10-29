@@ -2,6 +2,8 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=yarn,mean,macos,grunt,bower
 
 backend-old
+srcc
+
 ### Bower ###
 bower_components
 .bower-cache

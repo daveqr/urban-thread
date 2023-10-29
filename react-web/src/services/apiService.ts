@@ -3,6 +3,7 @@ import { List } from "immutable";
 import Category from "../models/Category";
 import { Product } from "../models/Product";
 
+// TODO move base url to config
 const BASE_PRODUCTS_URL = "http://localhost:3000/api/store/products";
 
 const tempCats: Category[] = [

@@ -1,0 +1,46 @@
+version: '3'
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./api:/usr/src/app
+    environment:
+      NODE_ENV: development
+    command: bash /usr/src/app/entrypoint.sh
+    depends_on:
+      - mongodb
+    networks:
+      - mynetwork
+  web:
+    build:
+      context: ./react-web
+      dockerfile: Dockerfile
+    ports:
+      - 3030:3030
+    volumes:
+      - ./react-web:/usr/src/app
+    environment:
+      NODE_ENV: development
+    command: bash /usr/src/app/entrypoint.sh
+    depends_on:
+      - api
+    networks:
+      - mynetwork
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    #volumes:
+    #  - mongodb_data:/data/db
+    #environment:
+      #MONGO_INITDB_ROOT_USERNAME: myuser
+      #MONGO_INITDB_ROOT_PASSWORD: mypassword
+    networks:
+      - mynetwork
+networks:
+  mynetwork:
+    driver: bridge
