@@ -3,7 +3,7 @@ services:
   api:
     build:
       context: ./api
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     ports:
       - 3000:3000
     volumes:
@@ -18,7 +18,7 @@ services:
   web:
     build:
       context: ./react-web
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     ports:
       - 3030:3030
     volumes:
@@ -28,8 +28,6 @@ services:
     command: bash /usr/src/app/entrypoint.sh
     depends_on:
       - api
-    networks:
-      - mynetwork
   mongodb:
     image: mongo:latest
     ports:
