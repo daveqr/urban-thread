@@ -1,19 +1,19 @@
-import { List } from 'immutable';
+import {List} from 'immutable';
 
-import Category, { CategoryInterface } from '../schemas/category.schema';
-import ProductTransformer  from '../transformers/product.transformer';
+import Category, {CategoryInterface} from '../schemas/category.schema';
+import ProductTransformer from '../transformers/product.transformer';
 import ProductModel from './product.model';
 
 class CategoryModel {
-    private category: CategoryInterface;
     productLinks: any[] = [];
+    private category: CategoryInterface;
 
     private constructor(category: CategoryInterface) {
         this.category = category;
     }
 
     get id(): string {
-        return this.category._id;
+        return <string>this.category._id;
     }
 
     get name(): string {
@@ -50,7 +50,7 @@ class CategoryModel {
     }
 
     static async findByIds(categoryIds: string[]): Promise<CategoryModel[]> {
-        const categories = await Category.find({ _id: { $in: categoryIds } });
+        const categories = await Category.find({_id: {$in: categoryIds}});
 
         return categories.map((category: any) => new CategoryModel(category));
     }
@@ -80,13 +80,11 @@ class CategoryModel {
 
         const productLinksByCategory = ProductTransformer.groupProductLinksByCategory(categories);
 
-        const categoriesWithProductLinks = categories.map((category: CategoryModel) => {
+        return categories.map((category: CategoryModel) => {
             category.productLinks = productLinksByCategory[category.id];
 
             return category;
         });
-
-        return categoriesWithProductLinks;
     }
 
     static async findByIdWithProductLinks(categoryId: string) {

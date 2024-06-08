@@ -39,6 +39,15 @@ services:
       #MONGO_INITDB_ROOT_PASSWORD: mypassword
     networks:
       - mynetwork
+  mysql:
+    image: mysql:8.0
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: mypassword
+      MYSQL_DATABASE: mydb
+    networks:
+      - mynetwork
 networks:
   mynetwork:
     driver: bridge

@@ -1,4 +1,4 @@
-import Product, { ProductInterface } from '../schemas/product.schema';
+import Product, {ProductInterface} from '../schemas/product.schema';
 
 class ProductModel {
     product: ProductInterface;
@@ -21,7 +21,7 @@ class ProductModel {
     // }
 
     get id(): string {
-        return this.product._id;
+        return <string>this.product._id;
     }
 
     get name(): string {

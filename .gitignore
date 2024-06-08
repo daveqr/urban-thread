@@ -177,11 +177,8 @@ dist
 .vscode-test
 **/.vscode/**
 
-# yarn v2
-.yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
-.yarn/install-state.gz
+# yarn
+*/.yarn/
 .pnp.*
 
 ### MEAN.Anglar Stack ###
@@ -195,7 +192,8 @@ app/**/*.js.map
 bower_components/
 
 # IDEs and editors
-.idea/
+.idea/*
+*.iml
 
 # misc
 .sass-cache/
