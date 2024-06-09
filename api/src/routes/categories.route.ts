@@ -19,7 +19,7 @@ router.get('/', async (req: any, res: any) => {
     try {
         const {isDetailed} = req.query;
 
-        const categories = await categoryService.getAllCategories(isDetailed);
+        const categories = await categoryService.findAllCategories(isDetailed);
 
         res.json(categories);
     } catch (error: any) {
@@ -29,7 +29,7 @@ router.get('/', async (req: any, res: any) => {
 
 router.get('/:id', async (req: any, res: any) => {
     try {
-        const category = await categoryService.getCategoryById(req.params.id);
+        const category = await categoryService.findCategoryById(req.params.id);
 
         if (!category) {
             return res.status(404).json({message: 'Category not found'});

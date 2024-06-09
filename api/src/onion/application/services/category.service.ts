@@ -1,4 +1,3 @@
-import CategoryModel from '../../domain/models/category.model';
 import {CategoryTransformer} from '../../../transformers/category.transformer';
 import {CategoryRepository} from "../../domain/repositories/CategoryRepository";
 
@@ -9,19 +8,19 @@ class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    async getAllCategories(isDetailed: any) {
+    async findAllCategories(isDetailed: any) {
 
         if (isDetailed) {
             return await this.categoryRepository.findAll();
         }
 
-        const categories = await CategoryModel.findWithMinProductsAndProductLinks();
+        const categories = await this.categoryRepository.findWithMinProductsAndProductLinks();
 
         return categories.map((category: any) =>
             CategoryTransformer.transform(category));
     }
 
-    async getCategoryById(categoryId: string) {
+    async findCategoryById(categoryId: string) {
         try {
             const category = await this.categoryRepository.findByIdWithProductLinks(categoryId);
 

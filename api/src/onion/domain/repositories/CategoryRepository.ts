@@ -8,4 +8,8 @@ export interface CategoryRepository {
     findWithMinProductsAndProductLinks(): Promise<CategoryModel[]>;
 
     findByIdWithProductLinks(categoryId: string): Promise<CategoryModel | null>;
+
+    findWithMinProducts(): Promise<CategoryModel[] | null>;
+
+    findByIds(categoryIds: string[]): Promise<CategoryModel[]>;
 }
