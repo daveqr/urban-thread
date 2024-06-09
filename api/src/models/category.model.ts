@@ -2,7 +2,7 @@ import {List} from 'immutable';
 
 import Category, {CategoryInterface} from '../schemas/category.schema';
 import ProductTransformer from '../transformers/product.transformer';
-import ProductModel from './product.model';
+import ProductModel from '../onion/domain/models/product.model';
 
 class CategoryModel {
     productLinks: any[] = [];

@@ -1,9 +1,8 @@
-import Product, {ProductInterface} from '../schemas/product.schema';
+import Product, {ProductInterface} from '../../../schemas/product.schema';
 
 class ProductModel {
     product: ProductInterface;
 
-    // TODO make this private
     constructor(product: ProductInterface) {
         this.product = product;
     }

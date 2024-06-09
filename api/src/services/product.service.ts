@@ -1,18 +1,25 @@
 import CategoryModel from '../models/category.model';
-import ProductModel from '../models/product.model';
+import ProductModel from '../onion/domain/models/product.model';
 import ProductTransformer from '../transformers/product.transformer';
 
-import { createCategoryLinks } from '../utils/linkUtils';
+import {createCategoryLinks} from '../utils/linkUtils';
+import {ProductRepository} from "../onion/domain/repositories/ProductRepository";
 
 class ProductService {
-    static async getAllProducts() {
-        const products = await ProductModel.find();
+    private productRepository: ProductRepository;
 
-        return await ProductService.transformProducts(products);
+    constructor(productRepository: ProductRepository) {
+        this.productRepository = productRepository;
     }
 
-    static async getProductById(productId: string, extended?: boolean) {
-        const product = await ProductModel.findById(productId);
+    async getAllProducts() {
+        const products = await this.productRepository.find();
+
+        return ProductService.transformProducts(products);
+    }
+
+    async getProductById(productId: string, extended?: boolean) {
+        const product = await this.productRepository.findById(productId);
 
         if (!product) {
             return null;
@@ -21,12 +28,12 @@ class ProductService {
         return await ProductService.transformProduct(product, extended);
     }
 
-    static async getFullProductById(productId: string) {
-        return await ProductService.getProductById(productId, true);
+    async getFullProductById(productId: string) {
+        return await this.getProductById(productId, true);
     }
 
-    static async getBasicProductById(productId: string) {
-        return await ProductService.getProductById(productId, false);
+    async getBasicProductById(productId: string) {
+        return await this.getProductById(productId, false);
     }
 
     static async transformProduct(product: ProductModel, extended?: boolean) {
@@ -39,7 +46,9 @@ class ProductService {
     }
 
     static async transformProducts(products: ProductModel[]) {
-        const categoryIds = Array.from(new Set(products.flatMap((product: { categoryIds: string[]; }) => product.categoryIds)));
+        const categoryIds = Array.from(new Set(products.flatMap((product: {
+            categoryIds: string[];
+        }) => product.categoryIds)));
         const categories = await CategoryModel.findByIds(categoryIds);
         const categoryLinks = createCategoryLinks(categories);
 

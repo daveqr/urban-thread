@@ -1,7 +1,10 @@
-
-import express, { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
-const router = express.Router();
+import express, {NextFunction, Request, Response} from 'express';
 import ProductService from '../services/product.service';
+import MongoDBProductRepository from '../onion/infrastructure/dataAccess/mongo/MongoDBProductRepository'; // Import MongoDBProductRepository
+
+const router = express.Router();
+const productRepository = new MongoDBProductRepository();
+const productService = new ProductService(productRepository);
 
 router.use((req: Request, res: Response, next: NextFunction) => {
     if (req.method === 'GET') {
@@ -12,57 +15,14 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 
 router.get('/', async (req: Request, res: Response) => {
     try {
-        const transformedProducts = await ProductService.getAllProducts();
+        const transformedProducts = await productService.getAllProducts();
 
         res.json(transformedProducts);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch products' });
+        res.status(500).json({error: 'Failed to fetch products'});
     }
 });
 
-/**
- * Fetch a product by id.
- * 
- * @example <caption>Success response.</caption>
- *
- * {
- *    "_embedded":{
- *       "categoryList":[
- *          {
- *             "name":"Category 1",
- *             "_links":{
- *                "self":{
- *                   "href":"/categories/1"
- *                }
- *             }
- *          },
- *          {
- *             "name":"Category 2",
- *             "_links":{
- *                "self":{
- *                   "href":"/categories/2"
- *                }
- *             }
- *          }
- *       ]
- *    },
- *    "id":"1",
- *    "name":"Chair",
- *    "description":"The description.",
- *    "price":454,
- *    "color":"orange",
- *    "_links":{
- *       "self":{
- *          "href":"/products/1"
- *       }
- *    }
- * }
- *
- * @example <caption>Error response.</caption>
- * {
- *   "error": "Error fetching product: 1"
- * }
- */
 router.get('/:id', async (req: Request, res: Response) => {
     try {
         const productId = req.params.id;
@@ -71,16 +31,16 @@ router.get('/:id', async (req: Request, res: Response) => {
         const isBasic = basic === 't';
 
         const transformedProduct = isBasic ?
-            await ProductService.getBasicProductById(productId) :
-            await ProductService.getFullProductById(productId);
+            await productService.getBasicProductById(productId) :
+            await productService.getFullProductById(productId);
 
         if (!transformedProduct) {
-            return res.status(404).json({ message: 'Product not found' });
+            return res.status(404).json({message: 'Product not found'});
         }
 
         res.json(transformedProduct);
     } catch (error: any) {
-        res.status(500).json({ message: 'Error fetching product: ' + error.message, error });
+        res.status(500).json({message: 'Error fetching product: ' + error.message, error});
     }
 });
 

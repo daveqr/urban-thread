@@ -1,5 +1,5 @@
 const sinon = require('sinon');
-const ProductModel = require('../models/product.model');
+const ProductModel = require('./product.model');
 
 describe('ProductModel', () => {
     afterEach(() => {
@@ -9,8 +9,8 @@ describe('ProductModel', () => {
     describe('find()', () => {
         it('should call ProductModel.find and return products', async () => {
             const expectedProducts = [
-                { _id: '1', name: 'Product 1' },
-                { _id: '2', name: 'Product 2' },
+                {_id: '1', name: 'Product 1'},
+                {_id: '2', name: 'Product 2'},
             ];
 
             const findStub = sinon.stub(ProductModel, 'find').resolves(expectedProducts);
