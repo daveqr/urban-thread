@@ -1,12 +1,12 @@
 import express, {NextFunction, Request, Response} from 'express';
-import ProductService from '../onion/application/services/product.service';
-import MongoDBProductRepository from '../onion/infrastructure/dataAccess/mongo/MongoDBProductRepository';
-import MongoDBCategoryRepository from "../onion/infrastructure/dataAccess/mongo/MongoDBCategoryRepository"; // Import MongoDBProductRepository
+import ProductUseCase from '../onion/application/usecases/product.usecase';
+import MongoDBProductRepository from '../onion/infrastructure/data/mongo/MongoDBProductRepository';
+import MongoDBCategoryRepository from "../onion/infrastructure/data/mongo/MongoDBCategoryRepository"; // Import MongoDBProductRepository
 
 const router = express.Router();
 const productRepository = new MongoDBProductRepository();
 const categoryRepository = new MongoDBCategoryRepository();
-const productService = new ProductService(productRepository, categoryRepository);
+const productService = new ProductUseCase(productRepository, categoryRepository);
 
 router.use((req: Request, res: Response, next: NextFunction) => {
     if (req.method === 'GET') {

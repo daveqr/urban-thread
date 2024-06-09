@@ -5,7 +5,7 @@ import {createCategoryLinks} from '../../../utils/linkUtils';
 import {ProductRepository} from "../../domain/repositories/ProductRepository";
 import {CategoryRepository} from "../../domain/repositories/CategoryRepository";
 
-class ProductService {
+class ProductUseCase {
     private productRepository: ProductRepository;
     private categoryRepository: CategoryRepository;
 
@@ -62,4 +62,4 @@ class ProductService {
     }
 }
 
-export default ProductService;
+export default ProductUseCase;

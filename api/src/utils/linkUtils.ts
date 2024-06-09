@@ -1,4 +1,4 @@
-function createSelfLink(baseUrl: string, resourceId: string) {
+function createSelfLink(baseUrl: string, resourceId: string | undefined) {
     const selfLink = {
         self: {
             href: `${baseUrl}/${resourceId}`,
@@ -9,7 +9,7 @@ function createSelfLink(baseUrl: string, resourceId: string) {
 
 function combineLinks(...links: Record<string, any>[]) {
     return links.reduce((combined, link) => {
-        return { ...combined, ...link };
+        return {...combined, ...link};
     }, {});
 }
 
