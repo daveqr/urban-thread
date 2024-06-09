@@ -1,6 +1,6 @@
 import {PRODUCT_BASE_URL} from '../config/urls';
 import ProductModel from '../onion/domain/models/product.model';
-import CategoryModel from '../models/category.model';
+import CategoryModel from '../onion/domain/models/category.model';
 import {combineLinks, createSelfLink} from '../utils/linkUtils';
 
 interface CategoryLink {

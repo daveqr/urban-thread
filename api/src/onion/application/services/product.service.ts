@@ -1,9 +1,9 @@
-import CategoryModel from '../models/category.model';
-import ProductModel from '../onion/domain/models/product.model';
-import ProductTransformer from '../transformers/product.transformer';
+import CategoryModel from '../../domain/models/category.model';
+import ProductModel from '../../domain/models/product.model';
+import ProductTransformer from '../../../transformers/product.transformer';
 
-import {createCategoryLinks} from '../utils/linkUtils';
-import {ProductRepository} from "../onion/domain/repositories/ProductRepository";
+import {createCategoryLinks} from '../../../utils/linkUtils';
+import {ProductRepository} from "../../domain/repositories/ProductRepository";
 
 class ProductService {
     private productRepository: ProductRepository;

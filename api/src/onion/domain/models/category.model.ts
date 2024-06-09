@@ -1,14 +1,14 @@
 import {List} from 'immutable';
 
-import Category, {CategoryInterface} from '../schemas/category.schema';
-import ProductTransformer from '../transformers/product.transformer';
-import ProductModel from '../onion/domain/models/product.model';
+import Category, {CategoryInterface} from '../../../schemas/category.schema';
+import ProductTransformer from '../../../transformers/product.transformer';
+import ProductModel from './product.model';
 
 class CategoryModel {
     productLinks: any[] = [];
     private category: CategoryInterface;
 
-    private constructor(category: CategoryInterface) {
+    constructor(category: CategoryInterface) {
         this.category = category;
     }
 

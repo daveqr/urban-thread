@@ -1,5 +1,5 @@
 import express, {NextFunction, Request, Response} from 'express';
-import ProductService from '../services/product.service';
+import ProductService from '../onion/application/services/product.service';
 import MongoDBProductRepository from '../onion/infrastructure/dataAccess/mongo/MongoDBProductRepository'; // Import MongoDBProductRepository
 
 const router = express.Router();
