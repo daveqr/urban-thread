@@ -1,10 +1,12 @@
-import dotenv from 'dotenv';
+import('dotenv').then(dotenv => {
+    dotenv.config({path: '.env.dev'});
+
+});
 import mongoose, {Document, Schema} from 'mongoose';
 import {ObjectId} from "mongodb";
 //import faker from 'faker';
-const {faker} = require('@faker-js/faker');
 
-dotenv.config({path: '.env.dev'});
+const {faker} = require('@faker-js/faker');
 
 
 const connectDB = async () => {
