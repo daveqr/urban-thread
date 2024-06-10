@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "NODE_ENV=development nodemon src/index.ts",
+    "debug": "NODE_ENV=development node --inspect -r ts-node/register src/index.ts",
     "seed": "ts-node scripts/seed.ts",
     "test": "jest",
     "cypress": "cypress run"
@@ -40,7 +41,7 @@
     "typescript": "^5.4.5",
     "winston": "^3.13.0"
   },
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "yarn@4.2.2",
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
     "cypress": "^13.11.0",

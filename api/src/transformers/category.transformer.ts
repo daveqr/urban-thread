@@ -1,22 +1,22 @@
-import { CATEGORY_BASE_URL } from '../config/urls';
-import { createSelfLink, combineLinks } from '../utils/linkUtils';
-import CategoryModel from '../models/category.model';
+import {CATEGORY_BASE_URL} from '../config/urls';
+import {combineLinks, createSelfLink} from '../utils/linkUtils';
+import {CategoryDto} from "../onion/application/dtos/category.dto";
 
 export class CategoryTransformer {
-  static transform(categoryModel: CategoryModel) {
-    const selfLink = createSelfLink(CATEGORY_BASE_URL, categoryModel.id);
-    const combinedLinks = combineLinks(selfLink);
+    static transform(categoryDto: CategoryDto) {
+        const selfLink = createSelfLink(CATEGORY_BASE_URL, categoryDto.id);
+        const combinedLinks = combineLinks(selfLink);
 
-    return {
-      id: categoryModel.id,
-      name: categoryModel.name,
-      description: categoryModel.description,
-      editionName: categoryModel.editionName,
-      editionDescription: categoryModel.editionDescription,
-      _links: combinedLinks,
-      _embedded: {
-        products: categoryModel.productLinks,
-      },
-    };
-  }
+        return {
+            id: categoryDto.id,
+            name: categoryDto.name,
+            description: categoryDto.description,
+            editionName: categoryDto.editionName,
+            editionDescription: categoryDto.editionDescription,
+            _links: combinedLinks,
+            _embedded: {
+                // products: categoryDto.productLinks,
+            },
+        };
+    }
 }
