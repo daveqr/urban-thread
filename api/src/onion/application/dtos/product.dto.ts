@@ -1,3 +1,3 @@
 export class ProductDto {
-    id: string | undefined;
+    id?: string;
 }
