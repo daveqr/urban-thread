@@ -1,11 +1,12 @@
 import express, {NextFunction, Request, Response} from 'express';
 import ProductUseCase from '../onion/application/usecases/product.usecase';
 import MongoDBProductRepository from '../onion/infrastructure/data/mongo/MongoDBProductRepository';
-import MongoDBCategoryRepository from "../onion/infrastructure/data/mongo/MongoDBCategoryRepository"; // Import MongoDBProductRepository
+import SQLiteCategoryRepository from "../onion/infrastructure/data/sqllite/SQLiteCategoryRepository"; // Import MongoDBProductRepository
 
 const router = express.Router();
 const productRepository = new MongoDBProductRepository();
-const categoryRepository = new MongoDBCategoryRepository();
+// const categoryRepository = new MongoDBCategoryRepository();
+const categoryRepository = new SQLiteCategoryRepository();
 const productService = new ProductUseCase(productRepository, categoryRepository);
 
 router.use((req: Request, res: Response, next: NextFunction) => {

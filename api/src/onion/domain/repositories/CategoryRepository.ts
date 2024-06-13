@@ -1,15 +1,15 @@
-import CategoryModel from "../models/category.model";
+import NewCategoryModel from "../models/newcategory.model";
 
 export interface CategoryRepository {
-    findAll(): Promise<CategoryModel[]>;
+    findAll(): Promise<NewCategoryModel[]>;
 
-    findById(categoryId: string): Promise<CategoryModel | null>;
+    findById(categoryId: string): Promise<NewCategoryModel | null>;
 
-    findWithMinProductsAndProductLinks(): Promise<CategoryModel[]>;
+    findWithMinProductsAndProductLinks(): Promise<NewCategoryModel[]>;
 
-    findByIdWithProductLinks(categoryId: string): Promise<CategoryModel | null>;
+    findByIdWithProductLinks(categoryId: string): Promise<NewCategoryModel | null>;
 
-    findWithMinProducts(): Promise<CategoryModel[] | null>;
+    findWithMinProducts(): Promise<NewCategoryModel[] | null>;
 
-    findByIds(categoryIds: string[]): Promise<CategoryModel[]>;
+    findByIds(categoryIds: string[]): Promise<NewCategoryModel[]>;
 }

@@ -4,6 +4,9 @@ import helmet from 'helmet';
 import logger from './utils/logger'
 import connectDB from './config/db.config';
 import routes from './config/routes.config';
+import {AppDataSource} from "./data-source";
+import path from "path";
+import {Category} from "./entities/Category";
 
 const session = require('express-session');
 const cors = require('cors');
@@ -25,7 +28,16 @@ dotenv.config({path: '.env.dev'});
 // }
 
 // Connect to the MongoDB database
-connectDB();
+connectDB().then(() => {
+    console.log('Connected to MongoDB');
+});
+
+// initializeDataSource().then(() => {
+//     console.log('Initialized datasource');
+// });
+
+const root: string = path.resolve(__dirname, "..")
+
 
 export type Language = 'en' | 'it';
 
@@ -125,3 +137,24 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     logger.info(`Server is running on port ${PORT}`);
 });
+
+async function main() {
+    const connection = AppDataSource
+
+    await AppDataSource.initialize()
+        .then(() => {
+            console.log("Data Source has been initialized!")
+        })
+        .catch((err) => {
+            console.error("Error during Data Source initialization", err)
+        })
+
+    const messageRepository = connection.getRepository(Category);
+    const allMessages = await messageRepository.find();
+    allMessages.forEach((message: Category) => {
+        const text = message.name
+        console.log(text)
+    })
+}
+
+main().catch(console.error)
