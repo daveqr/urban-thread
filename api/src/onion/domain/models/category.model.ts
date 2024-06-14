@@ -1,37 +1,40 @@
-import {CategoryInterface} from '../../../schemas/category.schema';
-import ProductModel from './product.model';
+import {CategoryEntity} from "../../../entities/category.entity";
 
-class CategoryModel {
+class Category {
     productLinks: any[] = [];
-    private category: CategoryInterface;
+    private category: CategoryEntity;
 
-    constructor(category: CategoryInterface) {
+    constructor(category: CategoryEntity) {
         this.category = category;
     }
 
     get id(): string {
-        return <string>this.category._id;
+        return String(this.category.id);
     }
 
     get name(): string {
-        return this.category.name;
+        return <string>this.category.name;
     }
 
     get description(): string {
-        return this.category.description;
+        return "thedescripton";
+        // return this.category.description;
     }
 
     get editionName(): string {
-        return this.category.edition.name;
+        return "editionname";
+        // return this.category.edition.name;
     }
 
     get editionDescription(): string {
-        return this.category.edition.description;
+        return "editionDescription";
+        // return this.category.edition.description;
     }
 
     get products() {
-        return this.category.products.map(product => new ProductModel(product));
+        return [];
+        // return this.category.products.map(product => new ProductModel(product));
     }
 }
 
-export default CategoryModel;
+export default Category;

@@ -1,5 +1,4 @@
 const sinon = require('sinon');
-const ProductModel = require('../../../src/onion/domain/models/product.model');
 
 describe('ProductModel', () => {
     afterEach(() => {

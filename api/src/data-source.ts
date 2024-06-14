@@ -1,13 +1,14 @@
-// src/data-source.ts
 import {DataSource} from "typeorm";
-import {Category} from "./entities/Category";
+import path from "path";
+
+const entitiesPath = path.join(__dirname, "entities", "*.ts");
 
 export const AppDataSource = new DataSource({
     type: "sqlite",
     database: "database.sqlite",
-    synchronize: false,
+    synchronize: true,
     logging: false,
-    entities: [Category],
+    entities: [entitiesPath],
     migrations: ["./migrations/*.ts"],
     subscribers: [],
 });

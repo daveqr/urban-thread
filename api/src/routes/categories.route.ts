@@ -1,9 +1,10 @@
 import CategoryUseCase from "../onion/application/usecases/category.usecase";
 import {CategoryTransformer} from "../transformers/category.transformer";
 import CategoryService from "../onion/domain/services/category.service";
-import SQLiteCategoryRepository from "../onion/infrastructure/data/sqllite/SQLiteCategoryRepository";
+import SQLiteCategoryRepository from "../onion/infrastructure/data/sqllite/category.repository.sqlite";
 
-const express = require('express');
+import express from 'express';
+
 const router = express.Router();
 require('../schemas/edition.schema');
 
