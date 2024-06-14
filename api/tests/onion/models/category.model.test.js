@@ -1,4 +1,3 @@
-const CategoryModel = require('../../../src/onion/domain/models/category.model'); // Import your CategoryModel
 const sinon = require('sinon');
 
 describe('CategoryModel', () => {

@@ -1,12 +1,14 @@
 import express, {NextFunction, Request, Response} from 'express';
 import ProductUseCase from '../onion/application/usecases/product.usecase';
-import MongoDBProductRepository from '../onion/infrastructure/data/mongo/MongoDBProductRepository';
-import MongoDBCategoryRepository from "../onion/infrastructure/data/mongo/MongoDBCategoryRepository"; // Import MongoDBProductRepository
+import SQLiteCategoryRepository from "../onion/infrastructure/data/sqllite/category.repository.sqlite";
+import SQLiteProductRepository from "../onion/infrastructure/data/sqllite/product.repository.sqlite";
+import ProductService from "../onion/domain/services/product.service"; // Import MongoDBProductRepository
 
 const router = express.Router();
-const productRepository = new MongoDBProductRepository();
-const categoryRepository = new MongoDBCategoryRepository();
-const productService = new ProductUseCase(productRepository, categoryRepository);
+const categoryRepository = new SQLiteCategoryRepository();
+const productRepository = new SQLiteProductRepository();
+const productService = new ProductService(productRepository);
+const productUseCase = new ProductUseCase(productService, productRepository, categoryRepository);
 
 router.use((req: Request, res: Response, next: NextFunction) => {
     if (req.method === 'GET') {
@@ -17,9 +19,9 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 
 router.get('/', async (req: Request, res: Response) => {
     try {
-        const transformedProducts = await productService.getAllProducts();
+        const products = await productUseCase.getAllProducts();
 
-        res.json(transformedProducts);
+        res.json(products);
     } catch (error) {
         res.status(500).json({error: 'Failed to fetch products'});
     }
@@ -33,8 +35,8 @@ router.get('/:id', async (req: Request, res: Response) => {
         const isBasic = basic === 't';
 
         const transformedProduct = isBasic ?
-            await productService.getBasicProductById(productId) :
-            await productService.getFullProductById(productId);
+            await productUseCase.getBasicProductById(productId) :
+            await productUseCase.getFullProductById(productId);
 
         if (!transformedProduct) {
             return res.status(404).json({message: 'Product not found'});

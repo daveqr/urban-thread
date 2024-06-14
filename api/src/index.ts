@@ -2,8 +2,11 @@ import express, {ErrorRequestHandler, NextFunction, Request, Response} from 'exp
 import dotenv from 'dotenv';
 import helmet from 'helmet';
 import logger from './utils/logger'
-import connectDB from './config/db.config';
 import routes from './config/routes.config';
+import {AppDataSource} from "./data-source";
+import path from "path";
+import {CategoryEntity} from "./entities/category.entity";
+import {ProductEntity} from "./entities/product.entity";
 
 const session = require('express-session');
 const cors = require('cors');
@@ -24,8 +27,13 @@ dotenv.config({path: '.env.dev'});
 //   dotenv.config({ path: '.env.prod' });
 // }
 
-// Connect to the MongoDB database
-connectDB();
+
+// initializeDataSource().then(() => {
+//     console.log('Initialized datasource');
+// });
+
+const root: string = path.resolve(__dirname, "..")
+
 
 export type Language = 'en' | 'it';
 
@@ -125,3 +133,27 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     logger.info(`Server is running on port ${PORT}`);
 });
+
+async function main() {
+    const connection = AppDataSource
+
+    await AppDataSource.initialize()
+        .then(() => {
+            console.log("Data Source has been initialized!")
+        })
+        .catch((err) => {
+            console.error("Error during Data Source initialization", err)
+        })
+
+    const categories = await connection.getRepository(CategoryEntity).find();
+    categories.forEach((categoryEntity: CategoryEntity) => {
+        console.log(categoryEntity.name)
+    })
+
+    const products = await connection.getRepository(ProductEntity).find();
+    products.forEach((productEntity: ProductEntity) => {
+        console.log(productEntity.name)
+    })
+}
+
+main().catch(console.error)

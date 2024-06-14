@@ -1,4 +1,4 @@
-import {CategoryRepository} from "../../domain/repositories/CategoryRepository";
+import {CategoryRepository} from "../../domain/repositories/category.repository";
 import {CategoryDto} from "../dtos/category.dto";
 import CategoryService from "../../domain/services/category.service";
 

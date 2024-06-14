@@ -1,13 +1,14 @@
 import CategoryUseCase from "../onion/application/usecases/category.usecase";
-import MongoDBCategoryRepository from "../onion/infrastructure/data/mongo/MongoDBCategoryRepository";
 import {CategoryTransformer} from "../transformers/category.transformer";
 import CategoryService from "../onion/domain/services/category.service";
+import SQLiteCategoryRepository from "../onion/infrastructure/data/sqllite/category.repository.sqlite";
 
-const express = require('express');
+import express from 'express';
+
 const router = express.Router();
 require('../schemas/edition.schema');
 
-const categoryRepository = new MongoDBCategoryRepository();
+const categoryRepository = new SQLiteCategoryRepository();
 const categoryService = new CategoryService(categoryRepository);
 const categoryUseCase = new CategoryUseCase(categoryRepository, categoryService);
 
