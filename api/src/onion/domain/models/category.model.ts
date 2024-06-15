@@ -1,24 +1,25 @@
-import {CategoryEntity} from "../../../entities/category.entity";
-
 class Category {
     productLinks: any[] = [];
-    private category: CategoryEntity;
+    private readonly _id: number;
+    private readonly _description?: string;
+    private readonly _name?: string;
 
-    constructor(category: CategoryEntity) {
-        this.category = category;
+    constructor(id: number, name?: string, description?: string) {
+        this._id = id;
+        this._description = description;
+        this._name = name;
     }
 
-    get id(): string {
-        return String(this.category.id);
+    get id(): number {
+        return this._id;
     }
 
-    get name(): string {
-        return <string>this.category.name;
+    get name(): string | undefined {
+        return this._name;
     }
 
-    get description(): string {
-        return "thedescripton";
-        // return this.category.description;
+    get description(): string | undefined {
+        return this._description;
     }
 
     get editionName(): string {

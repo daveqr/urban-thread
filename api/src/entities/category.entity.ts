@@ -5,10 +5,13 @@ import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 @Entity()
 export class CategoryEntity {
     @PrimaryGeneratedColumn()
-    id?: number;
+    id!: number;
 
     @Column()
     name?: string;
+
+    @Column()
+    description?: string;
 
     // @OneToMany(() => Product, product => product.category)
     // products: Product[];

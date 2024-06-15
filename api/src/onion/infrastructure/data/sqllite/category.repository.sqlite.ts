@@ -8,7 +8,8 @@ class SQLiteCategoryRepository implements CategoryRepository {
     async find(): Promise<Category[]> {
         const categoryRepo = AppDataSource.getRepository(CategoryEntity);
         const categories = await categoryRepo.find();
-        return categories.map((category) => new Category(category));
+        return categories.map((category) =>
+            new Category(category.id, category.name, category.description));
     }
 
     async findByIdWithProductLinks(categoryId: string): Promise<Category | null> {
@@ -40,7 +41,7 @@ class SQLiteCategoryRepository implements CategoryRepository {
         const categoryRepo = AppDataSource.getRepository(CategoryEntity);
 
         const categories = await categoryRepo.findBy({id: In([1, 2, 3])});
-        return categories.map(category => new Category(category));
+        return categories.map(category => new Category(category.id, category.name, category.description));
     }
 
     async findById(categoryId: any): Promise<Category | null> {
