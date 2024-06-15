@@ -8,7 +8,7 @@ import Product from "../../../domain/models/product.model";
 class SQLiteCategoryRepository implements CategoryRepository {
     async find(): Promise<Category[]> {
         const categoryRepo = AppDataSource.getRepository(CategoryEntity);
-        
+
         const categories = await categoryRepo.find({relations: ["products"]});
 
         return this.mapToDomainCategories(categories);
@@ -19,6 +19,7 @@ class SQLiteCategoryRepository implements CategoryRepository {
 
         const categories = await categoryRepo.createQueryBuilder('category')
             .innerJoinAndSelect('highlighted_categories', 'highlighted', 'category.id = highlighted.categoryId')
+            .leftJoinAndSelect('category.products', 'product')
             .getMany();
 
         return this.mapToDomainCategories(categories);
@@ -65,7 +66,7 @@ class SQLiteCategoryRepository implements CategoryRepository {
 
     private mapToDomainCategories(categories: CategoryEntity[]) {
         return categories.map((categoryEntity) => {
-            const products = categoryEntity.products.map(productEntity =>
+            let products = categoryEntity.products.map(productEntity =>
                 new Product(productEntity.id, productEntity.name, productEntity.description, [], productEntity.slug)
             );
 

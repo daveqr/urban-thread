@@ -21,12 +21,26 @@ router.use((req: any, res: any, next: any) => {
 
 router.get('/', async (req: any, res: any) => {
     try {
-        const isDetailed = req.query.detailed === 'true';
-        const categories = await categoryUseCase.findAllCategories(isDetailed);
-        console.log(categories)
+        const isDetailed = Boolean(req.query.detailed);
+
+        let categories = await categoryUseCase.find(isDetailed);
+
         const transformedCategories = categories.map(CategoryTransformer.transform);
         res.json(transformedCategories);
     } catch (error) {
+        console.log(error);
+        res.status(500).json({error: 'Failed to fetch categories'});
+    }
+});
+
+router.get('/highlighted', async (req: any, res: any) => {
+    try {
+        let categories = await categoryUseCase.findHighlightedCategories()
+
+        const transformedCategories = categories.map(CategoryTransformer.transform);
+        res.json(transformedCategories);
+    } catch (error) {
+        console.log(error);
         res.status(500).json({error: 'Failed to fetch categories'});
     }
 });

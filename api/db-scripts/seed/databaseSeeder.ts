@@ -9,6 +9,7 @@ import categoriesData from './data/categories.json';
 // @ts-ignore
 import productsData from './data/products.json';
 import slugify from "slugify";
+import HighlightedCategoryEntity from "../../src/entities/highlighted-category.entity";
 
 const seedDatabase = async () => {
     async function insertProducts(categoryMap: {
@@ -42,6 +43,28 @@ const seedDatabase = async () => {
         return categories;
     }
 
+    async function insertHighlightedCategories(highlightedCategoryRepo: Repository<HighlightedCategoryEntity>, categories: CategoryEntity[]) {
+        const highlightedNames = [
+            "Festival",
+            "Silk Dresses",
+            "Suits",
+            "Showroom"
+        ];
+
+        const highlightedCategories = categories.filter(category => highlightedNames.includes(category.name));
+
+        let position = 0;
+        const highlightedEntities = highlightedCategories.map(category => {
+            return highlightedCategoryRepo.create({
+                category: category,
+                position: position++
+            });
+        });
+
+        await highlightedCategoryRepo.save(highlightedEntities);
+    }
+
+
     function createCategoryMap(categories: any[]) {
         const categoryMap: { [key: string]: CategoryEntity } = {};
         for (const category of categories) {
@@ -53,14 +76,17 @@ const seedDatabase = async () => {
     try {
         await AppDataSource.initialize();
 
+        const highlightedCategoryRepo = AppDataSource.getRepository(HighlightedCategoryEntity);
         const productRepo = AppDataSource.getRepository(ProductEntity);
         const categoryRepo = AppDataSource.getRepository(CategoryEntity);
+
+        await highlightedCategoryRepo.clear();
         await productRepo.clear();
         await categoryRepo.clear();
 
         const categories = await insertCategories(categoryRepo);
-        const categoryMap = createCategoryMap(categories);
-        await insertProducts(categoryMap, productRepo);
+        await insertProducts(createCategoryMap(categories), productRepo);
+        await insertHighlightedCategories(highlightedCategoryRepo, categories);
 
         console.log("Database seeded successfully");
     } catch (error) {

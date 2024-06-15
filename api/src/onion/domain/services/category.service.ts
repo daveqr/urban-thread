@@ -15,6 +15,10 @@ class CategoryService {
         //     : await this.categoryRepository.findWithMinProductsAndProductLinks();
     }
 
+    async findHighlightedCategories(): Promise<Category[]> {
+        return await this.categoryRepository.findHighlightedCategories();
+    }
+
 }
 
 export default CategoryService;

@@ -12,22 +12,28 @@ class CategoryUseCase {
         this.categoryService = categoryService;
     }
 
-    async findAllCategories(isDetailed: boolean): Promise<CategoryDto[]> {
+    async find(isDetailed: boolean): Promise<CategoryDto[]> {
         const categories: Category[] = await this.categoryService.findAllCategories(isDetailed);
 
-        return categories.map(category => this.toCategoryDTO(category, isDetailed));
+        return categories.map(category => this.toCategoryDTO(category));
+    }
+
+    async findHighlightedCategories(): Promise<CategoryDto[]> {
+        const categories: Category[] = await this.categoryService.findHighlightedCategories();
+
+        return categories.map(category => this.toCategoryDTO(category));
     }
 
     async findCategoryById(categoryId: string): Promise<CategoryDto | null> {
         try {
             const category = await this.categoryRepository.findByIdWithProductLinks(categoryId);
-            return category ? this.toCategoryDTO(category, true) : null;
+            return category ? this.toCategoryDTO(category) : null;
         } catch (error) {
             throw error;
         }
     }
 
-    private toCategoryDTO(category: any, isDetailed: boolean): CategoryDto {
+    private toCategoryDTO(category: any): CategoryDto {
         const categoryDto = new CategoryDto();
         categoryDto.id = category.id;
         categoryDto.name = category.name;

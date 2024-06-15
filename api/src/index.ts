@@ -5,8 +5,6 @@ import logger from './utils/logger'
 import routes from './config/routes.config';
 import {AppDataSource} from "./data-source";
 import path from "path";
-import {CategoryEntity} from "./entities/category.entity";
-import {ProductEntity} from "./entities/product.entity";
 
 const session = require('express-session');
 const cors = require('cors');
@@ -144,16 +142,6 @@ async function main() {
         .catch((err) => {
             console.error("Error during Data Source initialization", err)
         })
-
-    const categories = await connection.getRepository(CategoryEntity).find();
-    categories.forEach((categoryEntity: CategoryEntity) => {
-        console.log(categoryEntity.name)
-    })
-
-    const products = await connection.getRepository(ProductEntity).find();
-    products.forEach((productEntity: ProductEntity) => {
-        console.log(productEntity.name)
-    })
 }
 
 main().catch(console.error)
