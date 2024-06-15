@@ -6,6 +6,9 @@ export class ProductEntity {
     @PrimaryGeneratedColumn()
     id!: number;
 
+    @Column({nullable: true})
+    uuid!: string;
+
     @Column({nullable: false})
     name!: string;
 

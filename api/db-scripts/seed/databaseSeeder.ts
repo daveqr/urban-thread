@@ -23,7 +23,10 @@ const seedDatabase = async () => {
                 ...productData,
                 categories: productCategories
             }) as unknown as ProductEntity;
-            product.slug = slugifyValue(product.name);
+
+            product.uuid = uuidv4();
+            product.slug = slugifyValue(product.name + ' p');
+
             products.push(product);
         }
         await productRepo.save(products);
@@ -39,7 +42,7 @@ const seedDatabase = async () => {
             const category: CategoryEntity = categoryRepo.create(categoryData) as unknown as CategoryEntity;
 
             category.uuid = uuidv4();
-            category.slug = slugifyValue(category.name + '-' + category.uuid);
+            category.slug = slugifyValue(category.name + ' c');
 
             categories.push(category);
         }

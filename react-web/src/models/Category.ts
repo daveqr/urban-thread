@@ -4,6 +4,8 @@ interface Category {
     description: string;
     editionName: string;
     editionDescription: string;
+    position: number;
+    slug: string;
 }
 
 export default Category;

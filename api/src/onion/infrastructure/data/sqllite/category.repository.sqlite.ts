@@ -4,6 +4,12 @@ import {CategoryRepository} from "../../../domain/repositories/category.reposito
 import Category from "../../../domain/models/category.model";
 import {AppDataSource} from "../../../../data-source";
 import Product from "../../../domain/models/product.model";
+import HighlightedCategory from "../../../domain/models/highlighted-category.model";
+
+interface HighlightedCategoryResult {
+    category: CategoryEntity;
+    position: number;
+}
 
 class SQLiteCategoryRepository implements CategoryRepository {
     async find(): Promise<Category[]> {
@@ -14,15 +20,21 @@ class SQLiteCategoryRepository implements CategoryRepository {
         return this.mapToDomainCategories(categories);
     }
 
-    async findHighlightedCategories(): Promise<Category[]> {
+    async findHighlightedCategories(): Promise<HighlightedCategory[]> {
         const categoryRepo = AppDataSource.getRepository(CategoryEntity);
 
-        const categories = await categoryRepo.createQueryBuilder('category')
+        const highlightedCategories = await categoryRepo.createQueryBuilder('category')
             .innerJoinAndSelect('highlighted_categories', 'highlighted', 'category.id = highlighted.categoryId')
             .leftJoinAndSelect('category.products', 'product')
-            .getMany();
+            .addSelect('highlighted.position', 'position')
+            .getRawAndEntities();
 
-        return this.mapToDomainCategories(categories);
+        const result = highlightedCategories.raw.map((rawResult, index) => ({
+            category: highlightedCategories.entities[index],
+            position: rawResult.position
+        }));
+
+        return this.mapToDomainHighlightedCategories(result);
     }
 
     async findByIdWithProductLinks(categoryId: string): Promise<Category | null> {
@@ -72,7 +84,21 @@ class SQLiteCategoryRepository implements CategoryRepository {
 
             let category = new Category(categoryEntity.uuid, categoryEntity.name, categoryEntity.description, products);
             category.slug = categoryEntity.slug;
+
             return category;
+        });
+    }
+
+    private mapToDomainHighlightedCategories(categoriesWithPosition: HighlightedCategoryResult[]): HighlightedCategory[] {
+        return categoriesWithPosition.map(({category, position}) => {
+            let products = category.products.map(productEntity =>
+                new Product(productEntity.id, productEntity.name, productEntity.description, [], productEntity.slug)
+            );
+
+            let highlightedCategory = new HighlightedCategory(category.uuid, category.name, products, position, category.description);
+            highlightedCategory.slug = category.slug;
+
+            return highlightedCategory;
         });
     }
 }
