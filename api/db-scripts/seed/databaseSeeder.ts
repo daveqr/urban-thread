@@ -42,11 +42,6 @@ const seedDatabase = async () => {
         return categories;
     }
 
-    async function clearTables(productRepo: Repository<ProductEntity>, categoryRepo: Repository<CategoryEntity>) {
-        await productRepo.clear();
-        await categoryRepo.clear();
-    }
-
     function createCategoryMap(categories: any[]) {
         const categoryMap: { [key: string]: CategoryEntity } = {};
         for (const category of categories) {
@@ -60,7 +55,8 @@ const seedDatabase = async () => {
 
         const productRepo = AppDataSource.getRepository(ProductEntity);
         const categoryRepo = AppDataSource.getRepository(CategoryEntity);
-        await clearTables(productRepo, categoryRepo);
+        await productRepo.clear();
+        await categoryRepo.clear();
 
         const categories = await insertCategories(categoryRepo);
         const categoryMap = createCategoryMap(categories);
