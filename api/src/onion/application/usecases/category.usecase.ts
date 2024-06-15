@@ -1,6 +1,7 @@
 import {CategoryRepository} from "../../domain/repositories/category.repository";
 import {CategoryDto} from "../dtos/category.dto";
 import CategoryService from "../../domain/services/category.service";
+import Category from "../../domain/models/category.model";
 
 class CategoryUseCase {
     private categoryRepository: CategoryRepository;
@@ -12,7 +13,7 @@ class CategoryUseCase {
     }
 
     async findAllCategories(isDetailed: boolean): Promise<CategoryDto[]> {
-        const categories = await this.categoryService.findAllCategories(isDetailed);
+        const categories: Category[] = await this.categoryService.findAllCategories(isDetailed);
 
         return categories.map(category => this.toCategoryDTO(category, isDetailed));
     }
@@ -27,10 +28,12 @@ class CategoryUseCase {
     }
 
     private toCategoryDTO(category: any, isDetailed: boolean): CategoryDto {
-        const categoryDTO = new CategoryDto();
-        categoryDTO.id = category.id;
-        categoryDTO.name = category.name;
-        categoryDTO.description = category.description;
+        const categoryDto = new CategoryDto();
+        categoryDto.id = category.id;
+        categoryDto.name = category.name;
+        categoryDto.slug = category.slug;
+        categoryDto.description = category.description;
+        categoryDto.products = category.products;
 
         // if (isDetailed) {
         //     categoryDTO.editionName = category.edition.name;
@@ -43,7 +46,7 @@ class CategoryUseCase {
         //     });
         // }
 
-        return categoryDTO;
+        return categoryDto;
     }
 }
 

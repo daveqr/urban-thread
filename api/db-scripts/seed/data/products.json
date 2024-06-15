@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Men's T-Shirt",
+    "description": "A comfortable cotton t-shirt for men.",
+    "categories": [
+      "Men's Clothing"
+    ]
+  },
+  {
+    "name": "Women's Dress",
+    "description": "A stylish summer dress for women.",
+    "categories": [
+      "Women's Clothing"
+    ]
+  },
+  {
+    "name": "Kid's Jeans",
+    "description": "Durable jeans for kids.",
+    "categories": [
+      "Kid's Clothing"
+    ]
+  }
+]

@@ -1,24 +1,48 @@
-import {CategoryEntity} from "../../../entities/category.entity";
+import Product from "./product.model";
 
 class Category {
     productLinks: any[] = [];
-    private category: CategoryEntity;
+    private readonly _id: number;
+    private readonly _description?: string;
+    private readonly _name?: string;
 
-    constructor(category: CategoryEntity) {
-        this.category = category;
+    constructor(id: number, name?: string, description?: string, products: Product[] = []) {
+        this._id = id;
+        this._description = description;
+        this._name = name;
+        this._products = products;
     }
 
-    get id(): string {
-        return String(this.category.id);
+    private _slug?: string;
+
+    get slug(): string {
+        return <string>this._slug;
     }
 
-    get name(): string {
-        return <string>this.category.name;
+    set slug(slug: string) {
+        this._slug = slug;
     }
 
-    get description(): string {
-        return "thedescripton";
-        // return this.category.description;
+    private _products: Product[];
+
+    get products(): Product[] {
+        return this._products;
+    }
+
+    set products(products: Product[]) {
+        this._products = products;
+    }
+
+    get id(): number {
+        return this._id;
+    }
+
+    get name(): string | undefined {
+        return this._name;
+    }
+
+    get description(): string | undefined {
+        return this._description;
     }
 
     get editionName(): string {
@@ -29,11 +53,6 @@ class Category {
     get editionDescription(): string {
         return "editionDescription";
         // return this.category.edition.description;
-    }
-
-    get products() {
-        return [];
-        // return this.category.products.map(product => new ProductModel(product));
     }
 }
 

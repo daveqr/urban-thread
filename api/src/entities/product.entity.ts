@@ -1,17 +1,23 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
-// import {Product} from "./Product";
-// import {Edition} from "./Edition";
+import {Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
+import {CategoryEntity} from "./category.entity";
 
 @Entity()
 export class ProductEntity {
     @PrimaryGeneratedColumn()
-    id?: number;
+    id!: number;
 
-    @Column()
-    name?: string;
+    @Column({nullable: false})
+    name!: string;
 
-    // @OneToMany(() => Product, product => product.category)
-    // products: Product[];
+    @Column({nullable: true})
+    description?: string;
+
+    @Column({nullable: false})
+    slug!: string;
+
+    @ManyToMany(() => CategoryEntity, category => category.products)
+    @JoinTable()
+    categories!: CategoryEntity[];
 
     // @ManyToOne(() => Edition, edition => edition.categories)
     // edition: Edition;
