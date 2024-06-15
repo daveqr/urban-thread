@@ -6,11 +6,14 @@ export class ProductEntity {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column({nullable: true})
-    name?: string;
+    @Column({nullable: false})
+    name!: string;
 
     @Column({nullable: true})
     description?: string;
+
+    @Column({nullable: false})
+    slug!: string;
 
     @ManyToMany(() => CategoryEntity, category => category.products)
     @JoinTable()

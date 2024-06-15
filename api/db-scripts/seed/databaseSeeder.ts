@@ -8,6 +8,7 @@ import categoriesData from './data/categories.json';
 
 // @ts-ignore
 import productsData from './data/products.json';
+import slugify from "slugify";
 
 const seedDatabase = async () => {
     async function insertProducts(categoryMap: {
@@ -16,10 +17,11 @@ const seedDatabase = async () => {
         const products = [];
         for (const productData of productsData) {
             const productCategories = productData.categories.map((name: string) => categoryMap[name]);
-            const product = productRepo.create({
+            const product: ProductEntity = productRepo.create({
                 ...productData,
                 categories: productCategories
-            });
+            }) as unknown as ProductEntity;
+            product.slug = slugify(product.name, {lower: true, remove: /[*+~.()'"!:@]/g});
             products.push(product);
         }
         await productRepo.save(products);
