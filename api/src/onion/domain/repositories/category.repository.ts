@@ -12,4 +12,6 @@ export interface CategoryRepository {
     findWithMinProducts(): Promise<Category[] | null>;
 
     findByIds(categoryIds: string[]): Promise<Category[]>;
+
+    findHighlightedCategories(): Promise<Category[]>;
 }

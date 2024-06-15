@@ -8,17 +8,20 @@ import Product from "../../../domain/models/product.model";
 class SQLiteCategoryRepository implements CategoryRepository {
     async find(): Promise<Category[]> {
         const categoryRepo = AppDataSource.getRepository(CategoryEntity);
+        
         const categories = await categoryRepo.find({relations: ["products"]});
 
-        return categories.map((categoryEntity) => {
-            const products = categoryEntity.products.map(productEntity =>
-                new Product(productEntity.id, productEntity.name, productEntity.description, [], productEntity.slug)
-            );
+        return this.mapToDomainCategories(categories);
+    }
 
-            let category = new Category(categoryEntity.id, categoryEntity.name, categoryEntity.description, products);
-            category.slug = categoryEntity.slug;
-            return category;
-        });
+    async findHighlightedCategories(): Promise<Category[]> {
+        const categoryRepo = AppDataSource.getRepository(CategoryEntity);
+
+        const categories = await categoryRepo.createQueryBuilder('category')
+            .innerJoinAndSelect('highlighted_categories', 'highlighted', 'category.id = highlighted.categoryId')
+            .getMany();
+
+        return this.mapToDomainCategories(categories);
     }
 
     async findByIdWithProductLinks(categoryId: string): Promise<Category | null> {
@@ -58,6 +61,18 @@ class SQLiteCategoryRepository implements CategoryRepository {
         // const category = await categoryRepo.findOne(categoryId, {relations: ["products", "edition"]});
         // return category ? new CategoryModel(category) : null;
         return null;
+    }
+
+    private mapToDomainCategories(categories: CategoryEntity[]) {
+        return categories.map((categoryEntity) => {
+            const products = categoryEntity.products.map(productEntity =>
+                new Product(productEntity.id, productEntity.name, productEntity.description, [], productEntity.slug)
+            );
+
+            let category = new Category(categoryEntity.id, categoryEntity.name, categoryEntity.description, products);
+            category.slug = categoryEntity.slug;
+            return category;
+        });
     }
 }
 
