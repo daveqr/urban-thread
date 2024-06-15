@@ -31,6 +31,7 @@ class CategoryUseCase {
         categoryDTO.id = category.id;
         categoryDTO.name = category.name;
         categoryDTO.description = category.description;
+        categoryDTO.products = category.products;
 
         // if (isDetailed) {
         //     categoryDTO.editionName = category.edition.name;

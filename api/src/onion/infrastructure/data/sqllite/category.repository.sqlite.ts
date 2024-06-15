@@ -3,13 +3,20 @@ import {CategoryEntity} from "../../../../entities/category.entity";
 import {CategoryRepository} from "../../../domain/repositories/category.repository";
 import Category from "../../../domain/models/category.model";
 import {AppDataSource} from "../../../../data-source";
+import Product from "../../../domain/models/product.model";
 
 class SQLiteCategoryRepository implements CategoryRepository {
     async find(): Promise<Category[]> {
         const categoryRepo = AppDataSource.getRepository(CategoryEntity);
-        const categories = await categoryRepo.find();
-        return categories.map((category) =>
-            new Category(category.id, category.name, category.description));
+        const categories = await categoryRepo.find({relations: ["products"]});
+
+        return categories.map((categoryEntity) => {
+            const products = categoryEntity.products.map(productEntity =>
+                new Product(productEntity.id, productEntity.name, productEntity.description)
+            );
+
+            return new Category(categoryEntity.id, categoryEntity.name, categoryEntity.description, products);
+        });
     }
 
     async findByIdWithProductLinks(categoryId: string): Promise<Category | null> {

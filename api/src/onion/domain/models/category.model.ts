@@ -1,13 +1,26 @@
+import Product from "./product.model";
+
 class Category {
     productLinks: any[] = [];
     private readonly _id: number;
     private readonly _description?: string;
     private readonly _name?: string;
 
-    constructor(id: number, name?: string, description?: string) {
+    constructor(id: number, name?: string, description?: string, products: Product[] = []) {
         this._id = id;
         this._description = description;
         this._name = name;
+        this._products = products;
+    }
+
+    private _products: Product[];
+
+    get products(): Product[] {
+        return this._products;
+    }
+
+    set products(products: Product[]) {
+        this._products = products;
     }
 
     get id(): number {
@@ -30,11 +43,6 @@ class Category {
     get editionDescription(): string {
         return "editionDescription";
         // return this.category.edition.description;
-    }
-
-    get products() {
-        return [];
-        // return this.category.products.map(product => new ProductModel(product));
     }
 }
 

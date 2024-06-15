@@ -23,6 +23,7 @@ router.get('/', async (req: any, res: any) => {
     try {
         const isDetailed = req.query.detailed === 'true';
         const categories = await categoryUseCase.findAllCategories(isDetailed);
+        console.log(categories)
         const transformedCategories = categories.map(CategoryTransformer.transform);
         res.json(transformedCategories);
     } catch (error) {

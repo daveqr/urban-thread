@@ -12,6 +12,7 @@ export class CategoryTransformer {
             name: categoryDto.name,
             description: categoryDto.description,
             editionName: categoryDto.editionName,
+            products: categoryDto.products,
             editionDescription: categoryDto.editionDescription,
             _links: combinedLinks,
             _embedded: {

@@ -1,13 +1,26 @@
+import Category from "./category.model";
+
 class Product {
     productLinks: any[] = [];
     private readonly _id: number;
     private readonly _description?: string;
     private readonly _name?: string;
 
-    constructor(id: number, name?: string, description?: string) {
+    constructor(id: number, name?: string, description?: string, categories: Category[] = []) {
         this._id = id;
         this._description = description;
         this._name = name;
+        this._categories = categories;
+    }
+
+    private _categories: Category[];
+
+    get categories(): Category[] {
+        return this._categories;
+    }
+
+    set categories(products: Category[]) {
+        this._categories = products;
     }
 
     get id(): number {

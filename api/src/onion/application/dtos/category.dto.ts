@@ -1,4 +1,4 @@
-import {ProductDto} from "./product.dto";
+import Product from "../../domain/models/product.model";
 
 export class CategoryDto {
     id?: string;
@@ -6,5 +6,6 @@ export class CategoryDto {
     description?: string;
     editionName?: string;
     editionDescription?: string;
-    products?: ProductDto[];
+    // products?: ProductDto[];
+    products?: Product[];
 }
