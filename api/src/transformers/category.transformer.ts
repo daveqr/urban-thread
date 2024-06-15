@@ -11,6 +11,7 @@ export class CategoryTransformer {
             id: categoryDto.id,
             name: categoryDto.name,
             description: categoryDto.description,
+            slug: categoryDto.slug,
             editionName: categoryDto.editionName,
             products: categoryDto.products,
             editionDescription: categoryDto.editionDescription,

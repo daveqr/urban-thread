@@ -21,16 +21,21 @@ const seedDatabase = async () => {
                 ...productData,
                 categories: productCategories
             }) as unknown as ProductEntity;
-            product.slug = slugify(product.name, {lower: true, remove: /[*+~.()'"!:@]/g});
+            product.slug = slugifyValue(product.name);
             products.push(product);
         }
         await productRepo.save(products);
     }
 
+    function slugifyValue(value: string) {
+        return slugify(value, {lower: true, remove: /[*+~.()'"!:@]/g});
+    }
+
     async function insertCategories(categoryRepo: Repository<CategoryEntity>) {
         const categories = [];
         for (const categoryData of categoriesData) {
-            const category = categoryRepo.create(categoryData);
+            const category: CategoryEntity = categoryRepo.create(categoryData) as unknown as CategoryEntity;
+            category.slug = slugifyValue(category.name);
             categories.push(category);
         }
         await categoryRepo.save(categories);

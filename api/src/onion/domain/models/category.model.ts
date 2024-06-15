@@ -13,6 +13,16 @@ class Category {
         this._products = products;
     }
 
+    private _slug?: string;
+
+    get slug(): string {
+        return <string>this._slug;
+    }
+
+    set slug(slug: string) {
+        this._slug = slug;
+    }
+
     private _products: Product[];
 
     get products(): Product[] {

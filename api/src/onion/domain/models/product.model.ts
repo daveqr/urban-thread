@@ -5,11 +5,13 @@ class Product {
     private readonly _id: number;
     private readonly _description?: string;
     private readonly _name?: string;
+    private readonly _slug: any;
 
-    constructor(id: number, name?: string, description?: string, categories: Category[] = []) {
+    constructor(id: number, name?: string, description?: string, categories: Category[] = [], slug: string = '') {
         this._id = id;
         this._description = description;
         this._name = name;
+        this._slug = slug;
         this._categories = categories;
     }
 
@@ -33,6 +35,10 @@ class Product {
 
     get description(): string | undefined {
         return this._description;
+    }
+
+    get slug(): string {
+        return this._slug;
     }
 
     get editionName(): string {

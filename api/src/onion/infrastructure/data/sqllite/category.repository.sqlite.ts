@@ -12,10 +12,12 @@ class SQLiteCategoryRepository implements CategoryRepository {
 
         return categories.map((categoryEntity) => {
             const products = categoryEntity.products.map(productEntity =>
-                new Product(productEntity.id, productEntity.name, productEntity.description)
+                new Product(productEntity.id, productEntity.name, productEntity.description, [], productEntity.slug)
             );
 
-            return new Category(categoryEntity.id, categoryEntity.name, categoryEntity.description, products);
+            let category = new Category(categoryEntity.id, categoryEntity.name, categoryEntity.description, products);
+            category.slug = categoryEntity.slug;
+            return category;
         });
     }
 
