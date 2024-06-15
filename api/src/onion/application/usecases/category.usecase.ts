@@ -27,15 +27,17 @@ class CategoryUseCase {
     async findCategoryById(categoryId: string): Promise<CategoryDto | null> {
         try {
             const category = await this.categoryRepository.findByIdWithProductLinks(categoryId);
+
             return category ? this.toCategoryDTO(category) : null;
         } catch (error) {
             throw error;
         }
     }
 
-    private toCategoryDTO(category: any): CategoryDto {
+    private toCategoryDTO(category: Category): CategoryDto {
         const categoryDto = new CategoryDto();
-        categoryDto.id = category.id;
+
+        categoryDto.uuid = category.uuid;
         categoryDto.name = category.name;
         categoryDto.slug = category.slug;
         categoryDto.description = category.description;

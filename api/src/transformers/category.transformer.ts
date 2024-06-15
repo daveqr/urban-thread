@@ -4,11 +4,11 @@ import {CategoryDto} from "../onion/application/dtos/category.dto";
 
 export class CategoryTransformer {
     static transform(categoryDto: CategoryDto) {
-        const selfLink = createSelfLink(CATEGORY_BASE_URL, categoryDto.id);
+        const selfLink = createSelfLink(CATEGORY_BASE_URL, categoryDto.uuid);
         const combinedLinks = combineLinks(selfLink);
 
         return {
-            id: categoryDto.id,
+            id: categoryDto.uuid,
             name: categoryDto.name,
             description: categoryDto.description,
             slug: categoryDto.slug,

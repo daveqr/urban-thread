@@ -5,6 +5,7 @@ import {Repository} from "typeorm";
 
 // @ts-ignore
 import categoriesData from './data/categories.json';
+import {v4 as uuidv4} from 'uuid';
 
 // @ts-ignore
 import productsData from './data/products.json';
@@ -36,7 +37,10 @@ const seedDatabase = async () => {
         const categories = [];
         for (const categoryData of categoriesData) {
             const category: CategoryEntity = categoryRepo.create(categoryData) as unknown as CategoryEntity;
-            category.slug = slugifyValue(category.name);
+
+            category.uuid = uuidv4();
+            category.slug = slugifyValue(category.name + '-' + category.uuid);
+
             categories.push(category);
         }
         await categoryRepo.save(categories);

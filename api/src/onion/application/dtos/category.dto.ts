@@ -1,7 +1,7 @@
 import Product from "../../domain/models/product.model";
 
 export class CategoryDto {
-    id!: string;
+    uuid!: string;
     name?: string;
     description?: string;
     slug!: string;

@@ -11,7 +11,7 @@ class SQLiteProductRepository implements ProductRepository {
 
         return products.map((productEntity) => {
             const categories = productEntity.categories.map(categoryEntity =>
-                new Category(categoryEntity.id, categoryEntity.name, categoryEntity.description)
+                new Category(categoryEntity.uuid, categoryEntity.name, categoryEntity.description)
             );
             return new Product(productEntity.id, productEntity.name, productEntity.description, categories);
         });
