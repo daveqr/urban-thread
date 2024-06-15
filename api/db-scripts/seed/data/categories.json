@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Men's Clothing",
+    "description": "Clothing items for men including shirts, pants, and accessories."
+  },
+  {
+    "name": "Women's Clothing",
+    "description": "Clothing items for women including dresses, skirts, and accessories."
+  },
+  {
+    "name": "Kid's Clothing",
+    "description": "Clothing items for kids including shirts, pants, and accessories."
+  }
+]
