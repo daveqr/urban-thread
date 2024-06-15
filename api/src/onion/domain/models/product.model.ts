@@ -1,24 +1,25 @@
-import {ProductEntity} from "../../../entities/product.entity";
-
 class Product {
     productLinks: any[] = [];
-    private productEntity: ProductEntity;
+    private readonly _id: number;
+    private readonly _description?: string;
+    private readonly _name?: string;
 
-    constructor(productEntity: ProductEntity) {
-        this.productEntity = productEntity;
+    constructor(id: number, name?: string, description?: string) {
+        this._id = id;
+        this._description = description;
+        this._name = name;
     }
 
-    get id(): string {
-        return String(this.productEntity.id);
+    get id(): number {
+        return this._id;
     }
 
-    get name(): string {
-        return <string>this.productEntity.name;
+    get name(): string | undefined {
+        return this._name;
     }
 
-    get description(): string {
-        return "thedescripton";
-        // return this.category.description;
+    get description(): string | undefined {
+        return this._description;
     }
 
     get editionName(): string {

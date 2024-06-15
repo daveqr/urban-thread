@@ -7,7 +7,8 @@ class SQLiteProductRepository implements ProductRepository {
     async find(): Promise<Product[]> {
         const repo = AppDataSource.getRepository(ProductEntity);
         const products = await repo.find();
-        return products.map((product) => new Product(product));
+        return products.map((product) =>
+            new Product(product.id, product.name, product.description));
     }
 
     async findById(id: any): Promise<Product | null> {

@@ -1,6 +1,6 @@
 // src/seeds/seed.ts
 import {AppDataSource} from "../../src/data-source";
-import {categorySeed, productSeed} from "./category.seed";
+import {dataSeed, productSeed} from "./data.seed";
 import {CategoryEntity} from "../../src/entities/category.entity";
 import {ProductEntity} from "../../src/entities/product.entity";
 
@@ -11,7 +11,7 @@ const seedDatabase = async () => {
     const productRepo = AppDataSource.getRepository(ProductEntity);
 
     await categoryRepo.clear();
-    await categoryRepo.save(categorySeed);
+    await categoryRepo.save(dataSeed);
 
     await productRepo.clear();
     await productRepo.save(productSeed);

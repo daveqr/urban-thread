@@ -7,10 +7,10 @@ export class CategoryEntity {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column()
+    @Column({nullable: true})
     name?: string;
 
-    @Column()
+    @Column({nullable: true})
     description?: string;
 
     // @OneToMany(() => Product, product => product.category)
