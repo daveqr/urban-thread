@@ -4,8 +4,17 @@ import {check, CustomValidator, validationResult} from 'express-validator';
 
 import {generateToken} from '../services/jwt.service'
 import {LanguageRequest} from '..';
+import {AppDataSource} from "../data-source";
+import UserService from "../domain/services/user.service";
+import SQLiteUserRepository from "../infrastructure/data/sqllite/user.repository.sqlite";
+import UserUseCase from "../application/usecases/user.usecase";
+import UserDto from "../application/dtos/user.dto";
 
 const router = express.Router();
+
+const userRepository = new SQLiteUserRepository(AppDataSource);
+const userService = new UserService(AppDataSource, userRepository);
+const userUseCase = new UserUseCase(AppDataSource, userRepository, userService);
 
 const isEmailUniqueCustomValidator: CustomValidator = async (value, {req}) => {
     // TODO need userExists
@@ -36,15 +45,13 @@ router.post('/',
 
             const {email, password, fname, lname} = req.body;
 
-            // TODO move all this user stuff to a service.
-            // Create a new user
-            // const user = await UserModel.createUser({
-            //     email: email,
-            //     password: password,
-            //     fname: fname,
-            //     lname: lname,
-            // });
-            // End move user stuff
+            const userDto = new UserDto();
+            userDto.email = email;
+            userDto.password = password;
+            userDto.fname = fname;
+            userDto.lname = lname;
+            await userUseCase.save(userDto);
+
             const user = {
                 id: "123",
                 email: "test@example.com"

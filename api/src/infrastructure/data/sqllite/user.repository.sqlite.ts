@@ -13,8 +13,6 @@ class SQLiteUserRepository implements UserRepository {
     }
 
     async findByUuid(uuid: string): Promise<User | null> {
-        // const userRepository = this.dataSource.getRepository(UserEntity);
-
         const userEntity = await this.userRepository.findOne({where: {uuid: uuid}});
 
         if (userEntity) {
@@ -29,6 +27,7 @@ class SQLiteUserRepository implements UserRepository {
             return null;
         }
     }
+
 
     async save(user: User): Promise<void> {
         const entityManager = this.dataSource.manager;
