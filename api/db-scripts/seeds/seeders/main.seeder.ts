@@ -1,11 +1,11 @@
 import {AppDataSource} from "../../../src/data-source";
-import {CategoryEntity} from "../../../src/infrastructure/data/sqllite/entities/category.entity";
-import {ProductEntity} from "../../../src/infrastructure/data/sqllite/entities/product.entity";
-import HighlightedCategoryEntity from "../../../src/infrastructure/data/sqllite/entities/highlighted-category.entity";
+import {CategoryEntity} from "../../../src/infrastructure/data/typeorm/entities/category.entity";
+import {ProductEntity} from "../../../src/infrastructure/data/typeorm/entities/product.entity";
+import HighlightedCategoryEntity from "../../../src/infrastructure/data/typeorm/entities/highlighted-category.entity";
 import {seedProducts} from "./product.seeder";
 import {seedCategories} from "./category.seeder";
 import {seedHighlightedCategories} from "./highlighted-category.seeder";
-import UserEntity from "../../../src/infrastructure/data/sqllite/entities/user.entity";
+import UserEntity from "../../../src/infrastructure/data/typeorm/entities/user.entity";
 import {seedUsers} from "./user.seeder";
 
 const seedDatabase = async () => {

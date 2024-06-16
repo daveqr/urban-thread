@@ -1,5 +1,5 @@
 import {Repository} from "typeorm";
-import {UserEntity} from "../../../src/infrastructure/data/sqllite/entities/user.entity";
+import {UserEntity} from "../../../src/infrastructure/data/typeorm/entities/user.entity";
 // @ts-ignore
 import usersData from '../data/users.json';
 import {v4 as uuidv4} from 'uuid';

@@ -1,6 +1,6 @@
 import CategoryUseCase from "../application/usecases/category.usecase";
 import CategoryService from "../core/services/category.service";
-import SQLiteCategoryRepository from "../infrastructure/data/sqllite/category.repository.sqlite";
+import TypeORMCategoryRepository from "../infrastructure/data/typeorm/category.repository.typeorm";
 
 import express from 'express';
 import {AppDataSource} from "../data-source";
@@ -9,7 +9,7 @@ import {HighlightedCategoryResponseTransformer} from "./transformers/highlighted
 
 const router = express.Router();
 
-const categoryRepository = new SQLiteCategoryRepository(AppDataSource);
+const categoryRepository = new TypeORMCategoryRepository(AppDataSource);
 const categoryService = new CategoryService(categoryRepository);
 const categoryUseCase = new CategoryUseCase(categoryRepository, categoryService);
 

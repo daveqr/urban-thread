@@ -6,13 +6,13 @@ import {generateToken} from '../utils/jwt.util'
 import {LanguageRequest} from '..';
 import {AppDataSource} from "../data-source";
 import UserService from "../core/services/user.service";
-import SQLiteUserRepository from "../infrastructure/data/sqllite/user.repository.sqlite";
+import TypeORMUserRepository from "../infrastructure/data/typeorm/user.repository.typeorm";
 import UserUseCase from "../application/usecases/user.usecase";
 import UserDto from "../application/dtos/user.dto";
 
 const router = express.Router();
 
-const userRepository = new SQLiteUserRepository(AppDataSource);
+const userRepository = new TypeORMUserRepository(AppDataSource);
 const userService = new UserService(AppDataSource, userRepository);
 const userUseCase = new UserUseCase(AppDataSource, userRepository, userService);
 
