@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 const secretKey = 'the_secret_key';
 
 function generateToken(payload: any, expiresIn = '1h'): string {
-  return jwt.sign(payload, secretKey, { expiresIn: expiresIn });
+    return jwt.sign(payload, secretKey, {expiresIn: expiresIn});
 }
 
-export { generateToken };
+export {generateToken};

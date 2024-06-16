@@ -5,10 +5,12 @@ import {Repository} from "typeorm";
 
 // @ts-ignore
 import categoriesData from './data/categories.json';
+import {v4 as uuidv4} from 'uuid';
 
 // @ts-ignore
 import productsData from './data/products.json';
 import slugify from "slugify";
+import HighlightedCategoryEntity from "../../src/entities/highlighted-category.entity";
 
 const seedDatabase = async () => {
     async function insertProducts(categoryMap: {
@@ -21,7 +23,10 @@ const seedDatabase = async () => {
                 ...productData,
                 categories: productCategories
             }) as unknown as ProductEntity;
-            product.slug = slugifyValue(product.name);
+
+            product.uuid = uuidv4();
+            product.slug = slugifyValue(product.name + ' p');
+
             products.push(product);
         }
         await productRepo.save(products);
@@ -35,17 +40,37 @@ const seedDatabase = async () => {
         const categories = [];
         for (const categoryData of categoriesData) {
             const category: CategoryEntity = categoryRepo.create(categoryData) as unknown as CategoryEntity;
-            category.slug = slugifyValue(category.name);
+
+            category.uuid = uuidv4();
+            category.slug = slugifyValue(category.name + ' c');
+
             categories.push(category);
         }
         await categoryRepo.save(categories);
         return categories;
     }
 
-    async function clearTables(productRepo: Repository<ProductEntity>, categoryRepo: Repository<CategoryEntity>) {
-        await productRepo.clear();
-        await categoryRepo.clear();
+    async function insertHighlightedCategories(highlightedCategoryRepo: Repository<HighlightedCategoryEntity>, categories: CategoryEntity[]) {
+        const highlightedNames = [
+            "Festival",
+            "Silk Dresses",
+            "Suits",
+            "Showroom"
+        ];
+
+        const highlightedCategories = categories.filter(category => highlightedNames.includes(category.name));
+
+        let position = 0;
+        const highlightedEntities = highlightedCategories.map(category => {
+            return highlightedCategoryRepo.create({
+                category: category,
+                position: position++
+            });
+        });
+
+        await highlightedCategoryRepo.save(highlightedEntities);
     }
+
 
     function createCategoryMap(categories: any[]) {
         const categoryMap: { [key: string]: CategoryEntity } = {};
@@ -58,13 +83,17 @@ const seedDatabase = async () => {
     try {
         await AppDataSource.initialize();
 
+        const highlightedCategoryRepo = AppDataSource.getRepository(HighlightedCategoryEntity);
         const productRepo = AppDataSource.getRepository(ProductEntity);
         const categoryRepo = AppDataSource.getRepository(CategoryEntity);
-        await clearTables(productRepo, categoryRepo);
+
+        await highlightedCategoryRepo.clear();
+        await productRepo.clear();
+        await categoryRepo.clear();
 
         const categories = await insertCategories(categoryRepo);
-        const categoryMap = createCategoryMap(categories);
-        await insertProducts(categoryMap, productRepo);
+        await insertProducts(createCategoryMap(categories), productRepo);
+        await insertHighlightedCategories(highlightedCategoryRepo, categories);
 
         console.log("Database seeded successfully");
     } catch (error) {

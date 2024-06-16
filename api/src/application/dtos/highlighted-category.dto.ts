@@ -1,9 +1,10 @@
 import Product from "../../domain/models/product.model";
 
-export class CategoryDto {
-    id!: string;
+export default class HighlightedCategoryDto {
+    uuid!: string;
     name?: string;
     description?: string;
+    position!: number;
     slug!: string;
     editionName?: string;
     editionDescription?: string;

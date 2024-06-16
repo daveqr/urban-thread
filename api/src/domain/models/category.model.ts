@@ -2,12 +2,12 @@ import Product from "./product.model";
 
 class Category {
     productLinks: any[] = [];
-    private readonly _id: number;
+    private readonly _uuid: string;
     private readonly _description?: string;
     private readonly _name?: string;
 
-    constructor(id: number, name?: string, description?: string, products: Product[] = []) {
-        this._id = id;
+    constructor(_uuid: string, name?: string, description?: string, products: Product[] = []) {
+        this._uuid = _uuid;
         this._description = description;
         this._name = name;
         this._products = products;
@@ -33,8 +33,8 @@ class Category {
         this._products = products;
     }
 
-    get id(): number {
-        return this._id;
+    get uuid(): string {
+        return this._uuid;
     }
 
     get name(): string | undefined {

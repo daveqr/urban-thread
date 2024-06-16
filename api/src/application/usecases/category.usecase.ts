@@ -2,6 +2,8 @@ import {CategoryRepository} from "../../domain/repositories/category.repository"
 import {CategoryDto} from "../dtos/category.dto";
 import CategoryService from "../../domain/services/category.service";
 import Category from "../../domain/models/category.model";
+import HighlightedCategory from "../../domain/models/highlighted-category.model";
+import HighlightedCategoryDto from "../dtos/highlighted-category.dto";
 
 class CategoryUseCase {
     private categoryRepository: CategoryRepository;
@@ -12,24 +14,45 @@ class CategoryUseCase {
         this.categoryService = categoryService;
     }
 
-    async findAllCategories(isDetailed: boolean): Promise<CategoryDto[]> {
+    async find(isDetailed: boolean): Promise<CategoryDto[]> {
         const categories: Category[] = await this.categoryService.findAllCategories(isDetailed);
 
-        return categories.map(category => this.toCategoryDTO(category, isDetailed));
+        return categories.map(category => this.toCategoryDto(category));
+    }
+
+    async findHighlightedCategories(): Promise<HighlightedCategoryDto[]> {
+        const categories: HighlightedCategory[] = await this.categoryService.findHighlightedCategories();
+
+        return categories.map(category => this.toHighlightedCategoryDto(category));
     }
 
     async findCategoryById(categoryId: string): Promise<CategoryDto | null> {
         try {
             const category = await this.categoryRepository.findByIdWithProductLinks(categoryId);
-            return category ? this.toCategoryDTO(category, true) : null;
+
+            return category ? this.toCategoryDto(category) : null;
         } catch (error) {
             throw error;
         }
     }
 
-    private toCategoryDTO(category: any, isDetailed: boolean): CategoryDto {
+    private toHighlightedCategoryDto(category: HighlightedCategory): HighlightedCategoryDto {
+        const categoryDto = new HighlightedCategoryDto();
+
+        categoryDto.uuid = category.uuid;
+        categoryDto.name = category.name;
+        categoryDto.slug = category.slug;
+        categoryDto.position = category.position;
+        categoryDto.description = category.description;
+        categoryDto.products = category.products;
+
+        return categoryDto;
+    }
+
+    private toCategoryDto(category: Category): CategoryDto {
         const categoryDto = new CategoryDto();
-        categoryDto.id = category.id;
+
+        categoryDto.uuid = category.uuid;
         categoryDto.name = category.name;
         categoryDto.slug = category.slug;
         categoryDto.description = category.description;

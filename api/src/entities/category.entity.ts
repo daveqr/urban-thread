@@ -3,10 +3,13 @@ import {ProductEntity} from "./product.entity";
 // import {Product} from "./Product";
 // import {Edition} from "./Edition";
 
-@Entity()
+@Entity('categories')
 export class CategoryEntity {
     @PrimaryGeneratedColumn()
     id!: number;
+
+    @Column({nullable: true})
+    uuid!: string;
 
     @Column({nullable: false})
     name!: string;
@@ -14,7 +17,7 @@ export class CategoryEntity {
     @Column({nullable: true})
     description?: string;
 
-    @Column({nullable: false})
+    @Column({nullable: false, unique: true})
     slug!: string;
 
     @ManyToMany(() => ProductEntity, product => product.categories)

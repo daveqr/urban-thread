@@ -10,5 +10,21 @@
   {
     "name": "Kid's Clothing",
     "description": "Clothing items for kids including shirts, pants, and accessories."
+  },
+  {
+    "name": "Silk Dresses",
+    "description": "Elegant silk dresses for special occasions."
+  },
+  {
+    "name": "Suits",
+    "description": "Formal suits for men and women."
+  },
+  {
+    "name": "Festival",
+    "description": "Festival clothing and accessories."
+  },
+  {
+    "name": "Showroom",
+    "description": "Exclusive showroom items."
   }
 ]

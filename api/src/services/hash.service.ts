@@ -4,8 +4,7 @@ class HashService {
     static async hash(str: string) {
         const saltRounds = 10;
         try {
-            const hashedStr = await bcrypt.hash(str, saltRounds);
-            return hashedStr;
+            return await bcrypt.hash(str, saltRounds);
         } catch (error) {
             throw new Error('Error hashing string');
         }
@@ -13,8 +12,7 @@ class HashService {
 
     static async compare(plainStr: string, hashedStr: string) {
         try {
-            const isMatch = await bcrypt.compare(plainStr, hashedStr);
-            return isMatch;
+            return await bcrypt.compare(plainStr, hashedStr);
         } catch (error) {
             throw new Error('Error comparing strings');
         }
