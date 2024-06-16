@@ -2,7 +2,7 @@ import express from 'express';
 import nodemailer from 'nodemailer';
 import {check, CustomValidator, validationResult} from 'express-validator';
 
-import {generateToken} from '../services/jwt.service'
+import {generateToken} from '../utils/jwt.util'
 import {LanguageRequest} from '..';
 import {AppDataSource} from "../data-source";
 import UserService from "../core/services/user.service";

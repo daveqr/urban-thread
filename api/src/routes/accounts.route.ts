@@ -1,6 +1,6 @@
 import passport from 'passport';
-import { generateToken } from '../services/jwt.service';
-import express, { Request, Response } from 'express';
+import express, {Request, Response} from 'express';
+
 const router = express.Router();
 
 // Login
@@ -15,7 +15,7 @@ router.post('/login', passport.authenticate('local'), (req: Request, res: Respon
 
 // Logout
 router.get('/logout', (req: Request, res: Response) => {
-    res.json({ message: 'Logout successful' });
+    res.json({message: 'Logout successful'});
 });
 
 module.exports = router;
