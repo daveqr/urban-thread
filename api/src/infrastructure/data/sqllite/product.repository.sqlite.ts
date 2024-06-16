@@ -1,12 +1,18 @@
 import {ProductRepository} from "../../../domain/repositories/product.repository";
 import Product from "../../../domain/models/product.model";
-import {AppDataSource} from "../../../../data-source";
-import {ProductEntity} from "../../../../entities/product.entity";
+import {ProductEntity} from "../../../entities/product.entity";
 import Category from "../../../domain/models/category.model";
+import {DataSource} from "typeorm";
 
 class SQLiteProductRepository implements ProductRepository {
+    private dataSource: DataSource;
+
+    constructor(dataSource: DataSource) {
+        this.dataSource = dataSource;
+    }
+
     async find(): Promise<Product[]> {
-        const repo = AppDataSource.getRepository(ProductEntity);
+        const repo = this.dataSource.getRepository(ProductEntity);
         const products = await repo.find({relations: ["categories"]});
 
         return products.map((productEntity) => {

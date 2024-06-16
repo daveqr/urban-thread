@@ -19,7 +19,6 @@ class CategoryService {
     async findHighlightedCategories(): Promise<HighlightedCategory[]> {
         return await this.categoryRepository.findHighlightedCategories();
     }
-
 }
 
 export default CategoryService;

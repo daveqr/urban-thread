@@ -1,8 +1,8 @@
-import {In} from "typeorm";
-import {CategoryEntity} from "../../../../entities/category.entity";
+import {DataSource, In} from "typeorm";
+import {CategoryEntity} from "../../../entities/category.entity";
 import {CategoryRepository} from "../../../domain/repositories/category.repository";
 import Category from "../../../domain/models/category.model";
-import {AppDataSource} from "../../../../data-source";
+import {AppDataSource} from "../../../data-source";
 import Product from "../../../domain/models/product.model";
 import HighlightedCategory from "../../../domain/models/highlighted-category.model";
 
@@ -12,8 +12,14 @@ interface HighlightedCategoryResult {
 }
 
 class SQLiteCategoryRepository implements CategoryRepository {
+    private dataSource: DataSource;
+
+    constructor(dataSource: DataSource) {
+        this.dataSource = dataSource;
+    }
+
     async find(): Promise<Category[]> {
-        const categoryRepo = AppDataSource.getRepository(CategoryEntity);
+        const categoryRepo = this.dataSource.getRepository(CategoryEntity);
 
         const categories = await categoryRepo.find({relations: ["products"]});
 
@@ -21,7 +27,7 @@ class SQLiteCategoryRepository implements CategoryRepository {
     }
 
     async findHighlightedCategories(): Promise<HighlightedCategory[]> {
-        const categoryRepo = AppDataSource.getRepository(CategoryEntity);
+        const categoryRepo = this.dataSource.getRepository(CategoryEntity);
 
         const highlightedCategories = await categoryRepo.createQueryBuilder('category')
             .innerJoinAndSelect('highlighted_categories', 'highlighted', 'category.id = highlighted.categoryId')
@@ -89,8 +95,8 @@ class SQLiteCategoryRepository implements CategoryRepository {
         });
     }
 
-    private mapToDomainHighlightedCategories(categoriesWithPosition: HighlightedCategoryResult[]): HighlightedCategory[] {
-        return categoriesWithPosition.map(({category, position}) => {
+    private mapToDomainHighlightedCategories(categories: HighlightedCategoryResult[]): HighlightedCategory[] {
+        return categories.map(({category, position}) => {
             let products = category.products.map(productEntity =>
                 new Product(productEntity.id, productEntity.name, productEntity.description, [], productEntity.slug)
             );

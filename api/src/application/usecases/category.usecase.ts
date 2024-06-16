@@ -3,7 +3,7 @@ import {CategoryDto} from "../dtos/category.dto";
 import CategoryService from "../../domain/services/category.service";
 import Category from "../../domain/models/category.model";
 import HighlightedCategory from "../../domain/models/highlighted-category.model";
-import Product from "../../domain/models/product.model";
+import HighlightedCategoryDto from "../dtos/highlighted-category.dto";
 
 class CategoryUseCase {
     private categoryRepository: CategoryRepository;
@@ -23,7 +23,7 @@ class CategoryUseCase {
     async findHighlightedCategories(): Promise<HighlightedCategoryDto[]> {
         const categories: HighlightedCategory[] = await this.categoryService.findHighlightedCategories();
 
-        return categories.map(category => this.toCatexxgoryDto(category));
+        return categories.map(category => this.toHighlightedCategoryDto(category));
     }
 
     async findCategoryById(categoryId: string): Promise<CategoryDto | null> {
@@ -36,7 +36,7 @@ class CategoryUseCase {
         }
     }
 
-    private toCatexxgoryDto(category: HighlightedCategory): HighlightedCategoryDto {
+    private toHighlightedCategoryDto(category: HighlightedCategory): HighlightedCategoryDto {
         const categoryDto = new HighlightedCategoryDto();
 
         categoryDto.uuid = category.uuid;
@@ -45,17 +45,6 @@ class CategoryUseCase {
         categoryDto.position = category.position;
         categoryDto.description = category.description;
         categoryDto.products = category.products;
-
-        // if (isDetailed) {
-        //     categoryDTO.editionName = category.edition.name;
-        //     categoryDTO.editionDescription = category.edition.description;
-        //     categoryDTO.products = category.products.map(product => {
-        //         const productDTO = new ProductDTO();
-        //         productDTO.id = product._id;
-        //         productDTO.name = product.name;
-        //         return productDTO;
-        //     });
-        // }
 
         return categoryDto;
     }
@@ -82,18 +71,6 @@ class CategoryUseCase {
 
         return categoryDto;
     }
-}
-
-export class HighlightedCategoryDto {
-    uuid!: string;
-    name?: string;
-    description?: string;
-    position!: number;
-    slug!: string;
-    editionName?: string;
-    editionDescription?: string;
-    // products?: ProductDto[];
-    products?: Product[];
 }
 
 export default CategoryUseCase;
