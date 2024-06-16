@@ -2,43 +2,18 @@ import Category from "./category.model";
 
 class Product {
     productLinks: any[] = [];
-    private readonly _id: number;
-    private readonly _description?: string;
-    private readonly _name?: string;
-    private readonly _slug: any;
+    id: number;
+    description?: string;
+    name?: string;
+    slug: string;
+    categories: Category[];
 
     constructor(id: number, name?: string, description?: string, categories: Category[] = [], slug: string = '') {
-        this._id = id;
-        this._description = description;
-        this._name = name;
-        this._slug = slug;
-        this._categories = categories;
-    }
-
-    private _categories: Category[];
-
-    get categories(): Category[] {
-        return this._categories;
-    }
-
-    set categories(products: Category[]) {
-        this._categories = products;
-    }
-
-    get id(): number {
-        return this._id;
-    }
-
-    get name(): string | undefined {
-        return this._name;
-    }
-
-    get description(): string | undefined {
-        return this._description;
-    }
-
-    get slug(): string {
-        return this._slug;
+        this.id = id;
+        this.description = description;
+        this.name = name;
+        this.slug = slug;
+        this.categories = categories;
     }
 
     get editionName(): string {

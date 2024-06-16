@@ -5,6 +5,8 @@ import HighlightedCategoryEntity from "../../../src/entities/highlighted-categor
 import {seedProducts} from "./product.seeder";
 import {seedCategories} from "./category.seeder";
 import {seedHighlightedCategories} from "./highlighted-category.seeder";
+import UserEntity from "../../../src/entities/user.entity";
+import {seedUsers} from "./user.seeder";
 
 const seedDatabase = async () => {
     try {
@@ -13,14 +15,17 @@ const seedDatabase = async () => {
         const highlightedCategoryRepo = AppDataSource.getRepository(HighlightedCategoryEntity);
         const productRepo = AppDataSource.getRepository(ProductEntity);
         const categoryRepo = AppDataSource.getRepository(CategoryEntity);
+        const userRepo = AppDataSource.getRepository(UserEntity);
 
         await highlightedCategoryRepo.clear();
         await productRepo.clear();
         await categoryRepo.clear();
+        await userRepo.clear();
 
         const categories = await seedCategories(categoryRepo);
         await seedProducts(productRepo, categories);
         await seedHighlightedCategories(highlightedCategoryRepo, categories);
+        await seedUsers(userRepo);
     } catch (error) {
         console.error("Error seeding database:", error);
     } finally {

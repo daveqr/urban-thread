@@ -1,14 +1,13 @@
 import CategoryUseCase from "../application/usecases/category.usecase";
-import {CategoryTransformer} from "../transformers/category.transformer";
 import CategoryService from "../domain/services/category.service";
 import SQLiteCategoryRepository from "../infrastructure/data/sqllite/category.repository.sqlite";
 
 import express from 'express';
-import {HighlightedCategoryTransformer} from "../transformers/highlighted-category.transformer";
 import {AppDataSource} from "../data-source";
+import {CategoryTransformer} from "./transformers/category.transformer";
+import {HighlightedCategoryTransformer} from "./transformers/highlighted-category.transformer";
 
 const router = express.Router();
-require('../schemas/edition.schema');
 
 const categoryRepository = new SQLiteCategoryRepository(AppDataSource);
 const categoryService = new CategoryService(categoryRepository);
