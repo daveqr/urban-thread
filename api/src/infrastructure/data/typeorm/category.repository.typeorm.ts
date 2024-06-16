@@ -85,7 +85,7 @@ class TypeORMCategoryRepository implements CategoryRepository {
     private mapToDomainCategories(categories: CategoryEntity[]) {
         return categories.map((categoryEntity) => {
             let products = categoryEntity.products.map(productEntity =>
-                new Product(productEntity.id, productEntity.name, productEntity.description, [], productEntity.slug)
+                new Product(productEntity.uuid, productEntity.name, productEntity.description, [], productEntity.slug)
             );
 
             let category = new Category(categoryEntity.uuid, categoryEntity.name, categoryEntity.description, products);
@@ -98,7 +98,7 @@ class TypeORMCategoryRepository implements CategoryRepository {
     private mapToDomainHighlightedCategories(categories: HighlightedCategoryResult[]): HighlightedCategory[] {
         return categories.map(({category, position}) => {
             let products = category.products.map(productEntity =>
-                new Product(productEntity.id, productEntity.name, productEntity.description, [], productEntity.slug)
+                new Product(productEntity.uuid, productEntity.name, productEntity.description, [], productEntity.slug)
             );
 
             let highlightedCategory = new HighlightedCategory(category.uuid, category.name, products, position, category.description);

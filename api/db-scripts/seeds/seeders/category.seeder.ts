@@ -8,12 +8,12 @@ import categoriesData from '../data/categories.json';
 export async function seedCategories(categoryRepo: Repository<CategoryEntity>): Promise<CategoryEntity[]> {
     const categories = [];
     for (const categoryData of categoriesData) {
-        const category: CategoryEntity = categoryRepo.create(categoryData) as unknown as CategoryEntity;
+        const categoryEntity: CategoryEntity = categoryRepo.create(categoryData) as unknown as CategoryEntity;
 
-        category.uuid = uuidv4();
-        category.slug = slugify(category.name + ' c', {lower: true, remove: /[*+~.()'"!:@]/g});
+        categoryEntity.uuid = uuidv4();
+        categoryEntity.slug = slugify(categoryEntity.name + ' c', {lower: true, remove: /[*+~.()'"!:@]/g});
 
-        categories.push(category);
+        categories.push(categoryEntity);
     }
     await categoryRepo.save(categories);
     return categories;

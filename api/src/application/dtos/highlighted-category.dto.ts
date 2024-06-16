@@ -5,7 +5,7 @@ export default class HighlightedCategoryDto {
     name?: string;
     description?: string;
     position!: number;
-    slug!: string;
+    slug?: string;
     editionName?: string;
     editionDescription?: string;
     // products?: ProductDto[];

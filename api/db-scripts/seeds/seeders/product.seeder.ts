@@ -11,15 +11,15 @@ export async function seedProducts(productRepo: Repository<ProductEntity>, categ
     const products = [];
     for (const productData of productsData) {
         const productCategories = productData.categories.map((name: string) => categoryMap[name]);
-        const product: ProductEntity = productRepo.create({
+        const productEntity: ProductEntity = productRepo.create({
             ...productData,
             categories: productCategories
         }) as unknown as ProductEntity;
 
-        product.uuid = uuidv4();
-        product.slug = slugify(product.name + ' p', {lower: true, remove: /[*+~.()'"!:@]/g});
+        productEntity.uuid = uuidv4();
+        productEntity.slug = slugify(productEntity.name + ' p', {lower: true, remove: /[*+~.()'"!:@]/g});
 
-        products.push(product);
+        products.push(productEntity);
     }
     await productRepo.save(products);
 }
