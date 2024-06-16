@@ -1,6 +1,8 @@
 # E-commerce Sample Project
 
-This project is a basic work-in-progress e-commerce example with two frontend implementations: one using Angular and the other using React. Both offer the same functionality. The backend, built with Express.js and MongoDB, serves as a REST API returning HAL+JSON, facilitating integration with various clients.
+This project is a basic work-in-progress e-commerce example with two frontend implementations: one using Angular and the
+other using React. Both offer the same functionality. The backend, built with Express.js and SQLLite, serves as a REST
+API returning HAL+JSON, facilitating integration with various clients.
 
 ## Project Structure
 
@@ -10,6 +12,7 @@ This project is a basic work-in-progress e-commerce example with two frontend im
 * **React**: Located in the `/react-web` directory.
 
 ### Backend
+
 - **Backend**: Located in the `/api` directory.
 
 ## Features

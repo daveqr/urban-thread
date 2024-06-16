@@ -1,14 +1,25 @@
-import express, { Request, Response } from 'express';
-const router = express.Router();
+import express from 'express';
 import nodemailer from 'nodemailer';
-import { validationResult, check, CustomValidator } from 'express-validator';
+import {check, CustomValidator, validationResult} from 'express-validator';
 
-import { generateToken } from '../services/jwt.service'
-import UserModel from '../models/user.model';
-import { LanguageRequest } from '..';
+import {generateToken} from '../utils/jwt.util'
+import {LanguageRequest} from '..';
+import {AppDataSource} from "../data-source";
+import UserService from "../core/services/user.service";
+import SQLiteUserRepository from "../infrastructure/data/sqllite/user.repository.sqlite";
+import UserUseCase from "../application/usecases/user.usecase";
+import UserDto from "../application/dtos/user.dto";
 
-const isEmailUniqueCustomValidator: CustomValidator = async (value, { req }) => {
-    const exists = await UserModel.userExists(value);
+const router = express.Router();
+
+const userRepository = new SQLiteUserRepository(AppDataSource);
+const userService = new UserService(AppDataSource, userRepository);
+const userUseCase = new UserUseCase(AppDataSource, userRepository, userService);
+
+const isEmailUniqueCustomValidator: CustomValidator = async (value, {req}) => {
+    // TODO need userExists
+    // const exists = await UserModel.userExists(value);
+    const exists = false;
     if (exists) {
         const errorMsg = req.i18n.__('User %s already exists', value);
         throw new Error(errorMsg);
@@ -22,29 +33,30 @@ router.post('/',
         check('email').isEmail()
             .custom(isEmailUniqueCustomValidator)
             .normalizeEmail(),
-        check('password').isLength({ min: 6 }),
-        check('fname').isLength({ min: 2 }),
-        check('lname').isLength({ min: 2 }),
+        check('password').isLength({min: 6}),
+        check('fname').isLength({min: 2}),
+        check('lname').isLength({min: 2}),
     ], async (req: LanguageRequest, res: any) => {
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-                return res.status(400).json({ errors: errors.array() });
+                return res.status(400).json({errors: errors.array()});
             }
 
-            const { email, password, fname, lname } = req.body;
+            const {email, password, fname, lname} = req.body;
 
-            // TODO move all this user stuff to a service.
-            // Create a new user
-            const user = await UserModel.createUser({
-                email: email,
-                password: password,
-                fname: fname,
-                lname: lname,
-            });
-            // End move user stuff
+            const userDto = new UserDto();
+            userDto.email = email;
+            userDto.password = password;
+            userDto.fname = fname;
+            userDto.lname = lname;
+            await userUseCase.save(userDto);
 
-            const token = generateToken({ userId: user.id, username: user.email });
+            const user = {
+                id: "123",
+                email: "test@example.com"
+            }
+            const token = generateToken({userId: user.id, username: user.email});
 
             // TODO move this email stuff somewhere else
             const transporter = nodemailer.createTransport({
@@ -73,11 +85,11 @@ router.post('/',
             });
             // end email stuff
 
-            return res.json({ message: req.i18n.__('Registration successful'), newUser: user, token });
+            return res.json({message: req.i18n.__('Registration successful'), newUser: user, token});
 
         } catch (err) {
             // TODO use middleware to handle this
-            return res.status(500).json({ error: req.i18n.__('Internal server error') });
+            return res.status(500).json({error: req.i18n.__('Internal server error')});
         }
     });
 

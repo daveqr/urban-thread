@@ -1,14 +1,13 @@
 import CategoryUseCase from "../application/usecases/category.usecase";
-import {CategoryTransformer} from "../transformers/category.transformer";
-import CategoryService from "../domain/services/category.service";
+import CategoryService from "../core/services/category.service";
 import SQLiteCategoryRepository from "../infrastructure/data/sqllite/category.repository.sqlite";
 
 import express from 'express';
-import {HighlightedCategoryTransformer} from "../transformers/highlighted-category.transformer";
 import {AppDataSource} from "../data-source";
+import {CategoryResponseTransformer} from "./transformers/category.response.transformer";
+import {HighlightedCategoryResponseTransformer} from "./transformers/highlighted-category.response.transformer";
 
 const router = express.Router();
-require('../schemas/edition.schema');
 
 const categoryRepository = new SQLiteCategoryRepository(AppDataSource);
 const categoryService = new CategoryService(categoryRepository);
@@ -27,7 +26,7 @@ router.get('/', async (req: any, res: any) => {
 
         let categories = await categoryUseCase.find(isDetailed);
 
-        const transformedCategories = categories.map(CategoryTransformer.transform);
+        const transformedCategories = categories.map(CategoryResponseTransformer.transform);
         res.json(transformedCategories);
     } catch (error) {
         console.log(error);
@@ -39,7 +38,7 @@ router.get('/highlighted', async (req: any, res: any) => {
     try {
         let categories = await categoryUseCase.findHighlightedCategories()
 
-        const transformedCategories = categories.map(HighlightedCategoryTransformer.transform);
+        const transformedCategories = categories.map(HighlightedCategoryResponseTransformer.transform);
 
         console.log(transformedCategories);
 

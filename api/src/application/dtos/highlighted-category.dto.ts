@@ -1,4 +1,4 @@
-import Product from "../../domain/models/product.model";
+import Product from "../../core/models/product.model";
 
 export default class HighlightedCategoryDto {
     uuid!: string;

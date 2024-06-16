@@ -1,7 +1,8 @@
 import {DataSource} from "typeorm";
-import {CategoryEntity} from "../../../../../src/entities/category.entity";
-import {ProductEntity} from "../../../../../src/entities/product.entity";
-import HighlightedCategoryEntity from "../../../../../src/entities/highlighted-category.entity";
+import {CategoryEntity} from "../../../../../src/infrastructure/data/sqllite/entities/category.entity";
+import {ProductEntity} from "../../../../../src/infrastructure/data/sqllite/entities/product.entity";
+import HighlightedCategoryEntity
+    from "../../../../../src/infrastructure/data/sqllite/entities/highlighted-category.entity";
 import SQLiteCategoryRepository from "../../../../../src/infrastructure/data/sqllite/category.repository.sqlite";
 
 const testDataSource = new DataSource({
