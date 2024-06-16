@@ -4,7 +4,7 @@ interface CategoryLink {
     href: string;
 }
 
-class ProductTransformer {
+class ProductResponseTransformer {
     // static transform(product: ProductModel, categoryLinks: CategoryLink[], extended?: boolean): any {
     //     const selfLink = createSelfLink(PRODUCT_BASE_URL, product.id);
     //     const combinedLinks = combineLinks(selfLink);
@@ -75,4 +75,4 @@ class ProductTransformer {
     // }
 }
 
-export default ProductTransformer;
+export default ProductResponseTransformer;

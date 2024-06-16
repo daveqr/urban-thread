@@ -1,7 +1,7 @@
 import {DataSource, Repository} from "typeorm";
-import {UserRepository} from "../../../domain/repositories/user.repository";
-import User from "../../../domain/models/user.model";
-import UserEntity from "../../../entities/user.entity";
+import {UserRepository} from "../../../core/repositories/user.repository";
+import User from "../../../core/models/user.model";
+import UserEntity from "./entities/user.entity";
 
 class SQLiteUserRepository implements UserRepository {
     private dataSource: DataSource;

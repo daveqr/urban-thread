@@ -1,10 +1,10 @@
 import {DataSource, In} from "typeorm";
-import {CategoryEntity} from "../../../entities/category.entity";
-import {CategoryRepository} from "../../../domain/repositories/category.repository";
-import Category from "../../../domain/models/category.model";
+import {CategoryEntity} from "./entities/category.entity";
+import {CategoryRepository} from "../../../core/repositories/category.repository";
+import Category from "../../../core/models/category.model";
 import {AppDataSource} from "../../../data-source";
-import Product from "../../../domain/models/product.model";
-import HighlightedCategory from "../../../domain/models/highlighted-category.model";
+import Product from "../../../core/models/product.model";
+import HighlightedCategory from "../../../core/models/highlighted-category.model";
 
 interface HighlightedCategoryResult {
     category: CategoryEntity;

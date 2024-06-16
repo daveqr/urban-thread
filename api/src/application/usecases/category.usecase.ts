@@ -1,8 +1,8 @@
-import {CategoryRepository} from "../../domain/repositories/category.repository";
+import {CategoryRepository} from "../../core/repositories/category.repository";
 import {CategoryDto} from "../dtos/category.dto";
-import CategoryService from "../../domain/services/category.service";
-import Category from "../../domain/models/category.model";
-import HighlightedCategory from "../../domain/models/highlighted-category.model";
+import CategoryService from "../../core/services/category.service";
+import Category from "../../core/models/category.model";
+import HighlightedCategory from "../../core/models/highlighted-category.model";
 import HighlightedCategoryDto from "../dtos/highlighted-category.dto";
 
 class CategoryUseCase {

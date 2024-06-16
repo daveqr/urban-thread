@@ -1,6 +1,6 @@
 import {DataSource} from "typeorm";
-import {CategoryEntity} from "../../../../../src/entities/category.entity";
-import {ProductEntity} from "../../../../../src/entities/product.entity";
+import {CategoryEntity} from "../../../../../src/infrastructure/data/sqllite/entities/category.entity";
+import {ProductEntity} from "../../../../../src/infrastructure/data/sqllite/entities/product.entity";
 import SQLiteProductRepository from "../../../../../src/infrastructure/data/sqllite/product.repository.sqlite";
 
 const testDataSource = new DataSource({

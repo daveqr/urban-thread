@@ -1,6 +1,6 @@
-import {ProductRepository} from "../../domain/repositories/product.repository";
-import {CategoryRepository} from "../../domain/repositories/category.repository";
-import ProductService from "../../domain/services/product.service";
+import {ProductRepository} from "../../core/repositories/product.repository";
+import {CategoryRepository} from "../../core/repositories/category.repository";
+import ProductService from "../../core/services/product.service";
 
 class ProductUseCase {
     private productRepository: ProductRepository;

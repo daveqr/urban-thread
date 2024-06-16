@@ -5,7 +5,7 @@ import {check, CustomValidator, validationResult} from 'express-validator';
 import {generateToken} from '../services/jwt.service'
 import {LanguageRequest} from '..';
 import {AppDataSource} from "../data-source";
-import UserService from "../domain/services/user.service";
+import UserService from "../core/services/user.service";
 import SQLiteUserRepository from "../infrastructure/data/sqllite/user.repository.sqlite";
 import UserUseCase from "../application/usecases/user.usecase";
 import UserDto from "../application/dtos/user.dto";

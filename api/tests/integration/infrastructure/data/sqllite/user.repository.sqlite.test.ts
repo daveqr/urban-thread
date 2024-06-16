@@ -1,5 +1,5 @@
 import {DataSource} from "typeorm";
-import UserEntity from "../../../../../src/entities/user.entity";
+import UserEntity from "../../../../../src/infrastructure/data/sqllite/entities/user.entity";
 import SQLiteUserRepository from "../../../../../src/infrastructure/data/sqllite/user.repository.sqlite";
 import {faker} from "@faker-js/faker";
 

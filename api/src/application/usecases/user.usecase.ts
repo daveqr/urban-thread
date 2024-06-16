@@ -1,6 +1,6 @@
-import {UserRepository} from "../../domain/repositories/user.repository";
-import UserService from "../../domain/services/user.service";
-import User from "../../domain/models/user.model";
+import {UserRepository} from "../../core/repositories/user.repository";
+import UserService from "../../core/services/user.service";
+import User from "../../core/models/user.model";
 import UserDto from "../dtos/user.dto";
 import {DataSource, EntityManager} from "typeorm";
 import {userSchema} from "../validators/user.validator";
@@ -16,7 +16,7 @@ class UserUseCase {
         this.entityManager = this.dataSource.manager;
     }
 
-    async findByUuid(uuid: string): Promise<User | null> {
+    async findByUuid(uuid: string): Promise<UserDto | null> {
         const user = await this.userService.findByUuid(uuid);
 
         if (user) {
@@ -47,6 +47,7 @@ class UserUseCase {
         user.password = userDto.password;
         user.fname = userDto.fname;
         user.lname = userDto.lname;
+
         return user;
     }
 }

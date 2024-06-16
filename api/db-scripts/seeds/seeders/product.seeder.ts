@@ -3,8 +3,8 @@ import {v4 as uuidv4} from 'uuid';
 import slugify from "slugify";
 // @ts-ignore
 import productsData from '../data/products.json';
-import {ProductEntity} from "../../../src/entities/product.entity";
-import {CategoryEntity} from "../../../src/entities/category.entity";
+import {ProductEntity} from "../../../src/infrastructure/data/sqllite/entities/product.entity";
+import {CategoryEntity} from "../../../src/infrastructure/data/sqllite/entities/category.entity";
 
 export async function seedProducts(productRepo: Repository<ProductEntity>, categories: CategoryEntity[]) {
     const categoryMap = createCategoryMap(categories);

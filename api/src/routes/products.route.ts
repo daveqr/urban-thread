@@ -2,7 +2,7 @@ import express, {NextFunction, Request, Response} from 'express';
 import ProductUseCase from '../application/usecases/product.usecase';
 import SQLiteCategoryRepository from "../infrastructure/data/sqllite/category.repository.sqlite";
 import SQLiteProductRepository from "../infrastructure/data/sqllite/product.repository.sqlite";
-import ProductService from "../domain/services/product.service";
+import ProductService from "../core/services/product.service";
 import {AppDataSource} from "../data-source";
 
 const router = express.Router();

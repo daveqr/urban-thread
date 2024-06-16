@@ -1,7 +1,7 @@
-import {ProductRepository} from "../../../domain/repositories/product.repository";
-import Product from "../../../domain/models/product.model";
-import {ProductEntity} from "../../../entities/product.entity";
-import Category from "../../../domain/models/category.model";
+import {ProductRepository} from "../../../core/repositories/product.repository";
+import Product from "../../../core/models/product.model";
+import {ProductEntity} from "./entities/product.entity";
+import Category from "../../../core/models/category.model";
 import {DataSource} from "typeorm";
 
 class SQLiteProductRepository implements ProductRepository {

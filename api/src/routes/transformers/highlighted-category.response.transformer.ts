@@ -1,9 +1,9 @@
-import {CATEGORY_BASE_URL} from '../../config/urls';
-import {combineLinks, createSelfLink} from '../../utils/linkUtils';
-import {CategoryDto} from "../../application/dtos/category.dto";
+import HighlightedCategoryDto from "../../application/dtos/highlighted-category.dto";
+import {combineLinks, createSelfLink} from "../../utils/linkUtils";
+import {CATEGORY_BASE_URL} from "../../config/urls";
 
-export class CategoryTransformer {
-    static transform(categoryDto: CategoryDto) {
+export class HighlightedCategoryResponseTransformer {
+    static transform(categoryDto: HighlightedCategoryDto) {
         const selfLink = createSelfLink(CATEGORY_BASE_URL, categoryDto.uuid);
         const combinedLinks = combineLinks(selfLink);
 
@@ -12,6 +12,7 @@ export class CategoryTransformer {
             name: categoryDto.name,
             description: categoryDto.description,
             slug: categoryDto.slug,
+            position: categoryDto.position,
             editionName: categoryDto.editionName,
             products: categoryDto.products,
             editionDescription: categoryDto.editionDescription,

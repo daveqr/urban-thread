@@ -1,5 +1,5 @@
 import {Repository} from "typeorm";
-import {UserEntity} from "../../../src/entities/user.entity";
+import {UserEntity} from "../../../src/infrastructure/data/sqllite/entities/user.entity";
 // @ts-ignore
 import usersData from '../data/users.json';
 import {v4 as uuidv4} from 'uuid';
@@ -14,7 +14,7 @@ export async function seedUsers(userRepository: Repository<UserEntity>): Promise
 
         users.push(user);
     }
-    
+
     await userRepository.save(users);
     return users;
 }
