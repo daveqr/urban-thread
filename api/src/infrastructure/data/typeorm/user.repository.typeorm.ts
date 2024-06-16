@@ -3,7 +3,7 @@ import {UserRepository} from "../../../core/repositories/user.repository";
 import User from "../../../core/models/user.model";
 import UserEntity from "./entities/user.entity";
 
-class SQLiteUserRepository implements UserRepository {
+class TypeORMUserRepository implements UserRepository {
     private dataSource: DataSource;
     private userRepository: Repository<UserEntity>;
 
@@ -46,4 +46,4 @@ class SQLiteUserRepository implements UserRepository {
     }
 }
 
-export default SQLiteUserRepository;
+export default TypeORMUserRepository;

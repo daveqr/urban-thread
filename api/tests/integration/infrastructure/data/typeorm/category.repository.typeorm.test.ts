@@ -1,9 +1,9 @@
 import {DataSource} from "typeorm";
-import {CategoryEntity} from "../../../../../src/infrastructure/data/sqllite/entities/category.entity";
-import {ProductEntity} from "../../../../../src/infrastructure/data/sqllite/entities/product.entity";
+import {CategoryEntity} from "../../../../../src/infrastructure/data/typeorm/entities/category.entity";
+import {ProductEntity} from "../../../../../src/infrastructure/data/typeorm/entities/product.entity";
 import HighlightedCategoryEntity
-    from "../../../../../src/infrastructure/data/sqllite/entities/highlighted-category.entity";
-import SQLiteCategoryRepository from "../../../../../src/infrastructure/data/sqllite/category.repository.sqlite";
+    from "../../../../../src/infrastructure/data/typeorm/entities/highlighted-category.entity";
+import TypeORMCategoryRepository from "../../../../../src/infrastructure/data/typeorm/category.repository.typeorm";
 
 const testDataSource = new DataSource({
     type: "sqlite",
@@ -26,10 +26,10 @@ beforeEach(async () => {
 });
 
 describe("SQLiteCategoryRepository", () => {
-    let repository: SQLiteCategoryRepository;
+    let repository: TypeORMCategoryRepository;
 
     beforeEach(() => {
-        repository = new SQLiteCategoryRepository(testDataSource);
+        repository = new TypeORMCategoryRepository(testDataSource);
     });
 
     async function createTestProductAndAssociateWithCategory(category: CategoryEntity) {

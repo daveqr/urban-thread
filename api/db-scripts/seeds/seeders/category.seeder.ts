@@ -1,7 +1,7 @@
 import {Repository} from "typeorm";
 import {v4 as uuidv4} from 'uuid';
 import slugify from "slugify";
-import {CategoryEntity} from "../../../src/infrastructure/data/sqllite/entities/category.entity";
+import {CategoryEntity} from "../../../src/infrastructure/data/typeorm/entities/category.entity";
 // @ts-ignore
 import categoriesData from '../data/categories.json';
 

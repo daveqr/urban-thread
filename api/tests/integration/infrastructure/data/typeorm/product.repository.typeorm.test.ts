@@ -1,7 +1,7 @@
 import {DataSource} from "typeorm";
-import {CategoryEntity} from "../../../../../src/infrastructure/data/sqllite/entities/category.entity";
-import {ProductEntity} from "../../../../../src/infrastructure/data/sqllite/entities/product.entity";
-import SQLiteProductRepository from "../../../../../src/infrastructure/data/sqllite/product.repository.sqlite";
+import {CategoryEntity} from "../../../../../src/infrastructure/data/typeorm/entities/category.entity";
+import {ProductEntity} from "../../../../../src/infrastructure/data/typeorm/entities/product.entity";
+import TypeORMProductRepository from "../../../../../src/infrastructure/data/typeorm/product.repository.typeorm";
 
 const testDataSource = new DataSource({
     type: "sqlite",
@@ -24,10 +24,10 @@ beforeEach(async () => {
 });
 
 describe("SQLiteProductRepository", () => {
-    let productRepository: SQLiteProductRepository;
+    let productRepository: TypeORMProductRepository;
 
     beforeEach(() => {
-        productRepository = new SQLiteProductRepository(testDataSource);
+        productRepository = new TypeORMProductRepository(testDataSource);
     });
 
 

@@ -11,7 +11,7 @@ interface HighlightedCategoryResult {
     position: number;
 }
 
-class SQLiteCategoryRepository implements CategoryRepository {
+class TypeORMCategoryRepository implements CategoryRepository {
     private dataSource: DataSource;
 
     constructor(dataSource: DataSource) {
@@ -109,4 +109,4 @@ class SQLiteCategoryRepository implements CategoryRepository {
     }
 }
 
-export default SQLiteCategoryRepository;
+export default TypeORMCategoryRepository;

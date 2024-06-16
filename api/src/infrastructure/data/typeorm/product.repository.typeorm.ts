@@ -4,7 +4,7 @@ import {ProductEntity} from "./entities/product.entity";
 import Category from "../../../core/models/category.model";
 import {DataSource} from "typeorm";
 
-class SQLiteProductRepository implements ProductRepository {
+class TypeORMProductRepository implements ProductRepository {
     private dataSource: DataSource;
 
     constructor(dataSource: DataSource) {
@@ -32,4 +32,4 @@ class SQLiteProductRepository implements ProductRepository {
 
 }
 
-export default SQLiteProductRepository;
+export default TypeORMProductRepository;

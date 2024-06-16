@@ -1,6 +1,6 @@
 import {Repository} from "typeorm";
-import HighlightedCategoryEntity from "../../../src/infrastructure/data/sqllite/entities/highlighted-category.entity";
-import {CategoryEntity} from "../../../src/infrastructure/data/sqllite/entities/category.entity";
+import HighlightedCategoryEntity from "../../../src/infrastructure/data/typeorm/entities/highlighted-category.entity";
+import {CategoryEntity} from "../../../src/infrastructure/data/typeorm/entities/category.entity";
 
 export async function seedHighlightedCategories(highlightedCategoryRepo: Repository<HighlightedCategoryEntity>, categories: CategoryEntity[]) {
     const highlightedNames = [

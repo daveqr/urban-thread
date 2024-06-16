@@ -1,6 +1,6 @@
 import {DataSource} from "typeorm";
-import UserEntity from "../../../../../src/infrastructure/data/sqllite/entities/user.entity";
-import SQLiteUserRepository from "../../../../../src/infrastructure/data/sqllite/user.repository.sqlite";
+import UserEntity from "../../../../../src/infrastructure/data/typeorm/entities/user.entity";
+import TypeORMUserRepository from "../../../../../src/infrastructure/data/typeorm/user.repository.typeorm";
 import {faker} from "@faker-js/faker";
 
 const testDataSource = new DataSource({
@@ -24,11 +24,11 @@ beforeEach(async () => {
 });
 
 describe("SQLiteUserRepository", () => {
-    let userRepository: SQLiteUserRepository;
+    let userRepository: TypeORMUserRepository;
     let users: UserEntity[];
 
     beforeEach(async () => {
-        userRepository = new SQLiteUserRepository(testDataSource);
+        userRepository = new TypeORMUserRepository(testDataSource);
         users = await insertTestUsers();
     });
 
