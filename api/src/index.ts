@@ -139,6 +139,9 @@ async function main() {
         .then(() => {
             console.log("Data Source has been initialized!")
         })
+        .then(() => {
+            console.log("UrbanThread API is ready.")
+        })
         .catch((err) => {
             console.error("Error during Data Source initialization", err)
         })

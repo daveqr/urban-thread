@@ -4,7 +4,7 @@ export class CategoryDto {
     uuid!: string;
     name?: string;
     description?: string;
-    slug!: string;
+    slug?: string;
     editionName?: string;
     editionDescription?: string;
     // products?: ProductDto[];

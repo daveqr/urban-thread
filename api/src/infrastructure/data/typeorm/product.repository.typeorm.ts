@@ -19,7 +19,7 @@ class TypeORMProductRepository implements ProductRepository {
             const categories = productEntity.categories.map(categoryEntity =>
                 new Category(categoryEntity.uuid, categoryEntity.name, categoryEntity.description)
             );
-            return new Product(productEntity.id, productEntity.name, productEntity.description, categories);
+            return new Product(productEntity.uuid, productEntity.name, productEntity.description, categories);
         });
     }
 

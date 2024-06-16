@@ -2,14 +2,14 @@ import Category from "./category.model";
 
 class Product {
     productLinks: any[] = [];
-    id: number;
+    uuid: string;
     description?: string;
     name?: string;
     slug: string;
     categories: Category[];
 
-    constructor(id: number, name?: string, description?: string, categories: Category[] = [], slug: string = '') {
-        this.id = id;
+    constructor(uuid: string, name?: string, description?: string, categories: Category[] = [], slug: string = '') {
+        this.uuid = uuid;
         this.description = description;
         this.name = name;
         this.slug = slug;

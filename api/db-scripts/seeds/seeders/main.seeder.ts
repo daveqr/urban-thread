@@ -26,12 +26,13 @@ const seedDatabase = async () => {
         await seedProducts(productRepo, categories);
         await seedHighlightedCategories(highlightedCategoryRepo, categories);
         await seedUsers(userRepo);
-    } catch (error) {
-        console.error("Error seeding database:", error);
+        // } catch (error) {
+        //     console.error("Error seeding database:", error);
     } finally {
         await AppDataSource.destroy();
     }
 };
 
 seedDatabase()
-    .then(r => console.log("Database seeded successfully"));
+    .then(() => console.log("Database seeded successfully"))
+    .catch(e => console.error("Error seeding database:", e));
