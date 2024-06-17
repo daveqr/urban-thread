@@ -23,7 +23,7 @@ beforeEach(async () => {
     await testDataSource.synchronize(true);
 });
 
-describe("SQLiteUserRepository", () => {
+describe("TypeORMUserRepository", () => {
     let userRepository: TypeORMUserRepository;
     let users: UserEntity[];
 

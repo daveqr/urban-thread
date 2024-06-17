@@ -25,7 +25,7 @@ beforeEach(async () => {
     await testDataSource.synchronize(true);
 });
 
-describe("SQLiteCategoryRepository", () => {
+describe("TypeORMCategoryRepository", () => {
     let repository: TypeORMCategoryRepository;
 
     beforeEach(() => {
