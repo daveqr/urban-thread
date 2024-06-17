@@ -5,5 +5,5 @@ export interface ProductRepository {
 
     find(): Promise<Product[]>;
 
-    findById(productId: any): Promise<Product | null>;
+    findByUuid(uuid: string): Promise<Product | null>;
 }

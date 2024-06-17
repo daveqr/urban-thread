@@ -21,23 +21,16 @@ class ProductUseCase {
         // return this.transformProducts(products);
     }
 
-    async getProductById(productId: string, extended?: boolean) {
-        const product = await this.productRepository.findById(productId);
-
-        if (!product) {
-            return null;
-        }
-
-        return null;
-        // return await this.transformProduct(product, extended);
+    async findByUuid(productId: string) {
+        return await this.productRepository.findByUuid(productId);
     }
 
     async getFullProductById(productId: string) {
-        return await this.getProductById(productId, true);
+        return await this.findByUuid(productId);
     }
 
     async getBasicProductById(productId: string) {
-        return await this.getProductById(productId, false);
+        return await this.findByUuid(productId);
     }
 
     // async transformProduct(product: ProductModel, extended?: boolean) {

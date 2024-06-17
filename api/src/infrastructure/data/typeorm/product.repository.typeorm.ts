@@ -12,8 +12,8 @@ class TypeORMProductRepository implements ProductRepository {
     }
 
     async find(): Promise<Product[]> {
-        const repo = this.dataSource.getRepository(ProductEntity);
-        const products = await repo.find({relations: ["categories"]});
+        const productRepository = this.dataSource.getRepository(ProductEntity);
+        const products = await productRepository.find({relations: ["categories"]});
 
         return products.map((productEntity) => {
             const categories = productEntity.categories.map(categoryEntity =>
@@ -23,11 +23,33 @@ class TypeORMProductRepository implements ProductRepository {
         });
     }
 
-    async findById(id: any): Promise<Product | null> {
-        // const categoryRepo = AppDataSource.getRepository(Category);
-        // const category = await categoryRepo.findOne(categoryId, {relations: ["products", "edition"]});
-        // return category ? new CategoryModel(category) : null;
-        return null;
+    async findByUuid(uuid: string): Promise<Product | null> {
+        const productRepository = this.dataSource.getRepository(ProductEntity);
+        const productEntity = await productRepository.findOne({
+            where: {uuid},
+            relations: ["categories"]
+        });
+
+        if (!productEntity) {
+            return null;
+        }
+
+        return this.mapEntityToProduct(productEntity);
+    }
+
+    private mapEntityToProduct(productEntity: ProductEntity): Product {
+        const categories = productEntity.categories.map(categoryEntity => new Category(
+            categoryEntity.uuid,
+            categoryEntity.name,
+        ));
+
+        return new Product(
+            productEntity.uuid,
+            productEntity.name,
+            productEntity.description,
+            categories,
+            productEntity.slug
+        );
     }
 
 }
