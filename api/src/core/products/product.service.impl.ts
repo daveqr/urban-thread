@@ -9,12 +9,14 @@ class ProductServiceImpl implements ProductService {
         this.productRepository = productRepository;
     }
 
-    async findAllProducts(isDetailed: boolean): Promise<Product[]> {
-        return await this.productRepository.find();
-        // return isDetailed
-        //     ? await this.categoryRepository.findAll()
-        //     : await this.categoryRepository.findWithMinProductsAndProductLinks();
+    findAllProducts(isDetailed: boolean): Promise<Product[]> {
+        throw new Error("Method not implemented.");
     }
+
+    findByUuid(uuid: string): Promise<Product | null> {
+        return this.productRepository.findByUuid(uuid);
+    }
+
 
 }
 

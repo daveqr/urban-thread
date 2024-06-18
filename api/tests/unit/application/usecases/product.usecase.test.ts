@@ -1,31 +1,19 @@
-import ProductUseCase from "../../../../src/application/usecases/product.usecase";
 import Product from "../../../../src/core/models/product.model";
-import {CategoryRepository} from "../../../../src/core/repositories/category.repository";
-import {ProductRepository} from "../../../../src/core/repositories/product.repository";
-import ProductServiceImpl from "../../../../src/core/products/product.service.impl";
 import sinon, {SinonStubbedInstance} from 'sinon';
-import {ProductRepositoryTestDouble} from "./product.repository.test-double";
+import ProductService from "../../../../src/core/products/product.service";
+import {ProductServiceTestDouble} from "../../test-doubles/product.service.test-double";
 
 describe("Product use case", () => {
-    let productService: ProductServiceImpl;
-    let categoryRepository: CategoryRepository;
-    let productUseCase: ProductUseCase;
-    let productRepository: SinonStubbedInstance<ProductRepository>;
+    let productService: SinonStubbedInstance<ProductService>;
 
     beforeEach(() => {
-        productService = sinon.createStubInstance(ProductServiceImpl);
-
-        categoryRepository = {} as CategoryRepository;
-        productRepository = sinon.createStubInstance<ProductRepository>(ProductRepositoryTestDouble);
-        productRepository.find.resolves([]);
-        productRepository.findByUuid.withArgs('some-uuid').resolves(new Product('some-uuid'));
-
-        productUseCase = new ProductUseCase(productService, productRepository, categoryRepository);
+        productService = sinon.createStubInstance<ProductService>(ProductServiceTestDouble);
+        productService.findByUuid.withArgs('some-uuid').resolves(new Product('some-uuid'));
     });
 
     it('should find product by uuid', async () => {
         // When
-        const foundProduct = await productUseCase.findByUuid('some-uuid');
+        const foundProduct = await productService.findByUuid('some-uuid');
 
         // Then
         expect(foundProduct).not.toBeNull();
@@ -35,10 +23,10 @@ describe("Product use case", () => {
 
     it('should return null when product with non-existent UUID is queried', async () => {
         // Given
-        productRepository.findByUuid.withArgs('nonexistent').resolves(null);
+        productService.findByUuid.withArgs('nonexistent').resolves(null);
 
         // When
-        const foundCategory = await productUseCase.findByUuid('nonexistent');
+        const foundCategory = await productService.findByUuid('nonexistent');
 
         // Then
         expect(foundCategory).toBeNull();

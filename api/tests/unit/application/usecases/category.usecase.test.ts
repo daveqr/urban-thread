@@ -2,23 +2,23 @@ import {CategoryRepository} from "../../../../src/core/repositories/category.rep
 import sinon, {SinonStubbedInstance} from 'sinon';
 import CategoryServiceImpl from "../../../../src/core/categories/category.service.impl";
 import CategoryUseCase from "../../../../src/application/usecases/category.usecase";
-import {CategoryRepositoryTestDouble} from "./category.repository.test-double";
+import {CategoryRepositoryTestDouble} from "../../test-doubles/category.repository.test-double";
 import Category from "../../../../src/core/models/category.model";
 import {CategoryDto} from "../../../../src/application/dtos/category.dto";
 
 describe("Category use case", () => {
     let categoryService: CategoryServiceImpl;
     let categoryUseCase: CategoryUseCase;
-    let productRepository: SinonStubbedInstance<CategoryRepository>;
+    let categoryRepository: SinonStubbedInstance<CategoryRepository>;
 
     beforeEach(() => {
         categoryService = sinon.createStubInstance(CategoryServiceImpl);
 
-        productRepository = sinon.createStubInstance<CategoryRepository>(CategoryRepositoryTestDouble);
-        productRepository.find.resolves([]);
-        productRepository.findByUuid.withArgs('some-uuid').resolves(new Category('some-uuid'));
+        categoryRepository = sinon.createStubInstance<CategoryRepository>(CategoryRepositoryTestDouble);
+        categoryRepository.find.resolves([]);
+        categoryRepository.findByUuid.withArgs('some-uuid').resolves(new Category('some-uuid'));
 
-        categoryUseCase = new CategoryUseCase(productRepository, categoryService);
+        categoryUseCase = new CategoryUseCase(categoryRepository, categoryService);
     });
 
     it('should find product by uuid', async () => {
@@ -33,7 +33,7 @@ describe("Category use case", () => {
 
     it('should return null when category with non-existent UUID is queried', async () => {
         // Given
-        productRepository.findByUuid.withArgs('nonexistent').resolves(null);
+        categoryRepository.findByUuid.withArgs('nonexistent').resolves(null);
 
         // When
         const foundCategory = await categoryUseCase.findByUuid('nonexistent');
