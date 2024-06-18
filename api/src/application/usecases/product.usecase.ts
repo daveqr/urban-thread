@@ -21,8 +21,8 @@ class ProductUseCase {
         // return this.transformProducts(products);
     }
 
-    async findByUuid(productId: string) {
-        return await this.productRepository.findByUuid(productId);
+    async findByUuid(uuid: string) {
+        return await this.productService.findByUuid(uuid);
     }
 
     async getFullProductById(productId: string) {

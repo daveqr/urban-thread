@@ -1,6 +1,6 @@
-import {CategoryRepository} from "../../../../src/core/repositories/category.repository";
-import Category from "../../../../src/core/models/category.model";
-import HighlightedCategory from "../../../../src/core/models/highlighted-category.model";
+import {CategoryRepository} from "../../../src/core/repositories/category.repository";
+import Category from "../../../src/core/models/category.model";
+import HighlightedCategory from "../../../src/core/models/highlighted-category.model";
 
 export class CategoryRepositoryTestDouble implements CategoryRepository {
     find(): Promise<Category[]> {
