@@ -51,7 +51,8 @@ router.get('/highlighted', async (req: any, res: any) => {
 
 router.get('/:id', async (req: any, res: any) => {
     try {
-        const category = await categoryUseCase.findCategoryById(req.params.id);
+        let uuid = req.params.id;
+        const category = await categoryUseCase.findByUuid(uuid);
 
         if (!category) {
             return res.status(404).json({message: 'Category not found'});

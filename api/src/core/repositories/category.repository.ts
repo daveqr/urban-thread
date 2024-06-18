@@ -6,6 +6,8 @@ export interface CategoryRepository {
 
     findById(categoryId: string): Promise<Category | null>;
 
+    findByUuid(uuid: string): Promise<Category | null>;
+
     findWithMinProductsAndProductLinks(): Promise<Category[]>;
 
     findByIdWithProductLinks(categoryId: string): Promise<Category | null>;

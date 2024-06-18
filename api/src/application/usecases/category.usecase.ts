@@ -26,14 +26,9 @@ class CategoryUseCase {
         return categories.map(category => this.toHighlightedCategoryDto(category));
     }
 
-    async findCategoryById(categoryId: string): Promise<CategoryDto | null> {
-        try {
-            const category = await this.categoryRepository.findByIdWithProductLinks(categoryId);
-
-            return category ? this.toCategoryDto(category) : null;
-        } catch (error) {
-            throw error;
-        }
+    async findByUuid(uuid: string): Promise<CategoryDto | null> {
+        let category = await this.categoryRepository.findByUuid(uuid);
+        return category ? this.toCategoryDto(category) : null;
     }
 
     private toHighlightedCategoryDto(category: HighlightedCategory): HighlightedCategoryDto {
