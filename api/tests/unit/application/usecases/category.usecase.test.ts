@@ -1,6 +1,6 @@
 import {CategoryRepository} from "../../../../src/core/repositories/category.repository";
 import sinon, {SinonStubbedInstance} from 'sinon';
-import CategoryServiceImpl from "../../../../src/application/services/category.service.impl";
+import CategoryServiceImpl from "../../../../src/core/categories/category.service.impl";
 import CategoryUseCase from "../../../../src/application/usecases/category.usecase";
 import {CategoryRepositoryTestDouble} from "./category.repository.test-double";
 import Category from "../../../../src/core/models/category.model";

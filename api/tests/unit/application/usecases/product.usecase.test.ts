@@ -2,7 +2,7 @@ import ProductUseCase from "../../../../src/application/usecases/product.usecase
 import Product from "../../../../src/core/models/product.model";
 import {CategoryRepository} from "../../../../src/core/repositories/category.repository";
 import {ProductRepository} from "../../../../src/core/repositories/product.repository";
-import ProductServiceImpl from "../../../../src/application/services/product.service.impl";
+import ProductServiceImpl from "../../../../src/core/products/product.service.impl";
 import sinon, {SinonStubbedInstance} from 'sinon';
 import {ProductRepositoryTestDouble} from "./product.repository.test-double";
 

@@ -1,5 +1,5 @@
 import CategoryUseCase from "../application/usecases/category.usecase";
-import CategoryServiceImpl from "../application/services/category.service.impl";
+import CategoryServiceImpl from "../core/categories/category.service.impl";
 import TypeORMCategoryRepository from "../infrastructure/data/typeorm/category.repository.typeorm";
 
 import express from 'express';

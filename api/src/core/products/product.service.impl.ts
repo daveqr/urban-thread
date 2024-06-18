@@ -1,6 +1,6 @@
-import Product from "../../core/models/product.model";
-import {ProductRepository} from "../../core/repositories/product.repository";
-import ProductService from "../../core/services/product.service";
+import Product from "../models/product.model";
+import {ProductRepository} from "../repositories/product.repository";
+import ProductService from "./product.service";
 
 class ProductServiceImpl implements ProductService {
     private productRepository: ProductRepository;

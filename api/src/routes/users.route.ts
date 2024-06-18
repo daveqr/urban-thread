@@ -5,7 +5,7 @@ import {check, CustomValidator, validationResult} from 'express-validator';
 import {generateToken} from '../utils/jwt.util'
 import {LanguageRequest} from '..';
 import {AppDataSource} from "../data-source";
-import UserServiceImpl from "../application/services/user.service.impl";
+import UserServiceImpl from "../core/users/user.service.impl";
 import TypeORMUserRepository from "../infrastructure/data/typeorm/user.repository.typeorm";
 import UserUseCase from "../application/usecases/user.usecase";
 import UserDto from "../application/dtos/user.dto";
