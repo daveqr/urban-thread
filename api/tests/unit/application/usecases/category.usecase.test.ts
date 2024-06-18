@@ -1,18 +1,18 @@
 import {CategoryRepository} from "../../../../src/core/repositories/category.repository";
 import sinon, {SinonStubbedInstance} from 'sinon';
-import CategoryService from "../../../../src/core/services/category.service";
+import CategoryServiceImpl from "../../../../src/application/services/category.service.impl";
 import CategoryUseCase from "../../../../src/application/usecases/category.usecase";
 import {CategoryRepositoryTestDouble} from "./category.repository.test-double";
 import Category from "../../../../src/core/models/category.model";
 import {CategoryDto} from "../../../../src/application/dtos/category.dto";
 
 describe("Category use case", () => {
-    let categoryService: CategoryService;
+    let categoryService: CategoryServiceImpl;
     let categoryUseCase: CategoryUseCase;
     let productRepository: SinonStubbedInstance<CategoryRepository>;
 
     beforeEach(() => {
-        categoryService = sinon.createStubInstance(CategoryService);
+        categoryService = sinon.createStubInstance(CategoryServiceImpl);
 
         productRepository = sinon.createStubInstance<CategoryRepository>(CategoryRepositoryTestDouble);
         productRepository.find.resolves([]);
