@@ -3,7 +3,7 @@ import {CategoryDto} from "../dtos/category.dto";
 import Category from "../../core/models/category.model";
 import HighlightedCategory from "../../core/models/highlighted-category.model";
 import HighlightedCategoryDto from "../dtos/highlighted-category.dto";
-import CategoryService from "../../core/services/category.service";
+import CategoryService from "../../core/categories/category.service";
 
 class CategoryUseCase {
     private categoryRepository: CategoryRepository;

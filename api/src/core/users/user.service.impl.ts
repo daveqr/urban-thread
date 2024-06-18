@@ -1,8 +1,8 @@
-import {UserRepository} from "../../core/repositories/user.repository";
-import User from "../../core/models/user.model";
+import {UserRepository} from "../repositories/user.repository";
+import User from "../models/user.model";
 import {v4 as uuidv4} from "uuid";
 import {DataSource, EntityManager} from "typeorm";
-import UserService from "../../core/services/user.service";
+import UserService from "./user.service";
 
 class UserServiceImpl implements UserService {
     private userRepository: UserRepository;

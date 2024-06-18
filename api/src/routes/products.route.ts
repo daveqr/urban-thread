@@ -2,7 +2,7 @@ import express, {NextFunction, Request, Response} from 'express';
 import ProductUseCase from '../application/usecases/product.usecase';
 import TypeORMCategoryRepository from "../infrastructure/data/typeorm/category.repository.typeorm";
 import TypeORMProductRepository from "../infrastructure/data/typeorm/product.repository.typeorm";
-import ProductServiceImpl from "../application/services/product.service.impl";
+import ProductServiceImpl from "../core/products/product.service.impl";
 import {AppDataSource} from "../data-source";
 
 const router = express.Router();
