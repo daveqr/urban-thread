@@ -5,7 +5,7 @@ import {check, CustomValidator, validationResult} from 'express-validator';
 import {generateToken} from '../utils/jwt.util'
 import {LanguageRequest} from '..';
 import {AppDataSource} from "../data-source";
-import UserService from "../core/services/user.service";
+import UserServiceImpl from "../application/services/user.service.impl";
 import TypeORMUserRepository from "../infrastructure/data/typeorm/user.repository.typeorm";
 import UserUseCase from "../application/usecases/user.usecase";
 import UserDto from "../application/dtos/user.dto";
@@ -13,7 +13,7 @@ import UserDto from "../application/dtos/user.dto";
 const router = express.Router();
 
 const userRepository = new TypeORMUserRepository(AppDataSource);
-const userService = new UserService(AppDataSource, userRepository);
+const userService = new UserServiceImpl(AppDataSource, userRepository);
 const userUseCase = new UserUseCase(AppDataSource, userRepository, userService);
 
 const isEmailUniqueCustomValidator: CustomValidator = async (value, {req}) => {

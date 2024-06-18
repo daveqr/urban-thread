@@ -2,13 +2,13 @@ import express, {NextFunction, Request, Response} from 'express';
 import ProductUseCase from '../application/usecases/product.usecase';
 import TypeORMCategoryRepository from "../infrastructure/data/typeorm/category.repository.typeorm";
 import TypeORMProductRepository from "../infrastructure/data/typeorm/product.repository.typeorm";
-import ProductService from "../core/services/product.service";
+import ProductServiceImpl from "../application/services/product.service.impl";
 import {AppDataSource} from "../data-source";
 
 const router = express.Router();
 const categoryRepository = new TypeORMCategoryRepository(AppDataSource);
 const productRepository = new TypeORMProductRepository(AppDataSource);
-const productService = new ProductService(productRepository);
+const productService = new ProductServiceImpl(productRepository);
 const productUseCase = new ProductUseCase(productService, productRepository, categoryRepository);
 
 router.use((req: Request, res: Response, next: NextFunction) => {

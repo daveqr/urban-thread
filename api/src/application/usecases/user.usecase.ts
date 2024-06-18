@@ -1,9 +1,9 @@
 import {UserRepository} from "../../core/repositories/user.repository";
-import UserService from "../../core/services/user.service";
 import User from "../../core/models/user.model";
 import UserDto from "../dtos/user.dto";
 import {DataSource, EntityManager} from "typeorm";
 import {userSchema} from "../validators/user.validator";
+import UserService from "../../core/services/user.service";
 
 class UserUseCase {
     private dataSource: DataSource;

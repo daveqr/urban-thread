@@ -1,5 +1,5 @@
 import CategoryUseCase from "../application/usecases/category.usecase";
-import CategoryService from "../core/services/category.service";
+import CategoryServiceImpl from "../application/services/category.service.impl";
 import TypeORMCategoryRepository from "../infrastructure/data/typeorm/category.repository.typeorm";
 
 import express from 'express';
@@ -10,7 +10,7 @@ import {HighlightedCategoryResponseTransformer} from "./transformers/highlighted
 const router = express.Router();
 
 const categoryRepository = new TypeORMCategoryRepository(AppDataSource);
-const categoryService = new CategoryService(categoryRepository);
+const categoryService = new CategoryServiceImpl(categoryRepository);
 const categoryUseCase = new CategoryUseCase(categoryRepository, categoryService);
 
 router.use((req: any, res: any, next: any) => {
