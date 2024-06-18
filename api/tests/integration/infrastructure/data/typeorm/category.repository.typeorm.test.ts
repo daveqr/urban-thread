@@ -4,6 +4,9 @@ import {ProductEntity} from "../../../../../src/infrastructure/data/typeorm/enti
 import HighlightedCategoryEntity
     from "../../../../../src/infrastructure/data/typeorm/entities/highlighted-category.entity";
 import TypeORMCategoryRepository from "../../../../../src/infrastructure/data/typeorm/category.repository.typeorm";
+import Category from "../../../../../src/core/models/category.model";
+import {faker} from "@faker-js/faker";
+import {v4 as uuidv4} from "uuid";
 
 const testDataSource = new DataSource({
     type: "sqlite",
@@ -26,60 +29,93 @@ beforeEach(async () => {
 });
 
 describe("TypeORMCategoryRepository", () => {
-    let repository: TypeORMCategoryRepository;
+    let categoryRepository: TypeORMCategoryRepository;
 
     beforeEach(() => {
-        repository = new TypeORMCategoryRepository(testDataSource);
+        categoryRepository = new TypeORMCategoryRepository(testDataSource);
     });
 
-    async function createTestProductAndAssociateWithCategory(category: CategoryEntity) {
-        const product = new ProductEntity();
-        product.name = "Test Product";
-        product.slug = "test-product";
-        category.products = [product];
+    async function populateSingleCategory() {
+        const categoryEntity = new CategoryEntity();
+        categoryEntity.name = faker.lorem.word();
+        categoryEntity.description = faker.lorem.sentence();
+        categoryEntity.slug = faker.lorem.slug();
+        categoryEntity.uuid = uuidv4();
 
-        await testDataSource.getRepository(ProductEntity).save(product);
-        await testDataSource.getRepository(CategoryEntity).save(category);
+        const productEntity = new ProductEntity();
+        productEntity.name = faker.commerce.productName();
+        productEntity.description = faker.lorem.paragraph();
+        productEntity.categories = [categoryEntity];
+        productEntity.slug = faker.lorem.slug();
+        productEntity.uuid = uuidv4();
+        categoryEntity.products = [productEntity];
+
+        await testDataSource.getRepository(ProductEntity).save(productEntity);
+        await testDataSource.getRepository(CategoryEntity).save(categoryEntity);
+
+        return categoryEntity;
     }
 
     it("should find categories", async () => {
         // Given
-        const category = new CategoryEntity();
-        category.name = "Test Category";
-        category.slug = "test-category";
-
-        await createTestProductAndAssociateWithCategory(category);
+        const category1 = await populateSingleCategory();
+        const category2 = await populateSingleCategory();
 
         // When
-        const categories = await repository.find();
+        const categories = await categoryRepository.find();
 
         // Then
-        expect(categories.length).toBe(1);
-        expect(categories[0].name).toBe("Test Category");
+        expect(categories.length).toBe(2);
+        expect(categories[0].name).toBe(category1.name);
+        expect(categories[1].name).toBe(category2.name);
         expect(categories[0].products.length).toBe(1);
-        expect(categories[0].products[0].name).toBe("Test Product");
+        expect(categories[0].products[0].name).toBe(category1.products[0].name);
     });
 
     it("should find highlighted categories", async () => {
         // Given
-        const category = new CategoryEntity();
-        category.name = "Test Category";
-        category.slug = "test-category";
-
+        const category = await populateSingleCategory();
         const highlighted = new HighlightedCategoryEntity(category);
         highlighted.position = 1;
 
-        await createTestProductAndAssociateWithCategory(category);
         await testDataSource.getRepository(HighlightedCategoryEntity).save(highlighted);
 
         // When
-        const highlightedCategories = await repository.findHighlightedCategories();
+        const highlightedCategories = await categoryRepository.findHighlightedCategories();
 
         // Then
         expect(highlightedCategories.length).toBe(1);
-        expect(highlightedCategories[0].name).toBe("Test Category");
+        expect(highlightedCategories[0].name).toBe(category.name);
         expect(highlightedCategories[0].products.length).toBe(1);
-        expect(highlightedCategories[0].products[0].name).toBe("Test Product");
+        expect(highlightedCategories[0].products[0].name).toBe(category.products[0].name);
         expect(highlightedCategories[0].position).toBe(1);
+    });
+
+    it('should find category by uuid', async () => {
+        // Given
+        const categoryEntity = await populateSingleCategory();
+
+        // When
+        const foundCategory = await categoryRepository.findByUuid(categoryEntity.uuid);
+
+        // Then
+        expect(foundCategory).not.toBeNull();
+        expect(foundCategory).toBeInstanceOf(Category);
+        expect(foundCategory?.uuid).toBe(foundCategory?.uuid);
+        expect(foundCategory?.name).toBe(foundCategory?.name);
+        expect(foundCategory?.description).toBe(foundCategory?.description);
+        expect(foundCategory?.products).toHaveLength(1);
+        expect(foundCategory?.products[0].name).toBe(foundCategory?.products[0].name);
+    });
+
+    it('should return null when category with non-existent UUID is queried', async () => {
+        // Given
+        const categoryEntity = await populateSingleCategory();
+
+        // When
+        const foundCategory = await categoryRepository.findByUuid("unknown");
+
+        // Then
+        expect(foundCategory).toBeNull();
     });
 });

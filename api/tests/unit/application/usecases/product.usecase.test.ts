@@ -10,17 +10,17 @@ describe("Product use case", () => {
     let productService: ProductService;
     let categoryRepository: CategoryRepository;
     let productUseCase: ProductUseCase;
-    let mockRepository: SinonStubbedInstance<ProductRepository>;
+    let productRepository: SinonStubbedInstance<ProductRepository>;
 
     beforeEach(() => {
         productService = sinon.createStubInstance(ProductService);
 
         categoryRepository = {} as CategoryRepository;
-        mockRepository = sinon.createStubInstance<ProductRepository>(ProductRepositoryTestDouble);
-        mockRepository.find.resolves([]);
-        mockRepository.findByUuid.withArgs('some-uuid').resolves(new Product('some-uuid'));
+        productRepository = sinon.createStubInstance<ProductRepository>(ProductRepositoryTestDouble);
+        productRepository.find.resolves([]);
+        productRepository.findByUuid.withArgs('some-uuid').resolves(new Product('some-uuid'));
 
-        productUseCase = new ProductUseCase(productService, mockRepository, categoryRepository);
+        productUseCase = new ProductUseCase(productService, productRepository, categoryRepository);
     });
 
     it('should find product by uuid', async () => {
@@ -31,5 +31,16 @@ describe("Product use case", () => {
         expect(foundProduct).not.toBeNull();
         expect(foundProduct).toBeInstanceOf(Product);
         expect(foundProduct?.uuid).toBe('some-uuid');
+    });
+
+    it('should return null when product with non-existent UUID is queried', async () => {
+        // Given
+        productRepository.findByUuid.withArgs('nonexistent').resolves(null);
+
+        // When
+        const foundCategory = await productUseCase.findByUuid('nonexistent');
+
+        // Then
+        expect(foundCategory).toBeNull();
     });
 });

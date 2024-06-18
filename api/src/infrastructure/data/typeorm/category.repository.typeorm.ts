@@ -1,4 +1,4 @@
-import {DataSource, In} from "typeorm";
+import {DataSource, In, Repository} from "typeorm";
 import {CategoryEntity} from "./entities/category.entity";
 import {CategoryRepository} from "../../../core/repositories/category.repository";
 import Category from "../../../core/models/category.model";
@@ -13,17 +13,31 @@ interface HighlightedCategoryResult {
 
 class TypeORMCategoryRepository implements CategoryRepository {
     private dataSource: DataSource;
+    private categoryEntityRepository: Repository<CategoryEntity>;
 
     constructor(dataSource: DataSource) {
         this.dataSource = dataSource;
+        this.categoryEntityRepository = this.categoryEntityRepository = this.dataSource.getRepository(CategoryEntity);
     }
 
     async find(): Promise<Category[]> {
-        const categoryRepo = this.dataSource.getRepository(CategoryEntity);
-
-        const categories = await categoryRepo.find({relations: ["products"]});
+        const categories = await this.categoryEntityRepository.find({relations: ["products"]});
 
         return this.mapToDomainCategories(categories);
+    }
+
+    async findByUuid(uuid: string): Promise<Category | null> {
+        const categoryEntity = await this.categoryEntityRepository.findOne({
+            where: {uuid},
+            relations: ["products"]
+        });
+
+        if (!categoryEntity) {
+            return null;
+        }
+
+        let categories = this.mapToDomainCategories([categoryEntity]);
+        return categories[0];
     }
 
     async findHighlightedCategories(): Promise<HighlightedCategory[]> {
