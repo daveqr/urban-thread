@@ -1,6 +1,7 @@
 import {ProductRepository} from "../../core/repositories/product.repository";
 import {CategoryRepository} from "../../core/repositories/category.repository";
 import ProductService from "../../core/products/product.service";
+import {Product} from "../../core/models/product.model";
 
 class ProductUseCase {
     private productRepository: ProductRepository;
@@ -21,7 +22,7 @@ class ProductUseCase {
         // return this.transformProducts(products);
     }
 
-    async findByUuid(uuid: string) {
+    async findByUuid(uuid: string): Promise<Product | null> {
         return await this.productService.findByUuid(uuid);
     }
 

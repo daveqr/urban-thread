@@ -1,7 +1,7 @@
 import {CategoryRepository} from "../repositories/category.repository";
 import Category from "../models/category.model";
-import HighlightedCategory from "../models/highlighted-category.model";
 import CategoryService from "./category.service";
+import {HighlightedCategory} from "../models/highlighted-category.model";
 
 class CategoryServiceImpl implements CategoryService {
     private categoryRepository: CategoryRepository;

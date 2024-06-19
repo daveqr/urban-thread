@@ -1,14 +1,16 @@
-import Product from "../../../../src/core/models/product.model";
 import sinon, {SinonStubbedInstance} from 'sinon';
 import ProductService from "../../../../src/core/products/product.service";
 import {ProductServiceTestDouble} from "../../test-doubles/product.service.test-double";
+import {Product} from "../../../../src/core/models/product.model";
 
 describe("Product use case", () => {
     let productService: SinonStubbedInstance<ProductService>;
 
     beforeEach(() => {
         productService = sinon.createStubInstance<ProductService>(ProductServiceTestDouble);
-        productService.findByUuid.withArgs('some-uuid').resolves(new Product('some-uuid'));
+        productService.findByUuid.withArgs('some-uuid').resolves({
+            uuid: 'some-uuid',
+        } as Product);
     });
 
     it('should find product by uuid', async () => {
@@ -17,7 +19,6 @@ describe("Product use case", () => {
 
         // Then
         expect(foundProduct).not.toBeNull();
-        expect(foundProduct).toBeInstanceOf(Product);
         expect(foundProduct?.uuid).toBe('some-uuid');
     });
 

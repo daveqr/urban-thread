@@ -15,7 +15,11 @@ describe("Category use case", () => {
 
         categoryRepository = sinon.createStubInstance<CategoryRepository>(CategoryRepositoryTestDouble);
         categoryRepository.find.resolves([]);
-        categoryRepository.findByUuid.withArgs('some-uuid').resolves(new Category('some-uuid'));
+        categoryRepository.findByUuid.withArgs('some-uuid').resolves(
+            {
+                uuid: 'some-uuid'
+            } as Category
+        );
 
         categoryUseCase = new CategoryUseCase(categoryRepository, categoryService);
     });
@@ -26,7 +30,6 @@ describe("Category use case", () => {
 
         // Then
         expect(foundCategory).not.toBeNull();
-        expect(foundCategory).toBeInstanceOf(Category);
         expect(foundCategory?.uuid).toBe('some-uuid');
     });
 

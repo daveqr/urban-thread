@@ -1,7 +1,7 @@
 import {CategoryRepository} from "../../core/repositories/category.repository";
 import Category from "../../core/models/category.model";
-import HighlightedCategory from "../../core/models/highlighted-category.model";
 import CategoryService from "../../core/categories/category.service";
+import {HighlightedCategory} from "../../core/models/highlighted-category.model";
 
 class CategoryUseCase {
     private categoryRepository: CategoryRepository;

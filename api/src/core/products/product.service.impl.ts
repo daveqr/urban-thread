@@ -1,6 +1,6 @@
-import Product from "../models/product.model";
 import {ProductRepository} from "../repositories/product.repository";
 import ProductService from "./product.service";
+import {Product} from "../models/product.model";
 
 class ProductServiceImpl implements ProductService {
     private productRepository: ProductRepository;
@@ -16,8 +16,6 @@ class ProductServiceImpl implements ProductService {
     findByUuid(uuid: string): Promise<Product | null> {
         return this.productRepository.findByUuid(uuid);
     }
-
-
 }
 
 export default ProductServiceImpl;
