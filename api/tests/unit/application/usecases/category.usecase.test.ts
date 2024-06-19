@@ -4,7 +4,6 @@ import CategoryServiceImpl from "../../../../src/core/categories/category.servic
 import CategoryUseCase from "../../../../src/application/usecases/category.usecase";
 import {CategoryRepositoryTestDouble} from "../../test-doubles/category.repository.test-double";
 import Category from "../../../../src/core/models/category.model";
-import {CategoryDto} from "../../../../src/application/dtos/category.dto";
 
 describe("Category use case", () => {
     let categoryService: CategoryServiceImpl;
@@ -27,7 +26,7 @@ describe("Category use case", () => {
 
         // Then
         expect(foundCategory).not.toBeNull();
-        expect(foundCategory).toBeInstanceOf(CategoryDto);
+        expect(foundCategory).toBeInstanceOf(Category);
         expect(foundCategory?.uuid).toBe('some-uuid');
     });
 
