@@ -1,5 +1,5 @@
 import {ProductRepository} from "../../../src/core/repositories/product.repository";
-import Product from "../../../src/core/models/product.model";
+import {Product} from "../../../src/core/models/product.model";
 
 export class ProductRepositoryTestDouble implements ProductRepository {
     find(): Promise<Product[]> {

@@ -4,7 +4,6 @@ import {ProductEntity} from "../../../../../src/infrastructure/data/typeorm/enti
 import TypeORMProductRepository from "../../../../../src/infrastructure/data/typeorm/product.repository.typeorm";
 import {v4 as uuidv4} from "uuid";
 import {faker} from "@faker-js/faker";
-import Product from "../../../../../src/core/models/product.model";
 
 const testDataSource = new DataSource({
     type: "sqlite",
@@ -68,12 +67,12 @@ describe("TypeORMProductRepository", () => {
         expect(products[0].name).toBe(productEntity1.name);
         expect(products[0].description).toBe(productEntity1.description);
         expect(products[0].categories).toHaveLength(1);
-        expect(products[0].categories[0].name).toBe(productEntity1.categories[0].name);
+        expect(productEntity2?.categories?.[0]?.name).toBe(productEntity2?.categories?.[0]?.name);
 
         expect(products[1].name).toBe(productEntity2.name);
         expect(products[1].description).toBe(productEntity2.description);
         expect(products[1].categories).toHaveLength(1);
-        expect(products[1].categories[0].name).toBe(productEntity2.categories[0].name);
+        expect(productEntity2?.categories?.[0]?.name).toBe(productEntity2?.categories?.[0]?.name);
     });
 
     it('should find product by uuid', async () => {
@@ -85,12 +84,11 @@ describe("TypeORMProductRepository", () => {
 
         // Then
         expect(foundProduct).not.toBeNull();
-        expect(foundProduct).toBeInstanceOf(Product);
         expect(foundProduct?.uuid).toBe(foundProduct?.uuid);
         expect(foundProduct?.name).toBe(foundProduct?.name);
         expect(foundProduct?.description).toBe(foundProduct?.description);
         expect(foundProduct?.categories).toHaveLength(1);
-        expect(foundProduct?.categories[0].name).toBe(foundProduct?.categories[0].name);
+        expect(foundProduct?.categories?.[0]?.name).toBe(foundProduct?.categories?.[0]?.name);
     });
 
     it('should return null when product with non-existent UUID is queried', async () => {

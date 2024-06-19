@@ -1,6 +1,6 @@
 import {CategoryRepository} from "../../../src/core/repositories/category.repository";
 import Category from "../../../src/core/models/category.model";
-import HighlightedCategory from "../../../src/core/models/highlighted-category.model";
+import {HighlightedCategoryx} from "../../../src/core/models/blah";
 
 export class CategoryRepositoryTestDouble implements CategoryRepository {
     find(): Promise<Category[]> {
@@ -23,7 +23,7 @@ export class CategoryRepositoryTestDouble implements CategoryRepository {
         return Promise.resolve(null);
     }
 
-    findHighlightedCategories(): Promise<HighlightedCategory[]> {
+    findHighlightedCategories(): Promise<HighlightedCategoryx[]> {
         return Promise.resolve([]);
     }
 

@@ -2,7 +2,7 @@ import ProductServiceImpl from "../../../../../src/core/products/product.service
 import {ProductRepository} from "../../../../../src/core/repositories/product.repository";
 import sinon, {SinonStubbedInstance} from "sinon";
 import {ProductRepositoryTestDouble} from "../../../test-doubles/product.repository.test-double";
-import Product from "../../../../../src/core/models/product.model";
+import {Product} from "../../../../../src/core/models/product.model";
 
 describe("ProductServiceImpl use case", () => {
     let productService: ProductServiceImpl;
@@ -15,14 +15,15 @@ describe("ProductServiceImpl use case", () => {
 
     it('should find product by uuid', async () => {
         // Given
-        productRepository.findByUuid.withArgs('some-uuid').resolves(new Product('some-uuid'));
+        productRepository.findByUuid.withArgs('some-uuid').resolves({
+            uuid: 'some-uuid',
+        } as Product);
 
         // When
         const foundProduct = await productRepository.findByUuid('some-uuid');
 
         // Then
         expect(foundProduct).not.toBeNull();
-        expect(foundProduct).toBeInstanceOf(Product);
         expect(foundProduct?.uuid).toBe('some-uuid');
     });
 

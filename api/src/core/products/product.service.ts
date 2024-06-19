@@ -1,4 +1,4 @@
-import Product from "../models/product.model";
+import {Product} from "../models/product.model";
 
 interface ProductService {
     findAllProducts(isDetailed: boolean): Promise<Product[]>;

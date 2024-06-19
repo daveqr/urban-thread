@@ -3,13 +3,9 @@ import {CategoryEntity} from "./entities/category.entity";
 import {CategoryRepository} from "../../../core/repositories/category.repository";
 import Category from "../../../core/models/category.model";
 import {AppDataSource} from "../../../data-source";
-import Product from "../../../core/models/product.model";
-import HighlightedCategory from "../../../core/models/highlighted-category.model";
+import {HighlightedCategoryx} from "../../../core/models/blah";
+import {Product} from "../../../core/models/product.model";
 
-interface HighlightedCategoryResult {
-    category: CategoryEntity;
-    position: number;
-}
 
 class TypeORMCategoryRepository implements CategoryRepository {
     private dataSource: DataSource;
@@ -40,17 +36,17 @@ class TypeORMCategoryRepository implements CategoryRepository {
         return categories[0];
     }
 
-    async findHighlightedCategories(): Promise<HighlightedCategory[]> {
+    async findHighlightedCategories(): Promise<HighlightedCategoryx[]> {
         const categoryRepo = this.dataSource.getRepository(CategoryEntity);
 
-        const highlightedCategories = await categoryRepo.createQueryBuilder('category')
+        const highlightedCategoryEntities = await categoryRepo.createQueryBuilder('category')
             .innerJoinAndSelect('highlighted_categories', 'highlighted', 'category.id = highlighted.categoryId')
             .leftJoinAndSelect('category.products', 'product')
             .addSelect('highlighted.position', 'position')
             .getRawAndEntities();
 
-        const result = highlightedCategories.raw.map((rawResult, index) => ({
-            category: highlightedCategories.entities[index],
+        const result = highlightedCategoryEntities.raw.map((rawResult, index) => ({
+            categoryEntity: highlightedCategoryEntities.entities[index],
             position: rawResult.position
         }));
 
@@ -98,25 +94,37 @@ class TypeORMCategoryRepository implements CategoryRepository {
 
     private mapToDomainCategories(categories: CategoryEntity[]) {
         return categories.map((categoryEntity) => {
-            let products = categoryEntity.products.map(productEntity =>
-                new Product(productEntity.uuid, productEntity.name, productEntity.description, [], productEntity.slug)
-            );
+            const products: Product[] = categoryEntity.products.map(productEntity => ({
+                uuid: productEntity.uuid,
+                name: productEntity.name,
+                description: productEntity.description,
+                slug: productEntity.slug
+            }));
 
-            let category = new Category(categoryEntity.uuid, categoryEntity.name, categoryEntity.description, products);
+            const category = new Category(categoryEntity.uuid, categoryEntity.name, categoryEntity.description, products);
             category.slug = categoryEntity.slug;
 
             return category;
         });
     }
 
-    private mapToDomainHighlightedCategories(categories: HighlightedCategoryResult[]): HighlightedCategory[] {
-        return categories.map(({category, position}) => {
-            let products = category.products.map(productEntity =>
-                new Product(productEntity.uuid, productEntity.name, productEntity.description, [], productEntity.slug)
-            );
+    private mapToDomainHighlightedCategories(categories: {
+        position: any;
+        categoryEntity: CategoryEntity
+    }[]): HighlightedCategoryx[] {
+        return categories.map(({categoryEntity, position}) => {
+            const products: Product[] = categoryEntity.products.map(productEntity => ({
+                uuid: productEntity.uuid,
+                name: productEntity.name,
+                description: productEntity.description,
+                slug: productEntity.slug
+            }));
 
-            let highlightedCategory = new HighlightedCategory(category.uuid, category.name, products, position, category.description);
-            highlightedCategory.slug = category.slug;
+            const highlightedCategory: HighlightedCategoryx = {
+                ...categoryEntity,
+                products: products,
+                position: position,
+            };
 
             return highlightedCategory;
         });

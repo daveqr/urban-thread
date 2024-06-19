@@ -1,7 +1,7 @@
 import {CategoryRepository} from "../../core/repositories/category.repository";
 import Category from "../../core/models/category.model";
-import HighlightedCategory from "../../core/models/highlighted-category.model";
 import CategoryService from "../../core/categories/category.service";
+import {HighlightedCategoryx} from "../../core/models/blah";
 
 class CategoryUseCase {
     private categoryRepository: CategoryRepository;
@@ -16,7 +16,7 @@ class CategoryUseCase {
         return await this.categoryService.findAllCategories(isDetailed);
     }
 
-    async findHighlightedCategories(): Promise<HighlightedCategory[]> {
+    async findHighlightedCategories(): Promise<HighlightedCategoryx[]> {
         return await this.categoryService.findHighlightedCategories();
     }
 

@@ -1,5 +1,5 @@
 import Category from "../models/category.model";
-import HighlightedCategory from "../models/highlighted-category.model";
+import {HighlightedCategoryx} from "../models/blah";
 
 export interface CategoryRepository {
     find(): Promise<Category[]>;
@@ -16,5 +16,5 @@ export interface CategoryRepository {
 
     findByIds(categoryIds: string[]): Promise<Category[]>;
 
-    findHighlightedCategories(): Promise<HighlightedCategory[]>;
+    findHighlightedCategories(): Promise<HighlightedCategoryx[]>;
 }

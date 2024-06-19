@@ -1,10 +1,10 @@
 import Category from "../models/category.model";
-import HighlightedCategory from "../models/highlighted-category.model";
+import {HighlightedCategoryx} from "../models/blah";
 
 interface CategoryService {
     findAllCategories(isDetailed: boolean): Promise<Category[]>;
 
-    findHighlightedCategories(): Promise<HighlightedCategory[]>;
+    findHighlightedCategories(): Promise<HighlightedCategoryx[]>;
 }
 
 export default CategoryService;
