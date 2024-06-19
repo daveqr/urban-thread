@@ -15,6 +15,7 @@ class TypeORMProductRepository implements ProductRepository {
         const productRepository = this.dataSource.getRepository(ProductEntity);
         const productEntities = await productRepository.find({relations: ["categories"]});
 
+        // DFD add this to the mapper
         return productEntities.map((productEntity): Product => {
             return {
                 ...productEntity,
