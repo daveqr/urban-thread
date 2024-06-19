@@ -1,3 +1,3 @@
-export interface TransformationService<Entity, DTO> {
-    transform(entity: Entity): DTO;
+export interface TransformationService<Model, DTO> {
+    transform(entity: Model): DTO;
 }
