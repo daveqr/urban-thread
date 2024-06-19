@@ -34,5 +34,4 @@ export class CategoryRepositoryTestDouble implements CategoryRepository {
     findWithMinProductsAndProductLinks(): Promise<Category[]> {
         return Promise.resolve([]);
     }
-
 }

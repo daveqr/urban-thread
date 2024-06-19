@@ -1,4 +1,4 @@
-import {Column, Entity, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
+import {BeforeInsert, BeforeUpdate, Column, Entity, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
 import {ProductEntity} from "./product.entity";
 
 @Entity('categories')
@@ -20,6 +20,14 @@ export class CategoryEntity {
 
     @ManyToMany(() => ProductEntity, product => product.categories)
     products!: ProductEntity[];
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    ensureProducts() {
+        if (!this.products) {
+            this.products = [];
+        }
+    }
 
     // @ManyToOne(() => Edition, edition => edition.categories)
     // edition: Edition;

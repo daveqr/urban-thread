@@ -3,8 +3,8 @@ import {CategoryEntity} from "./entities/category.entity";
 import {CategoryRepository} from "../../../core/repositories/category.repository";
 import Category from "../../../core/models/category.model";
 import {AppDataSource} from "../../../data-source";
-import {Product} from "../../../core/models/product.model";
 import {HighlightedCategory} from "../../../core/models/highlighted-category.model";
+import {mapToDomainCategories, mapToDomainHighlightedCategories} from "./mapper";
 
 
 class TypeORMCategoryRepository implements CategoryRepository {
@@ -19,7 +19,7 @@ class TypeORMCategoryRepository implements CategoryRepository {
     async find(): Promise<Category[]> {
         const categories = await this.categoryEntityRepository.find({relations: ["products"]});
 
-        return this.mapToDomainCategories(categories);
+        return mapToDomainCategories(categories);
     }
 
     async findByUuid(uuid: string): Promise<Category | null> {
@@ -32,7 +32,7 @@ class TypeORMCategoryRepository implements CategoryRepository {
             return null;
         }
 
-        let categories = this.mapToDomainCategories([categoryEntity]);
+        let categories = mapToDomainCategories([categoryEntity]);
         return categories[0];
     }
 
@@ -50,19 +50,19 @@ class TypeORMCategoryRepository implements CategoryRepository {
             position: rawResult.position
         }));
 
-        return this.mapToDomainHighlightedCategories(result);
+        return mapToDomainHighlightedCategories(result);
     }
 
     async findByIdWithProductLinks(categoryId: string): Promise<Category | null> {
         // const categoryRepo = getRepository(Category);
-        // const category = await categoryRepo.findOne(categoryId, { relations: ["products", "edition"] });
+        // const category = await categoryRepo.findOne(categoryId, { relations: ["productEntities", "edition"] });
         // return category ? new CategoryModel(category) : null;
         return null;
     }
 
     async findWithMinProducts(): Promise<Category[]> {
         // const categoryRepo = getRepository(Category);
-        // const categories = await categoryRepo.find({ relations: ["products", "edition"] });
+        // const categories = await categoryRepo.find({ relations: ["productEntities", "edition"] });
         // return categories.map(category => new CategoryModel(category));
         return [];
     }
@@ -81,53 +81,15 @@ class TypeORMCategoryRepository implements CategoryRepository {
     async findByIds(categoryIds: string[]): Promise<Category[]> {
         const categoryRepo = AppDataSource.getRepository(CategoryEntity);
 
-        const categories = await categoryRepo.findBy({id: In([1, 2, 3])});
-        return categories.map(category => new Category(category.uuid, category.name, category.description));
-    }
+        const categoryEntities = await categoryRepo.findBy({id: In([1, 2, 3])});
+        return mapToDomainCategories(categoryEntities);
+    };
 
     async findById(categoryId: any): Promise<Category | null> {
         // const categoryRepo = AppDataSource.getRepository(Category);
         // const category = await categoryRepo.findOne(categoryId, {relations: ["products", "edition"]});
         // return category ? new CategoryModel(category) : null;
         return null;
-    }
-
-    private mapToDomainCategories(categories: CategoryEntity[]) {
-        return categories.map((categoryEntity) => {
-            const products: Product[] = categoryEntity.products.map(productEntity => ({
-                uuid: productEntity.uuid,
-                name: productEntity.name,
-                description: productEntity.description,
-                slug: productEntity.slug
-            }));
-
-            const category = new Category(categoryEntity.uuid, categoryEntity.name, categoryEntity.description, products);
-            category.slug = categoryEntity.slug;
-
-            return category;
-        });
-    }
-
-    private mapToDomainHighlightedCategories(categories: {
-        position: any;
-        categoryEntity: CategoryEntity
-    }[]): HighlightedCategory[] {
-        return categories.map(({categoryEntity, position}) => {
-            const products: Product[] = categoryEntity.products.map(productEntity => ({
-                uuid: productEntity.uuid,
-                name: productEntity.name,
-                description: productEntity.description,
-                slug: productEntity.slug
-            }));
-
-            const highlightedCategory: HighlightedCategory = {
-                ...categoryEntity,
-                products: products,
-                position: position,
-            };
-
-            return highlightedCategory;
-        });
     }
 }
 

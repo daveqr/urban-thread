@@ -2,49 +2,49 @@
   {
     "name": "Men's T-Shirt",
     "description": "A comfortable cotton t-shirt for men.",
-    "categories": [
+    "categoryEntities": [
       "Men's Clothing"
     ]
   },
   {
     "name": "Women's Dress",
     "description": "A stylish summer dress for women.",
-    "categories": [
+    "categoryEntities": [
       "Women's Clothing"
     ]
   },
   {
     "name": "Kid's Jeans",
     "description": "Durable jeans for kids.",
-    "categories": [
+    "categoryEntities": [
       "Kid's Clothing"
     ]
   },
   {
     "name": "Silk Evening Gown",
     "description": "An exquisite silk gown for special occasions.",
-    "categories": [
+    "categoryEntities": [
       "Silk Dresses"
     ]
   },
   {
     "name": "Business Suit",
     "description": "A formal suit tailored for business professionals.",
-    "categories": [
+    "categoryEntities": [
       "Suits"
     ]
   },
   {
     "name": "Festival Outfit",
     "description": "Colorful attire perfect for festivals.",
-    "categories": [
+    "categoryEntities": [
       "Festival"
     ]
   },
   {
     "name": "Exclusive Showroom Item",
     "description": "An exclusive item available only in our showroom.",
-    "categories": [
+    "categoryEntities": [
       "Showroom"
     ]
   }

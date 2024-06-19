@@ -18,7 +18,7 @@ export class ProductEntity {
     @Column({nullable: false})
     slug!: string;
 
-    @ManyToMany(() => CategoryEntity, category => category.products)
+    @ManyToMany(() => CategoryEntity, categoryEntity => categoryEntity.products)
     @JoinTable()
     categories!: CategoryEntity[];
 

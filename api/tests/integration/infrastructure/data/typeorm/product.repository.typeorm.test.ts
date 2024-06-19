@@ -93,7 +93,7 @@ describe("TypeORMProductRepository", () => {
 
     it('should return null when product with non-existent UUID is queried', async () => {
         // Given
-        const productEntity = await populateSingleProduct();
+        await populateSingleProduct();
 
         // When
         const foundProduct = await productRepository.findByUuid("unknown");

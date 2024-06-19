@@ -6,11 +6,11 @@ import productsData from '../data/products.json';
 import {ProductEntity} from "../../../src/infrastructure/data/typeorm/entities/product.entity";
 import {CategoryEntity} from "../../../src/infrastructure/data/typeorm/entities/category.entity";
 
-export async function seedProducts(productRepo: Repository<ProductEntity>, categories: CategoryEntity[]) {
-    const categoryMap = createCategoryMap(categories);
+export async function seedProducts(productRepo: Repository<ProductEntity>, categoryEntities: CategoryEntity[]) {
+    const categoryMap = createCategoryMap(categoryEntities);
     const products = [];
     for (const productData of productsData) {
-        const productCategories = productData.categories.map((name: string) => categoryMap[name]);
+        const productCategories = productData.categoryEntities.map((name: string) => categoryMap[name]);
         const productEntity: ProductEntity = productRepo.create({
             ...productData,
             categories: productCategories
@@ -21,13 +21,15 @@ export async function seedProducts(productRepo: Repository<ProductEntity>, categ
 
         products.push(productEntity);
     }
+
     await productRepo.save(products);
 }
 
-function createCategoryMap(categories: CategoryEntity[]): { [key: string]: CategoryEntity } {
-    const categoryMap: { [key: string]: CategoryEntity } = {};
-    for (const category of categories) {
-        categoryMap[category.name] = category;
+function createCategoryMap(categoryEntities: CategoryEntity[]): { [key: string]: CategoryEntity } {
+    const categoryEntityMap: { [key: string]: CategoryEntity } = {};
+    for (const category of categoryEntities) {
+        categoryEntityMap[category.name] = category;
     }
-    return categoryMap;
+
+    return categoryEntityMap;
 }
