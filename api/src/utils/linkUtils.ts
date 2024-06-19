@@ -1,22 +1,21 @@
-function createSelfLink(baseUrl: string, resourceId: string | undefined) {
-    const selfLink = {
-        self: {
-            href: `${baseUrl}/${resourceId}`,
-        },
-    };
-    return selfLink;
+import {Link, ResourceLinks} from "../endpoints/hateoas.interfaces";
+
+function createSelfLink(baseUrl: string, resourceId: string | undefined): Link {
+    const href = `${baseUrl}/${resourceId}`;
+    return {href};
 }
 
-function combineLinks(...links: Record<string, any>[]) {
-    return links.reduce((combined, link) => {
-        return {...combined, ...link};
-    }, {});
-}
+// function combineLinks(...links: Link[]): ResourceLinks {
+//     const combined: ResourceLinks = links.reduce((acc, link) => {
+//         return {...acc, ...link};
+//     }, {self: {href: ''}} as ResourceLinks);
+//     return combined;
+// }
 
-function createCategoryLinks(categories: { id: string; name: string }[]) {
-    const categoryLinks: Record<string, any> = {};
+function createCategoryLinks(categories: { id: string; name: string }[]): ResourceLinks {
+    const categoryLinks: ResourceLinks = {self: {href: ''}};
     for (const category of categories) {
-        const categoryId: string = category.id;
+        const categoryId = category.id;
         categoryLinks[categoryId] = {
             rel: 'category',
             href: `/categories/${categoryId}`,
@@ -28,6 +27,6 @@ function createCategoryLinks(categories: { id: string; name: string }[]) {
 
 export {
     createSelfLink,
-    combineLinks,
+    // combineLinks,
     createCategoryLinks,
 };
