@@ -22,9 +22,9 @@ const seedDatabase = async () => {
         await categoryRepo.clear();
         await userRepo.clear();
 
-        const categories = await seedCategories(categoryRepo);
-        await seedProducts(productRepo, categories);
-        await seedHighlightedCategories(highlightedCategoryRepo, categories);
+        const categoryEntities = await seedCategories(categoryRepo);
+        await seedProducts(productRepo, categoryEntities);
+        await seedHighlightedCategories(highlightedCategoryRepo, categoryEntities);
         await seedUsers(userRepo);
         // } catch (error) {
         //     console.error("Error seeding database:", error);

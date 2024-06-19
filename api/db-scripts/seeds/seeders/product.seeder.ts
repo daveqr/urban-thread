@@ -7,10 +7,11 @@ import {ProductEntity} from "../../../src/infrastructure/data/typeorm/entities/p
 import {CategoryEntity} from "../../../src/infrastructure/data/typeorm/entities/category.entity";
 
 export async function seedProducts(productRepo: Repository<ProductEntity>, categoryEntities: CategoryEntity[]) {
-    const categoryMap = createCategoryMap(categoryEntities);
+    const categoryEntityMap = createCategoryMap(categoryEntities);
     const products = [];
+
     for (const productData of productsData) {
-        const productCategories = productData.categoryEntities.map((name: string) => categoryMap[name]);
+        const productCategories = productData.categories.map((name: string) => categoryEntityMap[name]);
         const productEntity: ProductEntity = productRepo.create({
             ...productData,
             categories: productCategories
@@ -27,8 +28,8 @@ export async function seedProducts(productRepo: Repository<ProductEntity>, categ
 
 function createCategoryMap(categoryEntities: CategoryEntity[]): { [key: string]: CategoryEntity } {
     const categoryEntityMap: { [key: string]: CategoryEntity } = {};
-    for (const category of categoryEntities) {
-        categoryEntityMap[category.name] = category;
+    for (const categoryEntity of categoryEntities) {
+        categoryEntityMap[categoryEntity.name] = categoryEntity;
     }
 
     return categoryEntityMap;

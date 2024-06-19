@@ -6,15 +6,15 @@ import {CategoryEntity} from "../../../src/infrastructure/data/typeorm/entities/
 import categoriesData from '../data/categories.json';
 
 export async function seedCategories(categoryRepo: Repository<CategoryEntity>): Promise<CategoryEntity[]> {
-    const categories = [];
+    const categoryEntities = [];
     for (const categoryData of categoriesData) {
         const categoryEntity: CategoryEntity = categoryRepo.create(categoryData) as unknown as CategoryEntity;
 
         categoryEntity.uuid = uuidv4();
         categoryEntity.slug = slugify(categoryEntity.name + ' c', {lower: true, remove: /[*+~.()'"!:@]/g});
 
-        categories.push(categoryEntity);
+        categoryEntities.push(categoryEntity);
     }
-    await categoryRepo.save(categories);
-    return categories;
+    await categoryRepo.save(categoryEntities);
+    return categoryEntities;
 }
