@@ -1,20 +1,31 @@
 import {Request, Response} from 'express';
 import CategoryUseCase from "../../application/usecases/category.usecase";
-import {CategoryResponseTransformer} from "./category.response.transformer";
-import {HighlightedCategoryResponseTransformer} from "./highlighted-category.response.transformer";
+import {CategoryTransformationService} from "./category.transformation.service";
+import {HighlightedCategoryTransformationService} from "./highlighted-category.transformation.service";
 
 class CategoryController {
     private categoryUseCase: CategoryUseCase;
+    private categoryTransformationService: CategoryTransformationService;
+    private highlightedCategoryTransformationService: HighlightedCategoryTransformationService;
 
-    constructor(categoryUseCase: CategoryUseCase) {
+    constructor(
+        categoryUseCase: CategoryUseCase,
+        categoryTransformationService: CategoryTransformationService,
+        highlightedCategoryTransformationService: HighlightedCategoryTransformationService
+    ) {
         this.categoryUseCase = categoryUseCase;
+        this.categoryTransformationService = categoryTransformationService;
+        this.highlightedCategoryTransformationService = highlightedCategoryTransformationService;
     }
 
     async getAllCategories(req: Request, res: Response) {
         try {
             const isDetailed = Boolean(req.query.detailed);
-            let categories = await this.categoryUseCase.find(isDetailed);
-            const transformedCategories = categories.map(CategoryResponseTransformer.transform);
+            const categories = await this.categoryUseCase.find(isDetailed);
+            const transformedCategories = categories.map(category =>
+                this.categoryTransformationService.transform(category)
+            );
+
             res.json(transformedCategories);
         } catch (error) {
             console.error(error);
@@ -25,7 +36,8 @@ class CategoryController {
     async getHighlightedCategories(req: Request, res: Response) {
         try {
             let categories = await this.categoryUseCase.findHighlightedCategories();
-            const transformedCategories = categories.map(HighlightedCategoryResponseTransformer.transform);
+            const transformedCategories = categories.map(category =>
+                this.highlightedCategoryTransformationService.transform(category));
             res.json(transformedCategories);
         } catch (error) {
             console.error(error);
