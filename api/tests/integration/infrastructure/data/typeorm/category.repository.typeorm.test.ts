@@ -110,7 +110,7 @@ describe("TypeORMCategoryRepository", () => {
 
     it('should return null when category with non-existent UUID is queried', async () => {
         // Given
-        const categoryEntity = await populateSingleCategory();
+        await populateSingleCategory();
 
         // When
         const foundCategory = await categoryRepository.findByUuid("unknown");

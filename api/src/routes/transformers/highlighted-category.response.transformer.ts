@@ -1,9 +1,9 @@
 import {combineLinks, createSelfLink} from "../../utils/linkUtils";
 import {CATEGORY_BASE_URL} from "../../config/urls";
-import {HighlightedCategoryx} from "../../core/models/blah";
+import {HighlightedCategory} from "../../core/models/highlighted-category.model";
 
 export class HighlightedCategoryResponseTransformer {
-    static transform(category: HighlightedCategoryx) {
+    static transform(category: HighlightedCategory) {
         const selfLink = createSelfLink(CATEGORY_BASE_URL, category.uuid);
         const combinedLinks = combineLinks(selfLink);
 

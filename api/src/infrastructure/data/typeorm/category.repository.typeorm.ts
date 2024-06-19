@@ -3,8 +3,8 @@ import {CategoryEntity} from "./entities/category.entity";
 import {CategoryRepository} from "../../../core/repositories/category.repository";
 import Category from "../../../core/models/category.model";
 import {AppDataSource} from "../../../data-source";
-import {HighlightedCategoryx} from "../../../core/models/blah";
 import {Product} from "../../../core/models/product.model";
+import {HighlightedCategory} from "../../../core/models/highlighted-category.model";
 
 
 class TypeORMCategoryRepository implements CategoryRepository {
@@ -36,7 +36,7 @@ class TypeORMCategoryRepository implements CategoryRepository {
         return categories[0];
     }
 
-    async findHighlightedCategories(): Promise<HighlightedCategoryx[]> {
+    async findHighlightedCategories(): Promise<HighlightedCategory[]> {
         const categoryRepo = this.dataSource.getRepository(CategoryEntity);
 
         const highlightedCategoryEntities = await categoryRepo.createQueryBuilder('category')
@@ -111,7 +111,7 @@ class TypeORMCategoryRepository implements CategoryRepository {
     private mapToDomainHighlightedCategories(categories: {
         position: any;
         categoryEntity: CategoryEntity
-    }[]): HighlightedCategoryx[] {
+    }[]): HighlightedCategory[] {
         return categories.map(({categoryEntity, position}) => {
             const products: Product[] = categoryEntity.products.map(productEntity => ({
                 uuid: productEntity.uuid,
@@ -120,7 +120,7 @@ class TypeORMCategoryRepository implements CategoryRepository {
                 slug: productEntity.slug
             }));
 
-            const highlightedCategory: HighlightedCategoryx = {
+            const highlightedCategory: HighlightedCategory = {
                 ...categoryEntity,
                 products: products,
                 position: position,

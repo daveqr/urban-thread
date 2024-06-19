@@ -1,7 +1,7 @@
 import {CategoryRepository} from "../repositories/category.repository";
 import Category from "../models/category.model";
 import CategoryService from "./category.service";
-import {HighlightedCategoryx} from "../models/blah";
+import {HighlightedCategory} from "../models/highlighted-category.model";
 
 class CategoryServiceImpl implements CategoryService {
     private categoryRepository: CategoryRepository;
@@ -17,7 +17,7 @@ class CategoryServiceImpl implements CategoryService {
         //     : await this.categoryRepository.findWithMinProductsAndProductLinks();
     }
 
-    async findHighlightedCategories(): Promise<HighlightedCategoryx[]> {
+    async findHighlightedCategories(): Promise<HighlightedCategory[]> {
         return await this.categoryRepository.findHighlightedCategories();
     }
 }

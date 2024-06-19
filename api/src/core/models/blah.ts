@@ -9,9 +9,3 @@ export interface Categoryx {
     editionDescription?: string;
     slug: string;
 }
-
-export interface Highlighted {
-    position: number;
-}
-
-export type HighlightedCategoryx = Categoryx & Highlighted;
