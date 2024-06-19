@@ -8,13 +8,13 @@ import {AppDataSource} from "../data-source";
 import UserServiceImpl from "../core/users/user.service.impl";
 import TypeORMUserRepository from "../infrastructure/data/typeorm/user.repository.typeorm";
 import UserUseCase from "../application/usecases/user.usecase";
-import UserDto from "../application/dtos/user.dto";
+import User from "../core/models/user.model";
 
 const router = express.Router();
 
 const userRepository = new TypeORMUserRepository(AppDataSource);
 const userService = new UserServiceImpl(AppDataSource, userRepository);
-const userUseCase = new UserUseCase(AppDataSource, userRepository, userService);
+const userUseCase = new UserUseCase(AppDataSource, userService);
 
 const isEmailUniqueCustomValidator: CustomValidator = async (value, {req}) => {
     // TODO need userExists
@@ -45,18 +45,18 @@ router.post('/',
 
             const {email, password, fname, lname} = req.body;
 
-            const userDto = new UserDto();
-            userDto.email = email;
-            userDto.password = password;
-            userDto.fname = fname;
-            userDto.lname = lname;
-            await userUseCase.save(userDto);
+            const user = new User();
+            user.email = email;
+            user.password = password;
+            user.fname = fname;
+            user.lname = lname;
+            await userUseCase.save(user);
 
-            const user = {
+            const tempUser = {
                 id: "123",
                 email: "test@example.com"
             }
-            const token = generateToken({userId: user.id, username: user.email});
+            const token = generateToken({userId: tempUser.id, username: tempUser.email});
 
             // TODO move this email stuff somewhere else
             const transporter = nodemailer.createTransport({
@@ -85,7 +85,7 @@ router.post('/',
             });
             // end email stuff
 
-            return res.json({message: req.i18n.__('Registration successful'), newUser: user, token});
+            return res.json({message: req.i18n.__('Registration successful'), newUser: tempUser, token});
 
         } catch (err) {
             // TODO use middleware to handle this
