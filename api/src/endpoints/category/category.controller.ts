@@ -4,20 +4,24 @@ import {
     CategoryTransformationService,
     HighlightedCategoryTransformationService
 } from "./category.transformation.service";
+import {container, inject, injectable} from "tsyringe";
+import {CategoryRepository} from "../../core/repositories/category.repository";
 
+@injectable()
 class CategoryController {
 
     constructor(
-        private categoryUseCase: CategoryUseCase,
-        private categoryTransformationService: CategoryTransformationService,
-        private highlightedCategoryTransformationService: HighlightedCategoryTransformationService
+        @inject('CategoryUseCase') private categoryUseCase: CategoryUseCase,
+        @inject('CategoryTransformationService') private categoryTransformationService: CategoryTransformationService,
+        @inject('HighlightedCategoryTransformationService') private highlightedCategoryTransformationService: HighlightedCategoryTransformationService
     ) {
     }
 
     async getAllCategories(req: Request, res: Response) {
         try {
             const isDetailed = Boolean(req.query.detailed);
-            const categories = await this.categoryUseCase.find(isDetailed);
+            const categoryRepository = container.resolve("CategoryRepository") as CategoryRepository;
+            const categories = await categoryRepository.find();
             const transformedCategories = categories.map(category =>
                 this.categoryTransformationService.transform(category)
             );

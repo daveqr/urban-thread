@@ -1,22 +1,9 @@
 import express from 'express';
-import {AppDataSource} from "../../data-source";
-import TypeORMCategoryRepository from "../../infrastructure/data/typeorm/category.repository.typeorm";
-import CategoryServiceImpl from "../../core/categories/category.service.impl";
-import CategoryUseCase from "../../application/usecases/category.usecase";
 import CategoryController from './category.controller';
-import {
-    CategoryTransformationService,
-    HighlightedCategoryTransformationService
-} from "./category.transformation.service";
+import {container} from "tsyringe";
 
 const router = express.Router();
-
-const categoryRepository = new TypeORMCategoryRepository(AppDataSource);
-const categoryService = new CategoryServiceImpl(categoryRepository);
-const categoryUseCase = new CategoryUseCase(categoryRepository, categoryService);
-const categoryTransformationService = new CategoryTransformationService();
-const highlightedCategoryTransformationService = new HighlightedCategoryTransformationService();
-const categoryController = new CategoryController(categoryUseCase, categoryTransformationService, highlightedCategoryTransformationService);
+const categoryController = container.resolve("CategoryController") as CategoryController;
 
 router.use((req: any, res: any, next: any) => {
     if (req.method === 'GET') {

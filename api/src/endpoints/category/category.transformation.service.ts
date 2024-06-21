@@ -3,7 +3,9 @@ import {createSelfLink} from '../../utils/linkUtils';
 import Category from '../../core/models/category.model';
 import {TransformationService} from '../transformation.service';
 import {HighlightedCategory} from "../../core/models/highlighted-category.model";
+import {injectable} from "tsyringe";
 
+@injectable()
 export class CategoryTransformationService implements TransformationService<Category, any> {
     transform(category: Category): any {
         return {
@@ -18,6 +20,7 @@ export class CategoryTransformationService implements TransformationService<Cate
     }
 }
 
+@injectable()
 export class HighlightedCategoryTransformationService extends CategoryTransformationService
     implements TransformationService<HighlightedCategory, any> {
     transform(category: HighlightedCategory): any {

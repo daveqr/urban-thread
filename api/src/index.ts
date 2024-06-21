@@ -1,10 +1,13 @@
+import "reflect-metadata";
+import './di';
 import express, {ErrorRequestHandler, NextFunction, Request, Response} from 'express';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
 import logger from './utils/logger'
 import routes from './config/routes.config';
-import {AppDataSource} from "./data-source";
 import path from "path";
+import {AppDataSource} from "./data-source";
+
 
 const session = require('express-session');
 const cors = require('cors');
@@ -15,7 +18,6 @@ const acceptLanguage = require('accept-language-parser');
 
 require('./config/passport.config');
 
-// Create the express app
 const app = express();
 
 // Load environment variables
@@ -24,11 +26,6 @@ dotenv.config({path: '.env.dev'});
 // } else if (process.env.NODE_ENV === 'production') {
 //   dotenv.config({ path: '.env.prod' });
 // }
-
-
-// initializeDataSource().then(() => {
-//     console.log('Initialized datasource');
-// });
 
 const root: string = path.resolve(__dirname, "..")
 
@@ -133,8 +130,6 @@ app.listen(PORT, () => {
 });
 
 async function main() {
-    const connection = AppDataSource
-
     await AppDataSource.initialize()
         .then(() => {
             console.log("Data Source has been initialized!")
