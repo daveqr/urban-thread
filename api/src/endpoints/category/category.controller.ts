@@ -1,21 +1,17 @@
 import {Request, Response} from 'express';
 import CategoryUseCase from "../../application/usecases/category.usecase";
-import {CategoryTransformationService} from "./category.transformation.service";
-import {HighlightedCategoryTransformationService} from "./highlighted-category.transformation.service";
+import {
+    CategoryTransformationService,
+    HighlightedCategoryTransformationService
+} from "./category.transformation.service";
 
 class CategoryController {
-    private categoryUseCase: CategoryUseCase;
-    private categoryTransformationService: CategoryTransformationService;
-    private highlightedCategoryTransformationService: HighlightedCategoryTransformationService;
 
     constructor(
-        categoryUseCase: CategoryUseCase,
-        categoryTransformationService: CategoryTransformationService,
-        highlightedCategoryTransformationService: HighlightedCategoryTransformationService
+        private categoryUseCase: CategoryUseCase,
+        private categoryTransformationService: CategoryTransformationService,
+        private highlightedCategoryTransformationService: HighlightedCategoryTransformationService
     ) {
-        this.categoryUseCase = categoryUseCase;
-        this.categoryTransformationService = categoryTransformationService;
-        this.highlightedCategoryTransformationService = highlightedCategoryTransformationService;
     }
 
     async getAllCategories(req: Request, res: Response) {

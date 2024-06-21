@@ -4,8 +4,10 @@ import TypeORMCategoryRepository from "../../infrastructure/data/typeorm/categor
 import CategoryServiceImpl from "../../core/categories/category.service.impl";
 import CategoryUseCase from "../../application/usecases/category.usecase";
 import CategoryController from './category.controller';
-import {CategoryTransformationService} from "./category.transformation.service";
-import {HighlightedCategoryTransformationService} from "./highlighted-category.transformation.service";
+import {
+    CategoryTransformationService,
+    HighlightedCategoryTransformationService
+} from "./category.transformation.service";
 
 const router = express.Router();
 
