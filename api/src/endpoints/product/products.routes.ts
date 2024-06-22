@@ -3,11 +3,6 @@ import ProductController from './product.controller';
 import {container} from "tsyringe";
 
 const router = express.Router();
-// const productRepository = new TypeORMProductRepository(AppDataSource);
-// const productService = new ProductServiceImpl(productRepository);
-// const productUseCase = new ProductUseCase(productService);
-// const productController = new ProductController(productUseCase);
-
 const productController = container.resolve("ProductController") as ProductController;
 
 router.use((req, res, next) => {

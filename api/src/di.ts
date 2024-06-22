@@ -1,9 +1,4 @@
-// container.register<DataSource>('DataSource', {useValue: AppDataSource});
-// container.register<CategoryRepository>('CategoryRepository', TypeORMCategoryRepository);
-// container.register<CategoryService>('CategoryService', CategoryServiceImpl);
 import {container} from "tsyringe";
-import CategoryService from "./core/categories/category.service";
-import CategoryServiceImpl from "./core/categories/category.service.impl";
 import {CategoryRepository} from "./core/repositories/category.repository";
 import TypeORMCategoryRepository from "./infrastructure/data/typeorm/category.repository.typeorm";
 import {AppDataSource} from "./data-source";
@@ -19,10 +14,10 @@ import Category from "./core/models/category.model";
 import {HighlightedCategory} from "./core/models/highlighted-category.model";
 import ProductController from "./endpoints/product/product.controller";
 import ProductUseCase from "./application/usecases/product.usecase";
-import ProductServiceImpl from "./core/products/product.service.impl";
-import ProductService from "./core/products/product.service";
 import TypeORMProductRepository from "./infrastructure/data/typeorm/product.repository.typeorm";
 import {ProductRepository} from "./core/repositories/product.repository";
+import {ProductService, ProductServiceImpl} from "./core/services/product.service";
+import {CategoryService, CategoryServiceImpl} from "./core/services/category.service";
 
 
 container.register<DataSource>('DataSource', {useValue: AppDataSource});

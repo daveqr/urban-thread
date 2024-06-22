@@ -1,14 +1,13 @@
 import "reflect-metadata"
 import sinon, {SinonStubbedInstance} from 'sinon';
-import CategoryUsecase from "../../../../src/application/usecases/category.usecase";
-import CategoryUseCase from "../../../../src/application/usecases/category.usecase";
 import Category from "../../../../src/core/models/category.model";
-import CategoryService from "../../../../src/core/categories/category.service";
 import {CategoryServiceTestDouble} from "../../test-doubles/category'.service.test-double";
+import {CategoryService} from "../../../../src/core/services/category.service";
+import CategoryUseCase from "../../../../src/application/usecases/category.usecase";
 
 describe("CategoryUseCase tests", () => {
     let categoryService: SinonStubbedInstance<CategoryService>;
-    let categoryUseCase: CategoryUsecase;
+    let categoryUseCase: CategoryUseCase;
 
     beforeEach(() => {
         categoryService = sinon.createStubInstance<CategoryService>(CategoryServiceTestDouble as any);

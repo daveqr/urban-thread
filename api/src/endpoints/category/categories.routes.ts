@@ -17,3 +17,4 @@ router.get('/highlighted', categoryController.getHighlightedCategories.bind(cate
 router.get('/:id', categoryController.getCategoryById.bind(categoryController));
 
 export default router;
+d9604da2 - cdc3 - 4434 - ac1c - b50cab3d8d65

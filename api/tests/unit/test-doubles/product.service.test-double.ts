@@ -1,5 +1,5 @@
-import ProductService from "../../../src/core/products/product.service";
 import {Product} from "../../../src/core/models/product.model";
+import {ProductService} from "../../../src/core/services/product.service";
 
 export class ProductServiceTestDouble implements ProductService {
     findProductByUuid(uuid: string): Promise<Product | null> {

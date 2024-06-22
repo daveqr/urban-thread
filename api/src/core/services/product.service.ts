@@ -1,10 +1,15 @@
-import {ProductRepository} from "../repositories/product.repository";
-import ProductService from "./product.service";
 import {Product} from "../models/product.model";
 import {inject, injectable} from "tsyringe";
+import {ProductRepository} from "../repositories/product.repository";
+
+export interface ProductService {
+    findAllProducts(): Promise<Product[]>;
+
+    findProductByUuid(uuid: string): Promise<Product | null>;
+}
 
 @injectable()
-class ProductServiceImpl implements ProductService {
+export class ProductServiceImpl implements ProductService {
 
     constructor(
         @inject('ProductRepository') private productRepository: ProductRepository) {
@@ -19,4 +24,4 @@ class ProductServiceImpl implements ProductService {
     }
 }
 
-export default ProductServiceImpl;
+

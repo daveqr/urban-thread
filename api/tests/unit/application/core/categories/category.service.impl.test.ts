@@ -1,9 +1,9 @@
 import "reflect-metadata"
 import {createStubInstance, SinonStubbedInstance} from "sinon";
-import CategoryServiceImpl from "../../../../../src/core/categories/category.service.impl";
 import {CategoryRepository} from "../../../../../src/core/repositories/category.repository";
 import {CategoryRepositoryTestDouble} from "../../../test-doubles/category.repository.test-double";
 import Category from "../../../../../src/core/models/category.model";
+import {CategoryServiceImpl} from "../../../../../src/core/services/category.service";
 
 
 describe("CategoryServiceImpl tests", () => {

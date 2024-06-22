@@ -1,9 +1,9 @@
 import "reflect-metadata"
 import sinon, {SinonStubbedInstance} from 'sinon';
-import ProductService from "../../../../src/core/products/product.service";
 import {ProductServiceTestDouble} from "../../test-doubles/product.service.test-double";
 import {Product} from "../../../../src/core/models/product.model";
 import ProductUseCase from "../../../../src/application/usecases/product.usecase";
+import {ProductService} from "../../../../src/core/services/product.service";
 
 describe("Product use case", () => {
     let productService: SinonStubbedInstance<ProductService>;
