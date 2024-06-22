@@ -1,7 +1,7 @@
 import User from "../../core/models/user.model";
 import {DataSource, EntityManager} from "typeorm";
 import {userSchema} from "../validators/user.validator";
-import UserService from "../../core/users/user.service";
+import UserService from "../../core/services/user.service";
 
 class UserUseCase {
     private entityManager: EntityManager;
