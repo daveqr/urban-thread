@@ -11,15 +11,16 @@ class CategoryServiceImpl implements CategoryService {
         @inject('CategoryRepository') private categoryRepository: CategoryRepository) {
     }
 
-    async findAllCategories(isDetailed: boolean): Promise<Category[]> {
+    async findAllCategories(): Promise<Category[]> {
         return await this.categoryRepository.find();
-        // return isDetailed
-        //     ? await this.categoryRepository.findAll()
-        //     : await this.categoryRepository.findWithMinProductsAndProductLinks();
     }
 
     async findHighlightedCategories(): Promise<HighlightedCategory[]> {
         return await this.categoryRepository.findHighlightedCategories();
+    }
+
+    async findCategoryByUuid(uuid: string): Promise<Category | null> {
+        return await this.categoryRepository.findByUuid(uuid);
     }
 }
 
