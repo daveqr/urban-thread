@@ -1,10 +1,15 @@
-import {UserRepository} from "../repositories/user.repository";
 import User from "../models/user.model";
-import {v4 as uuidv4} from "uuid";
 import {DataSource, EntityManager} from "typeorm";
-import UserService from "./user.service";
+import {UserRepository} from "../repositories/user.repository";
+import {v4 as uuidv4} from "uuid";
 
-class UserServiceImpl implements UserService {
+export interface UserService {
+    findByUuid(uuid: string): Promise<User | null>;
+
+    save(user: User): Promise<void>;
+}
+
+export class UserServiceImpl implements UserService {
     private entityManager: EntityManager;
 
     constructor(dataSource: DataSource, private userRepository: UserRepository) {
@@ -37,5 +42,3 @@ class UserServiceImpl implements UserService {
         });
     }
 }
-
-export default UserServiceImpl;

@@ -2,10 +2,10 @@ import express from 'express';
 import UserController from './user.controller';
 import UserUseCase from "../../application/usecases/user.usecase";
 import TypeORMUserRepository from "../../infrastructure/data/typeorm/user.repository.typeorm";
-import UserServiceImpl from "../../core/users/user.service.impl";
 import {AppDataSource} from "../../data-source";
 import {check} from "express-validator";
 import {LanguageRequest} from "../../index";
+import UserServiceImpl from "../../core/users/user.service.impl";
 
 const router = express.Router();
 const userRepository = new TypeORMUserRepository(AppDataSource);
