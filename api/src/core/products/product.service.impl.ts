@@ -1,19 +1,20 @@
 import {ProductRepository} from "../repositories/product.repository";
 import ProductService from "./product.service";
 import {Product} from "../models/product.model";
+import {inject, injectable} from "tsyringe";
 
+@injectable()
 class ProductServiceImpl implements ProductService {
-    private productRepository: ProductRepository;
 
-    constructor(productRepository: ProductRepository) {
-        this.productRepository = productRepository;
+    constructor(
+        @inject('ProductRepository') private productRepository: ProductRepository) {
     }
 
-    findAllProducts(isDetailed: boolean): Promise<Product[]> {
-        throw new Error("Method not implemented.");
+    async findAllProducts(): Promise<Product[]> {
+        return this.productRepository.find();
     }
 
-    findByUuid(uuid: string): Promise<Product | null> {
+    async findProductByUuid(uuid: string): Promise<Product | null> {
         return this.productRepository.findByUuid(uuid);
     }
 }

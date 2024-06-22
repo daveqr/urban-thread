@@ -1,12 +1,12 @@
 import "reflect-metadata";
-import './di';
-import express, {ErrorRequestHandler, NextFunction, Request, Response} from 'express';
-import dotenv from 'dotenv';
-import helmet from 'helmet';
-import logger from './utils/logger'
-import routes from './config/routes.config';
+import "./di";
+import express, {ErrorRequestHandler, NextFunction, Request, Response} from "express";
+import dotenv from "dotenv";
+import logger from "./utils/logger"
+import routes from "./config/routes.config";
 import path from "path";
 import {AppDataSource} from "./data-source";
+import helmet from "helmet";
 
 
 const session = require('express-session');

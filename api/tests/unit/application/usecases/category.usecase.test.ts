@@ -1,3 +1,4 @@
+import "reflect-metadata"
 import {CategoryRepository} from "../../../../src/core/repositories/category.repository";
 import sinon, {SinonStubbedInstance} from 'sinon';
 import CategoryServiceImpl from "../../../../src/core/categories/category.service.impl";
@@ -11,9 +12,9 @@ describe("Category use case", () => {
     let categoryRepository: SinonStubbedInstance<CategoryRepository>;
 
     beforeEach(() => {
-        categoryService = sinon.createStubInstance(CategoryServiceImpl);
+        categoryService = sinon.createStubInstance(CategoryServiceImpl as any);
 
-        categoryRepository = sinon.createStubInstance<CategoryRepository>(CategoryRepositoryTestDouble);
+        categoryRepository = sinon.createStubInstance<CategoryRepository>(CategoryRepositoryTestDouble as any);
         categoryRepository.find.resolves([]);
         categoryRepository.findByUuid.withArgs('some-uuid').resolves(
             {

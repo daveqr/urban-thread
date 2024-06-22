@@ -4,13 +4,9 @@ import {userSchema} from "../validators/user.validator";
 import UserService from "../../core/users/user.service";
 
 class UserUseCase {
-    private dataSource: DataSource;
-    private userService: UserService;
     private entityManager: EntityManager;
 
-    constructor(dataSource: DataSource, userService: UserService) {
-        this.dataSource = dataSource;
-        this.userService = userService;
+    constructor(private dataSource: DataSource, private userService: UserService) {
         this.entityManager = this.dataSource.manager;
     }
 
