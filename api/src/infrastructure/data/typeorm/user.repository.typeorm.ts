@@ -4,11 +4,9 @@ import User from "../../../core/models/user.model";
 import UserEntity from "./entities/user.entity";
 
 class TypeORMUserRepository implements UserRepository {
-    private dataSource: DataSource;
     private userRepository: Repository<UserEntity>;
 
-    constructor(dataSource: DataSource) {
-        this.dataSource = dataSource;
+    constructor(private dataSource: DataSource) {
         this.userRepository = this.dataSource.getRepository(UserEntity);
     }
 

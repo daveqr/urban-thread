@@ -3,12 +3,14 @@ import {ProductEntity} from "./entities/product.entity";
 import {DataSource} from "typeorm";
 import {Product} from "../../../core/models/product.model";
 import {mapEntityToProduct, mapToDomainCategories} from "./mapper";
+import {inject, injectable} from "tsyringe";
 
+@injectable()
 class TypeORMProductRepository implements ProductRepository {
-    private dataSource: DataSource;
 
-    constructor(dataSource: DataSource) {
-        this.dataSource = dataSource;
+    constructor(
+        @inject('DataSource') private dataSource: DataSource
+    ) {
     }
 
     async find(): Promise<Product[]> {

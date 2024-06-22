@@ -7,10 +7,9 @@ import UserUseCase from "../../application/usecases/user.usecase";
 import User from "../../core/models/user.model";
 
 export default class UserController {
-    private userUseCase: UserUseCase;
 
-    constructor(userUseCase: UserUseCase) {
-        this.userUseCase = userUseCase;
+
+    constructor(private userUseCase: UserUseCase) {
     }
 
     async createUser(req: LanguageRequest, res: Response) {

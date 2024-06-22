@@ -9,5 +9,4 @@ export class ProductRepositoryTestDouble implements ProductRepository {
     findByUuid(uuid: string): Promise<Product | null> {
         return Promise.resolve(null);
     }
-
 }

@@ -5,11 +5,9 @@ import {DataSource, EntityManager} from "typeorm";
 import UserService from "./user.service";
 
 class UserServiceImpl implements UserService {
-    private userRepository: UserRepository;
     private entityManager: EntityManager;
 
-    constructor(dataSource: DataSource, userRepository: UserRepository) {
-        this.userRepository = userRepository;
+    constructor(dataSource: DataSource, private userRepository: UserRepository) {
         this.entityManager = dataSource.manager;
     }
 
