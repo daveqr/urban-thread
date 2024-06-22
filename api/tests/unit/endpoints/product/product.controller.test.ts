@@ -1,7 +1,7 @@
 import "reflect-metadata"
 import sinon, {SinonStubbedInstance} from 'sinon';
-import ProductController from "../../../../src/endpoints/product/product.controller";
 import ProductUseCase from "../../../../src/application/usecases/product.usecase";
+import ProductController from "../../../../src/endpoints/product/product.controller";
 import {Product} from "../../../../src/core/models/product.model";
 
 const httpMocks = require('node-mocks-http');
@@ -33,7 +33,6 @@ describe("Product controller", () => {
         expect(data.length).toBe(2);
         expect(response.statusCode).toEqual(200);
     });
-
 
     it("should handle errors", async () => {
         const request = httpMocks.createRequest();

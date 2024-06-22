@@ -1,11 +1,18 @@
-import {CategoryRepository} from "../repositories/category.repository";
 import Category from "../models/category.model";
-import CategoryService from "./category.service";
 import {HighlightedCategory} from "../models/highlighted-category.model";
 import {inject, injectable} from "tsyringe";
+import {CategoryRepository} from "../repositories/category.repository";
+
+export interface CategoryService {
+    findAllCategories(): Promise<Category[]>;
+
+    findHighlightedCategories(): Promise<HighlightedCategory[]>;
+
+    findCategoryByUuid(uuid: string): Promise<Category | null>;
+}
 
 @injectable()
-class CategoryServiceImpl implements CategoryService {
+export class CategoryServiceImpl implements CategoryService {
 
     constructor(
         @inject('CategoryRepository') private categoryRepository: CategoryRepository) {
@@ -23,5 +30,3 @@ class CategoryServiceImpl implements CategoryService {
         return await this.categoryRepository.findByUuid(uuid);
     }
 }
-
-export default CategoryServiceImpl;

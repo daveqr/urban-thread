@@ -1,6 +1,6 @@
-import ProductService from "../../core/products/product.service";
 import {Product} from "../../core/models/product.model";
 import {inject, injectable} from "tsyringe";
+import {ProductService} from "../../core/services/product.service";
 
 @injectable()
 class ProductUseCase {

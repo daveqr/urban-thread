@@ -1,9 +1,9 @@
 import "reflect-metadata"
-import ProductServiceImpl from "../../../../../src/core/products/product.service.impl";
 import {ProductRepository} from "../../../../../src/core/repositories/product.repository";
 import {createStubInstance, SinonStubbedInstance} from "sinon";
 import {Product} from "../../../../../src/core/models/product.model";
 import {ProductRepositoryTestDouble} from "../../../test-doubles/product.repository.test-double";
+import {ProductServiceImpl} from "../../../../../src/core/services/product.service";
 
 describe("ProductServiceImpl use case", () => {
     let productRepository: SinonStubbedInstance<ProductRepository>;

@@ -1,7 +1,7 @@
 import Category from "../../core/models/category.model";
-import CategoryService from "../../core/categories/category.service";
 import {HighlightedCategory} from "../../core/models/highlighted-category.model";
 import {inject, injectable} from "tsyringe";
+import {CategoryService} from "../../core/services/category.service";
 
 @injectable()
 class CategoryUseCase {

@@ -1,6 +1,6 @@
-import CategoryService from "../../../src/core/categories/category.service";
 import Category from "../../../src/core/models/category.model";
 import {HighlightedCategory} from "../../../src/core/models/highlighted-category.model";
+import {CategoryService} from "../../../src/core/services/category.service";
 
 export class CategoryServiceTestDouble implements CategoryService {
 
