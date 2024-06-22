@@ -49,6 +49,7 @@
     "reflect-metadata": "^0.2.2",
     "slugify": "^1.6.6",
     "sqlite3": "^5.1.7",
+    "tsyringe": "^4.8.0",
     "typeorm": "^0.3.20",
     "typescript": "^5.4.5",
     "winston": "^3.13.0"

@@ -5,14 +5,16 @@ import Category from "../../../core/models/category.model";
 import {AppDataSource} from "../../../data-source";
 import {HighlightedCategory} from "../../../core/models/highlighted-category.model";
 import {mapToDomainCategories, mapToDomainHighlightedCategories} from "./mapper";
+import {inject, injectable} from "tsyringe";
 
 
+@injectable()
 class TypeORMCategoryRepository implements CategoryRepository {
-    private dataSource: DataSource;
     private categoryEntityRepository: Repository<CategoryEntity>;
 
-    constructor(dataSource: DataSource) {
-        this.dataSource = dataSource;
+    constructor(
+        @inject('DataSource') private dataSource: DataSource
+    ) {
         this.categoryEntityRepository = this.categoryEntityRepository = this.dataSource.getRepository(CategoryEntity);
     }
 

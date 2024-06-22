@@ -2,12 +2,13 @@ import {CategoryRepository} from "../repositories/category.repository";
 import Category from "../models/category.model";
 import CategoryService from "./category.service";
 import {HighlightedCategory} from "../models/highlighted-category.model";
+import {inject, injectable} from "tsyringe";
 
+@injectable()
 class CategoryServiceImpl implements CategoryService {
-    private categoryRepository: CategoryRepository;
 
-    constructor(categoryRepository: CategoryRepository) {
-        this.categoryRepository = categoryRepository;
+    constructor(
+        @inject('CategoryRepository') private categoryRepository: CategoryRepository) {
     }
 
     async findAllCategories(isDetailed: boolean): Promise<Category[]> {
