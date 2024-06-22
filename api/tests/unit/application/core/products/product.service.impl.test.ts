@@ -6,8 +6,8 @@ import {Product} from "../../../../../src/core/models/product.model";
 import {ProductRepositoryTestDouble} from "../../../test-doubles/product.repository.test-double";
 
 describe("ProductServiceImpl use case", () => {
-    let productService: ProductServiceImpl;
     let productRepository: SinonStubbedInstance<ProductRepository>;
+    let productService: ProductServiceImpl;
 
     beforeEach(() => {
         productRepository = createStubInstance<ProductRepository>(ProductRepositoryTestDouble as any);
@@ -21,29 +21,29 @@ describe("ProductServiceImpl use case", () => {
         } as Product]);
 
         // When
-        const foundProduct = await productService.findAllProducts();
+        const products = await productService.findAllProducts();
 
         // Then
-        expect(foundProduct).not.toBeNull();
-        expect(foundProduct.length).toBe(1);
-        expect(foundProduct[0].uuid).toBe("some-uuid");
+        expect(products).not.toBeNull();
+        expect(products.length).toBe(1);
+        expect(products[0].uuid).toBe("some-uuid");
     });
 
-    it("should find product by uuid", async () => {
+    it("should find a product by uuid", async () => {
         // Given
         productRepository.findByUuid.withArgs('some-uuid').resolves({
             uuid: 'some-uuid',
         } as Product);
 
         // When
-        const foundProduct = await productService.findProductByUuid('some-uuid');
+        const product = await productService.findProductByUuid('some-uuid');
 
         // Then
-        expect(foundProduct).not.toBeNull();
-        expect(foundProduct?.uuid).toBe('some-uuid');
+        expect(product).not.toBeNull();
+        expect(product?.uuid).toBe('some-uuid');
     });
 
-    it("should return null if no product found by uuid", async () => {
+    it("should return null if no product is found by uuid", async () => {
         // Given
         productRepository.findByUuid.withArgs('some-uuid').resolves(null);
 

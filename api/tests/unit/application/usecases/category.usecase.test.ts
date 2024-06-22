@@ -1,31 +1,28 @@
 import "reflect-metadata"
-import {CategoryRepository} from "../../../../src/core/repositories/category.repository";
 import sinon, {SinonStubbedInstance} from 'sinon';
-import CategoryServiceImpl from "../../../../src/core/categories/category.service.impl";
+import CategoryUsecase from "../../../../src/application/usecases/category.usecase";
 import CategoryUseCase from "../../../../src/application/usecases/category.usecase";
-import {CategoryRepositoryTestDouble} from "../../test-doubles/category.repository.test-double";
 import Category from "../../../../src/core/models/category.model";
+import CategoryService from "../../../../src/core/categories/category.service";
+import {CategoryServiceTestDouble} from "../../test-doubles/category'.service.test-double";
 
-describe("Category use case", () => {
-    let categoryService: CategoryServiceImpl;
-    let categoryUseCase: CategoryUseCase;
-    let categoryRepository: SinonStubbedInstance<CategoryRepository>;
+describe("CategoryUseCase tests", () => {
+    let categoryService: SinonStubbedInstance<CategoryService>;
+    let categoryUseCase: CategoryUsecase;
 
     beforeEach(() => {
-        categoryService = sinon.createStubInstance(CategoryServiceImpl as any);
+        categoryService = sinon.createStubInstance<CategoryService>(CategoryServiceTestDouble as any);
+        categoryUseCase = new CategoryUseCase(categoryService);
+    });
 
-        categoryRepository = sinon.createStubInstance<CategoryRepository>(CategoryRepositoryTestDouble as any);
-        categoryRepository.find.resolves([]);
-        categoryRepository.findByUuid.withArgs('some-uuid').resolves(
+    it('should find a category by uuid', async () => {
+        // Given
+        categoryService.findCategoryByUuid.withArgs('some-uuid').resolves(
             {
                 uuid: 'some-uuid'
             } as Category
         );
 
-        categoryUseCase = new CategoryUseCase(categoryRepository, categoryService);
-    });
-
-    it('should find product by uuid', async () => {
         // When
         const foundCategory = await categoryUseCase.findByUuid('some-uuid');
 
@@ -36,12 +33,12 @@ describe("Category use case", () => {
 
     it('should return null when category with non-existent UUID is queried', async () => {
         // Given
-        categoryRepository.findByUuid.withArgs('nonexistent').resolves(null);
+        categoryService.findCategoryByUuid.withArgs('nonexistent').resolves(null);
 
         // When
-        const foundCategory = await categoryUseCase.findByUuid('nonexistent');
+        const category = await categoryUseCase.findByUuid('nonexistent');
 
         // Then
-        expect(foundCategory).toBeNull();
+        expect(category).toBeNull();
     });
 });

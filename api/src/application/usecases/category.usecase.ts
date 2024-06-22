@@ -1,4 +1,3 @@
-import {CategoryRepository} from "../../core/repositories/category.repository";
 import Category from "../../core/models/category.model";
 import CategoryService from "../../core/categories/category.service";
 import {HighlightedCategory} from "../../core/models/highlighted-category.model";
@@ -8,12 +7,11 @@ import {inject, injectable} from "tsyringe";
 class CategoryUseCase {
 
     constructor(
-        @inject('CategoryRepository') private categoryRepository: CategoryRepository,
-        @inject('CategoryRepository') private categoryService: CategoryService) {
+        @inject('CategoryService') private categoryService: CategoryService) {
     }
 
     async find(isDetailed: boolean): Promise<Category[]> {
-        return await this.categoryService.findAllCategories(isDetailed);
+        return await this.categoryService.findAllCategories();
     }
 
     async findHighlightedCategories(): Promise<HighlightedCategory[]> {
@@ -21,7 +19,7 @@ class CategoryUseCase {
     }
 
     async findByUuid(uuid: string): Promise<Category | null> {
-        return await this.categoryRepository.findByUuid(uuid);
+        return await this.categoryService.findCategoryByUuid(uuid);
     }
 }
 
