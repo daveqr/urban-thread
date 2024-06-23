@@ -4,8 +4,14 @@ import {userSchema} from "../validators/user.validator";
 import {UserService} from "../../core/services/user.service";
 import {inject, injectable} from "tsyringe";
 
+export interface UserUseCase {
+    findById(id: string): Promise<User | null>;
+
+    save(user: User): Promise<void>;
+}
+
 @injectable()
-class UserUseCase {
+class UserUseCaseImpl implements UserUseCase {
     private entityManager: EntityManager;
 
     constructor(
@@ -27,4 +33,4 @@ class UserUseCase {
     }
 }
 
-export default UserUseCase;
+export default UserUseCaseImpl;

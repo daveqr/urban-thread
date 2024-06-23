@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import ProductUseCase from '../../application/usecases/product.usecase';
+import {ProductUseCase} from '../../application/usecases/product.usecase';
 import {inject, injectable} from "tsyringe";
 
 @injectable()

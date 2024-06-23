@@ -1,18 +1,18 @@
 import "reflect-metadata"
 import sinon, {SinonStubbedInstance} from 'sinon';
 import {UserService} from "../../../../src/core/services/user.service";
-import UserUseCase from "../../../../src/application/usecases/user.usecase";
+import UserUseCaseImpl from "../../../../src/application/usecases/user.usecase";
 import {UserServiceTestDouble} from "../../test-doubles/user.service.test-double";
 import {AppDataSource} from "../../../../src/data-source";
 import User from "../../../../src/core/models/user.model";
 
 describe("User use case", () => {
     let userService: SinonStubbedInstance<UserService>;
-    let userUseCase: UserUseCase;
+    let userUseCase: UserUseCaseImpl;
 
     beforeEach(() => {
         userService = sinon.createStubInstance<UserService>(UserServiceTestDouble as any);
-        userUseCase = new UserUseCase(AppDataSource, userService);
+        userUseCase = new UserUseCaseImpl(AppDataSource, userService);
     });
 
     it('should find user by id', async () => {
