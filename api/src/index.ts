@@ -2,12 +2,11 @@ import "reflect-metadata";
 import "./di";
 import express, {ErrorRequestHandler, NextFunction, Request, Response} from "express";
 import dotenv from "dotenv";
-import logger from "./utils/logger"
 import routes from "./config/routes.config";
 import path from "path";
 import {AppDataSource} from "./data-source";
 import helmet from "helmet";
-
+import logger, {WinstonLogger} from './utils/logger.util';
 
 const session = require('express-session');
 const cors = require('cors');
@@ -50,7 +49,7 @@ app.use((req: LanguageRequest, res: any, next: any) => {
     req.locale = languages.length > 0 ? languages[0].code : 'en';
 
     req.i18n = i18n;
-    logger.debug(`Preferred locale: ${req.locale}`);
+    new WinstonLogger().debug(`Preferred locale: ${req.locale}`);
     next();
 });
 
