@@ -1,5 +1,4 @@
-import {inject, injectable} from "tsyringe";
-import {ProductRepository} from "../../core/repositories/product.repository";
+import {injectable} from "tsyringe";
 import {Product} from "../../core/models/product.model";
 import axios from "axios";
 import {ProductService} from "../../core/services/product.service";
@@ -7,17 +6,16 @@ import {ProductService} from "../../core/services/product.service";
 @injectable()
 export class ProductRestService implements ProductService {
 
-    constructor(
-        @inject('ProductRepository') private productRepository: ProductRepository) {
+    constructor() {
     }
 
     async findAllProducts(): Promise<Product[]> {
-        const response = await axios.get('http://localhost:4000');
+        const response = await axios.get('http://localhost:4000/products');
         return response.data;
-        // return this.productRepository.find();
     }
 
     async findProductByUuid(uuid: string): Promise<Product | null> {
-        return this.productRepository.findByUuid(uuid);
+        const response = await axios.get('http://localhost:4000/products/' + uuid);
+        return response.data;
     }
 }
