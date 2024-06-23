@@ -18,6 +18,11 @@ import TypeORMProductRepository from "./infrastructure/data/typeorm/product.repo
 import {ProductRepository} from "./core/repositories/product.repository";
 import {ProductService, ProductServiceImpl} from "./core/services/product.service";
 import {CategoryService, CategoryServiceImpl} from "./core/services/category.service";
+import TypeORMUserRepository from "./infrastructure/data/typeorm/user.repository.typeorm";
+import {UserRepository} from "./core/repositories/user.repository";
+import {UserService, UserServiceImpl} from "./core/services/user.service";
+import UserUseCase from "./application/usecases/user.usecase";
+import UserController from "./endpoints/user/user.controller";
 
 
 container.register<DataSource>('DataSource', {useValue: AppDataSource});
@@ -34,3 +39,7 @@ container.register<ProductService>('ProductService', ProductServiceImpl);
 container.register<ProductUseCase>('ProductUseCase', ProductUseCase);
 container.register<ProductController>('ProductController', ProductController);
 
+container.register<UserRepository>('UserRepository', TypeORMUserRepository);
+container.register<UserService>('UserService', UserServiceImpl);
+container.register<UserUseCase>('UserUseCase', UserUseCase);
+container.register<UserController>('UserController', UserController);

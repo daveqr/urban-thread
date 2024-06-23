@@ -29,13 +29,13 @@ class UserServiceImpl implements UserService {
         this.entityManager = dataSource.manager;
     }
 
-    async findByUuid(uuid: string): Promise<User | null> {
-        return await this.userRepository.findByUuid(uuid);
+    async findById(uuid: string): Promise<User | null> {
+        return await this.userRepository.findById(uuid);
     }
 
     async save(user: User): Promise<void> {
         await this.entityManager.transaction(async transactionalEntityManager => {
-            let userToUpsert = await this.findByUuid(user.uuid);
+            let userToUpsert = await this.findById(user.id);
 
             if (userToUpsert) {
                 userToUpsert.email = user.email;
@@ -44,7 +44,7 @@ class UserServiceImpl implements UserService {
                 userToUpsert.lname = user.lname;
             } else {
                 userToUpsert = new User();
-                userToUpsert.uuid = uuidv4();
+                userToUpsert.id = uuidv4();
                 userToUpsert.email = user.email;
                 userToUpsert.password = user.password;
                 userToUpsert.fname = user.fname;

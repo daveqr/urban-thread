@@ -2,20 +2,23 @@ import {DataSource, Repository} from "typeorm";
 import {UserRepository} from "../../../core/repositories/user.repository";
 import User from "../../../core/models/user.model";
 import UserEntity from "./entities/user.entity";
+import {inject, injectable} from "tsyringe";
 
+@injectable()
 class TypeORMUserRepository implements UserRepository {
     private userRepository: Repository<UserEntity>;
 
-    constructor(private dataSource: DataSource) {
+    constructor(
+        @inject('DataSource') private dataSource: DataSource) {
         this.userRepository = this.dataSource.getRepository(UserEntity);
     }
 
-    async findByUuid(uuid: string): Promise<User | null> {
+    async findById(uuid: string): Promise<User | null> {
         const userEntity = await this.userRepository.findOne({where: {uuid: uuid}});
 
         if (userEntity) {
             return {
-                uuid: userEntity.uuid,
+                id: userEntity.uuid,
                 email: userEntity.email,
                 password: userEntity.password,
                 fname: userEntity.fname,
@@ -33,7 +36,7 @@ class TypeORMUserRepository implements UserRepository {
         await entityManager.transaction(async transactionalEntityManager => {
             const userEntity = new UserEntity();
 
-            userEntity.uuid = user.uuid;
+            userEntity.uuid = user.id;
             userEntity.email = user.email;
             userEntity.password = user.password;
             userEntity.fname = user.fname;

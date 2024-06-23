@@ -1,17 +1,21 @@
 import User from "../../core/models/user.model";
 import {DataSource, EntityManager} from "typeorm";
 import {userSchema} from "../validators/user.validator";
-import UserService from "../../core/services/user.service";
+import {UserService} from "../../core/services/user.service";
+import {inject, injectable} from "tsyringe";
 
+@injectable()
 class UserUseCase {
     private entityManager: EntityManager;
 
-    constructor(private dataSource: DataSource, private userService: UserService) {
+    constructor(
+        @inject('DataSource') private dataSource: DataSource,
+        @inject('UserService') private userService: UserService) {
         this.entityManager = this.dataSource.manager;
     }
 
-    async findByUuid(uuid: string): Promise<User | null> {
-        return await this.userService.findByUuid(uuid);
+    async findById(id: string): Promise<User | null> {
+        return await this.userService.findById(id);
     }
 
     async save(user: User): Promise<void> {

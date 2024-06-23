@@ -1,7 +1,7 @@
 import "reflect-metadata"
 import sinon, {SinonStubbedInstance} from 'sinon';
 import Category from "../../../../src/core/models/category.model";
-import {CategoryServiceTestDouble} from "../../test-doubles/category'.service.test-double";
+import {CategoryServiceTestDouble} from "../../test-doubles/category.service.test-double";
 import {CategoryService} from "../../../../src/core/services/category.service";
 import CategoryUseCase from "../../../../src/application/usecases/category.usecase";
 

@@ -1,18 +1,18 @@
-import {Response} from 'express';
+import {Request, Response} from 'express';
 import nodemailer from 'nodemailer';
 import {validationResult} from 'express-validator';
 import {generateToken} from '../../utils/jwt.util';
-import {LanguageRequest} from '../../index';
 import UserUseCase from "../../application/usecases/user.usecase";
 import User from "../../core/models/user.model";
+import {inject, injectable} from "tsyringe";
 
+@injectable()
 export default class UserController {
 
-
-    constructor(private userUseCase: UserUseCase) {
+    constructor(@inject('UserUseCase') private userUseCase: UserUseCase) {
     }
 
-    async createUser(req: LanguageRequest, res: Response) {
+    async createUser(req: Request, res: Response) {
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -62,11 +62,11 @@ export default class UserController {
             });
             // End email stuff
 
-            return res.json({message: req.i18n.__('Registration successful'), newUser: tempUser, token});
+            return res.json({message: ('Registration successful'), newUser: tempUser, token});
 
         } catch (err) {
             // TODO: Use middleware to handle this
-            return res.status(500).json({error: req.i18n.__('Internal server error')});
+            return res.status(500).json({error: ('Internal server error')});
         }
     }
 }
