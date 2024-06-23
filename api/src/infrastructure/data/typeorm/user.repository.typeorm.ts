@@ -2,11 +2,14 @@ import {DataSource, Repository} from "typeorm";
 import {UserRepository} from "../../../core/repositories/user.repository";
 import User from "../../../core/models/user.model";
 import UserEntity from "./entities/user.entity";
+import {inject, injectable} from "tsyringe";
 
+@injectable()
 class TypeORMUserRepository implements UserRepository {
     private userRepository: Repository<UserEntity>;
 
-    constructor(private dataSource: DataSource) {
+    constructor(
+        @inject('DataSource') private dataSource: DataSource) {
         this.userRepository = this.dataSource.getRepository(UserEntity);
     }
 
