@@ -6,13 +6,15 @@ import HighlightedCategoryEntity
 import TypeORMCategoryRepository from "../../../../../src/infrastructure/data/typeorm/category.repository.typeorm";
 import {faker} from "@faker-js/faker";
 import {v4 as uuidv4} from "uuid";
+import path from "path";
 
+const entitiesPath = path.join(__dirname, "../../../../../src/infrastructure/data/typeorm/entities", "*.ts");
 const testDataSource = new DataSource({
     type: "sqlite",
     database: ":memory:",
     synchronize: true,
-    entities: [CategoryEntity, ProductEntity, HighlightedCategoryEntity],
     logging: false,
+    entities: [entitiesPath],
 });
 
 beforeAll(async () => {

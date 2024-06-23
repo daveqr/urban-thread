@@ -4,13 +4,15 @@ import {ProductEntity} from "../../../../../src/infrastructure/data/typeorm/enti
 import TypeORMProductRepository from "../../../../../src/infrastructure/data/typeorm/product.repository.typeorm";
 import {v4 as uuidv4} from "uuid";
 import {faker} from "@faker-js/faker";
+import path from "path";
 
+const entitiesPath = path.join(__dirname, "../../../../../src/infrastructure/data/typeorm/entities", "*.ts");
 const testDataSource = new DataSource({
     type: "sqlite",
     database: ":memory:",
     synchronize: true,
-    entities: [CategoryEntity, ProductEntity],
     logging: false,
+    entities: [entitiesPath],
 });
 
 beforeAll(async () => {

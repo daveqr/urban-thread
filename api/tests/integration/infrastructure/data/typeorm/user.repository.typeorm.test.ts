@@ -2,13 +2,16 @@ import {DataSource} from "typeorm";
 import UserEntity from "../../../../../src/infrastructure/data/typeorm/entities/user.entity";
 import TypeORMUserRepository from "../../../../../src/infrastructure/data/typeorm/user.repository.typeorm";
 import {faker} from "@faker-js/faker";
+import path from "path";
+import User from "../../../../../src/core/models/user.model";
 
+const entitiesPath = path.join(__dirname, "../../../../../src/infrastructure/data/typeorm/entities", "*.ts");
 const testDataSource = new DataSource({
     type: "sqlite",
     database: ":memory:",
     synchronize: true,
-    entities: [UserEntity],
     logging: false,
+    entities: [entitiesPath],
 });
 
 beforeAll(async () => {
@@ -50,7 +53,7 @@ describe("TypeORMUserRepository", () => {
         return users;
     }
 
-    it("should find user by uuid", async () => {
+    it("should find user by id", async () => {
         // When
         const userUuidToFind = users[0].uuid;
         const user = await userRepository.findById(userUuidToFind);
@@ -70,20 +73,19 @@ describe("TypeORMUserRepository", () => {
         expect(user).toBeNull();
     });
 
-
     it("should save a user", async () => {
         // Given
         const newUser = {
-            uuid: "the-uuid",
+            id: "the-uuid",
             email: "test@example.com",
             password: "the-password",
             fname: "fname",
             lname: "lname"
-        };
+        } as User;
         await userRepository.save(newUser);
 
         // When
-        const user = await userRepository.findById(newUser.uuid);
+        const user = await userRepository.findById(newUser.id);
 
         // Then
         expect(user).not.toBeNull();
