@@ -1,21 +1,11 @@
-import {DataSource} from "typeorm";
 import {CategoryEntity} from "../../../../../src/infrastructure/data/typeorm/entities/category.entity";
 import {ProductEntity} from "../../../../../src/infrastructure/data/typeorm/entities/product.entity";
 import HighlightedCategoryEntity
     from "../../../../../src/infrastructure/data/typeorm/entities/highlighted-category.entity";
 import TypeORMCategoryRepository from "../../../../../src/infrastructure/data/typeorm/category.repository.typeorm";
 import {faker} from "@faker-js/faker";
-import {v4 as uuidv4} from "uuid";
-import path from "path";
-
-const entitiesPath = path.join(__dirname, "../../../../../src/infrastructure/data/typeorm/entities", "*.ts");
-const testDataSource = new DataSource({
-    type: "sqlite",
-    database: ":memory:",
-    synchronize: true,
-    logging: false,
-    entities: [entitiesPath],
-});
+import {UuidIdGenerator} from "../../../../../src/utils/id-generator.util";
+import {testDataSource} from "./test.data-source"
 
 beforeAll(async () => {
     await testDataSource.initialize();
@@ -41,14 +31,14 @@ describe("TypeORMCategoryRepository", () => {
         categoryEntity.name = faker.lorem.word();
         categoryEntity.description = faker.lorem.sentence();
         categoryEntity.slug = faker.lorem.slug();
-        categoryEntity.uuid = uuidv4();
+        categoryEntity.uuid = new UuidIdGenerator().generateId()
 
         const productEntity = new ProductEntity();
         productEntity.name = faker.commerce.productName();
         productEntity.description = faker.lorem.paragraph();
         productEntity.categories = [categoryEntity];
         productEntity.slug = faker.lorem.slug();
-        productEntity.uuid = uuidv4();
+        productEntity.uuid = new UuidIdGenerator().generateId()
         categoryEntity.products = [productEntity];
 
         await testDataSource.getRepository(ProductEntity).save(productEntity);
@@ -83,7 +73,7 @@ describe("TypeORMCategoryRepository", () => {
         const highlighted = new HighlightedCategoryEntity(category);
         highlighted.position = 1;
 
-        await testDataSource.getRepository(HighlightedCategoryEntity).save(highlighted);
+        await testDataSource.getRepository(HighlightedCategoryEntity as any).save(highlighted);
 
         // When
         const highlightedCategories = await categoryRepository.findHighlightedCategories();
@@ -91,8 +81,8 @@ describe("TypeORMCategoryRepository", () => {
         // Then
         expect(highlightedCategories.length).toBe(1);
         expect(highlightedCategories[0].name).toBe(category.name);
-        expect(highlightedCategories[0].products.length).toBe(1);
-        expect(highlightedCategories[0].products[0].name).toBe(category.products[0].name);
+        expect(highlightedCategories[0].products!.length).toBe(1);
+        expect(highlightedCategories[0].products![0].name).toBe(category.products[0].name);
         expect(highlightedCategories[0].position).toBe(1);
     });
 

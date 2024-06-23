@@ -1,18 +1,8 @@
-import {DataSource} from "typeorm";
 import UserEntity from "../../../../../src/infrastructure/data/typeorm/entities/user.entity";
 import TypeORMUserRepository from "../../../../../src/infrastructure/data/typeorm/user.repository.typeorm";
 import {faker} from "@faker-js/faker";
-import path from "path";
 import User from "../../../../../src/core/models/user.model";
-
-const entitiesPath = path.join(__dirname, "../../../../../src/infrastructure/data/typeorm/entities", "*.ts");
-const testDataSource = new DataSource({
-    type: "sqlite",
-    database: ":memory:",
-    synchronize: true,
-    logging: false,
-    entities: [entitiesPath],
-});
+import {testDataSource} from "./test.data-source";
 
 beforeAll(async () => {
     await testDataSource.initialize();

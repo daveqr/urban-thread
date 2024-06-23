@@ -1,19 +1,9 @@
-import {DataSource} from "typeorm";
 import {CategoryEntity} from "../../../../../src/infrastructure/data/typeorm/entities/category.entity";
 import {ProductEntity} from "../../../../../src/infrastructure/data/typeorm/entities/product.entity";
 import TypeORMProductRepository from "../../../../../src/infrastructure/data/typeorm/product.repository.typeorm";
-import {v4 as uuidv4} from "uuid";
 import {faker} from "@faker-js/faker";
-import path from "path";
-
-const entitiesPath = path.join(__dirname, "../../../../../src/infrastructure/data/typeorm/entities", "*.ts");
-const testDataSource = new DataSource({
-    type: "sqlite",
-    database: ":memory:",
-    synchronize: true,
-    logging: false,
-    entities: [entitiesPath],
-});
+import {testDataSource} from "./test.data-source";
+import {UuidIdGenerator} from "../../../../../src/utils/id-generator.util";
 
 beforeAll(async () => {
     await testDataSource.initialize();
@@ -39,14 +29,14 @@ describe("TypeORMProductRepository", () => {
         categoryEntity.name = faker.lorem.word();
         categoryEntity.description = faker.lorem.sentence();
         categoryEntity.slug = faker.lorem.slug();
-        categoryEntity.uuid = uuidv4();
+        categoryEntity.uuid = new UuidIdGenerator().generateId();
 
         const productEntity = new ProductEntity();
         productEntity.name = faker.commerce.productName();
         productEntity.description = faker.lorem.paragraph();
         productEntity.categories = [categoryEntity];
         productEntity.slug = faker.lorem.slug();
-        productEntity.uuid = uuidv4();
+        productEntity.uuid = new UuidIdGenerator().generateId();
         categoryEntity.products = [productEntity];
 
         await testDataSource.getRepository(ProductEntity).save(productEntity);

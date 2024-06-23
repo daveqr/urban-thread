@@ -1,10 +1,9 @@
 import {Repository} from "typeorm";
-import {v4 as uuidv4} from 'uuid';
 import slugify from "slugify";
-// @ts-ignore
 import productsData from '../data/products.json';
 import {ProductEntity} from "../../../src/infrastructure/data/typeorm/entities/product.entity";
 import {CategoryEntity} from "../../../src/infrastructure/data/typeorm/entities/category.entity";
+import {UuidIdGenerator} from "../../../src/utils/id-generator.util";
 
 export async function seedProducts(productRepo: Repository<ProductEntity>, categoryEntities: CategoryEntity[]) {
     const categoryEntityMap = createCategoryMap(categoryEntities);
@@ -17,7 +16,7 @@ export async function seedProducts(productRepo: Repository<ProductEntity>, categ
             categories: productCategories
         }) as unknown as ProductEntity;
 
-        productEntity.uuid = uuidv4();
+        productEntity.uuid = new UuidIdGenerator().generateId();
         productEntity.slug = slugify(productEntity.name + ' p', {lower: true, remove: /[*+~.()'"!:@]/g});
 
         products.push(productEntity);

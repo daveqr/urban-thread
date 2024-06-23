@@ -1,4 +1,4 @@
-import {Categoryx} from "./blah";
 import {Highlighted} from "./highlighted.model";
+import Category from "./category.model";
 
-export type HighlightedCategory = Categoryx & Highlighted;
+export type HighlightedCategory = Category & Highlighted;

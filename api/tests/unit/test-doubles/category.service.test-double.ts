@@ -4,8 +4,8 @@ import {CategoryService} from "../../../src/core/services/category.service";
 import {DataSource, EntityManager} from "typeorm";
 import {UserRepository} from "../../../src/core/repositories/user.repository";
 import User from "../../../src/core/models/user.model";
-import {v4 as uuidv4} from "uuid";
 import {UserService} from "../../../src/core/services/user.service";
+import {UuidIdGenerator} from "../../../src/utils/id-generator.util";
 
 export class CategoryServiceTestDouble implements CategoryService {
 
@@ -44,7 +44,7 @@ class UserServiceImpl implements UserService {
                 userToUpsert.lname = user.lname;
             } else {
                 userToUpsert = new User();
-                userToUpsert.id = uuidv4();
+                userToUpsert.id = new UuidIdGenerator().generateId();
                 userToUpsert.email = user.email;
                 userToUpsert.password = user.password;
                 userToUpsert.fname = user.fname;
