@@ -30,6 +30,7 @@
     "@types/passport-local": "^1.0.38",
     "@types/uuid": "^9.0.8",
     "accept-language-parser": "^1.5.0",
+    "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "compression": "^1.7.4",
     "cors": "^2.8.5",

@@ -122,7 +122,6 @@ app.use(cors(corsOptionsReact));
 // Routes
 app.use('/', routes);
 
-// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     logger.info(`Server is running on port ${PORT}`);

@@ -3,15 +3,16 @@ import {ProductRepository} from "../../../../../src/core/repositories/product.re
 import {createStubInstance, SinonStubbedInstance} from "sinon";
 import {Product} from "../../../../../src/core/models/product.model";
 import {ProductRepositoryTestDouble} from "../../../test-doubles/product.repository.test-double";
-import {ProductServiceImpl} from "../../../../../src/core/services/product.service";
+
+import {ProductRestService} from "../../../../../src/infrastructure/services/product.service.rest";
 
 describe("ProductServiceImpl use case", () => {
     let productRepository: SinonStubbedInstance<ProductRepository>;
-    let productService: ProductServiceImpl;
+    let productService: ProductRestService;
 
     beforeEach(() => {
         productRepository = createStubInstance<ProductRepository>(ProductRepositoryTestDouble as any);
-        productService = new ProductServiceImpl(productRepository);
+        productService = new ProductRestService(productRepository);
     });
 
     it("should find products", async () => {
