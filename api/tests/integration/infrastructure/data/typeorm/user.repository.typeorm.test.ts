@@ -53,18 +53,18 @@ describe("TypeORMUserRepository", () => {
     it("should find user by uuid", async () => {
         // When
         const userUuidToFind = users[0].uuid;
-        const user = await userRepository.findByUuid(userUuidToFind);
+        const user = await userRepository.findById(userUuidToFind);
 
         // Then
         expect(user).not.toBeNull();
         if (user) {
-            expect(user.uuid).toBe(userUuidToFind);
+            expect(user.id).toBe(userUuidToFind);
         }
     });
 
     it("should return null when user is not found by uuid", async () => {
         // When
-        const user = await userRepository.findByUuid("invalid-uuid");
+        const user = await userRepository.findById("invalid-uuid");
 
         // Then
         expect(user).toBeNull();
@@ -83,7 +83,7 @@ describe("TypeORMUserRepository", () => {
         await userRepository.save(newUser);
 
         // When
-        const user = await userRepository.findByUuid(newUser.uuid);
+        const user = await userRepository.findById(newUser.uuid);
 
         // Then
         expect(user).not.toBeNull();

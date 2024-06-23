@@ -10,12 +10,12 @@ class TypeORMUserRepository implements UserRepository {
         this.userRepository = this.dataSource.getRepository(UserEntity);
     }
 
-    async findByUuid(uuid: string): Promise<User | null> {
+    async findById(uuid: string): Promise<User | null> {
         const userEntity = await this.userRepository.findOne({where: {uuid: uuid}});
 
         if (userEntity) {
             return {
-                uuid: userEntity.uuid,
+                id: userEntity.uuid,
                 email: userEntity.email,
                 password: userEntity.password,
                 fname: userEntity.fname,
@@ -33,7 +33,7 @@ class TypeORMUserRepository implements UserRepository {
         await entityManager.transaction(async transactionalEntityManager => {
             const userEntity = new UserEntity();
 
-            userEntity.uuid = user.uuid;
+            userEntity.uuid = user.id;
             userEntity.email = user.email;
             userEntity.password = user.password;
             userEntity.fname = user.fname;

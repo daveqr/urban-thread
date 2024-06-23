@@ -1,5 +1,5 @@
 class User {
-    uuid!: string;
+    id!: string;
     email!: string;
     password!: string;
     fname!: string;

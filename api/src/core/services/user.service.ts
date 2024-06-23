@@ -4,7 +4,7 @@ import {UserRepository} from "../repositories/user.repository";
 import {v4 as uuidv4} from "uuid";
 
 export interface UserService {
-    findByUuid(uuid: string): Promise<User | null>;
+    findById(id: string): Promise<User | null>;
 
     save(user: User): Promise<void>;
 }
@@ -16,13 +16,13 @@ export class UserServiceImpl implements UserService {
         this.entityManager = dataSource.manager;
     }
 
-    async findByUuid(uuid: string): Promise<User | null> {
-        return await this.userRepository.findByUuid(uuid);
+    async findById(id: string): Promise<User | null> {
+        return await this.userRepository.findById(id);
     }
 
     async save(user: User): Promise<void> {
         await this.entityManager.transaction(async transactionalEntityManager => {
-            let userToUpsert = await this.findByUuid(user.uuid);
+            let userToUpsert = await this.findById(user.id);
 
             if (userToUpsert) {
                 userToUpsert.email = user.email;
@@ -31,7 +31,7 @@ export class UserServiceImpl implements UserService {
                 userToUpsert.lname = user.lname;
             } else {
                 userToUpsert = new User();
-                userToUpsert.uuid = uuidv4();
+                userToUpsert.id = uuidv4();
                 userToUpsert.email = user.email;
                 userToUpsert.password = user.password;
                 userToUpsert.fname = user.fname;
