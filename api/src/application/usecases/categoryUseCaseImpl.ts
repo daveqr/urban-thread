@@ -3,8 +3,16 @@ import {HighlightedCategory} from "../../core/models/highlighted-category.model"
 import {inject, injectable} from "tsyringe";
 import {CategoryService} from "../../core/services/category.service";
 
+export interface CategoryUseCase {
+    find(isDetailed: boolean): Promise<Category[]>;
+
+    findHighlightedCategories(): Promise<HighlightedCategory[]>;
+
+    findByUuid(uuid: string): Promise<Category | null>;
+}
+
 @injectable()
-class CategoryUseCase {
+class CategoryUseCaseImpl implements CategoryUseCase {
 
     constructor(
         @inject('CategoryService') private categoryService: CategoryService) {
@@ -23,4 +31,4 @@ class CategoryUseCase {
     }
 }
 
-export default CategoryUseCase;
+export default CategoryUseCaseImpl;

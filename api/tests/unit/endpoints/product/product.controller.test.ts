@@ -1,17 +1,17 @@
 import "reflect-metadata"
 import sinon, {SinonStubbedInstance} from 'sinon';
-import ProductUseCase from "../../../../src/application/usecases/product.usecase";
+import ProductUseCaseImpl from "../../../../src/application/usecases/product.usecase";
 import ProductController from "../../../../src/endpoints/product/product.controller";
 import {Product} from "../../../../src/core/models/product.model";
 
 const httpMocks = require('node-mocks-http');
 
 describe("Product controller", () => {
-    let productUseCase: SinonStubbedInstance<ProductUseCase>;
+    let productUseCase: SinonStubbedInstance<ProductUseCaseImpl>;
     let productController: ProductController;
 
     beforeEach(() => {
-        productUseCase = sinon.createStubInstance(ProductUseCase as any);
+        productUseCase = sinon.createStubInstance(ProductUseCaseImpl as any);
         productController = new ProductController(productUseCase);
     });
 

@@ -2,16 +2,16 @@ import "reflect-metadata"
 import sinon, {SinonStubbedInstance} from 'sinon';
 import {ProductServiceTestDouble} from "../../test-doubles/product.service.test-double";
 import {Product} from "../../../../src/core/models/product.model";
-import ProductUseCase from "../../../../src/application/usecases/product.usecase";
+import ProductUseCaseImpl from "../../../../src/application/usecases/product.usecase";
 import {ProductService} from "../../../../src/core/services/product.service";
 
 describe("Product use case", () => {
     let productService: SinonStubbedInstance<ProductService>;
-    let productUseCase: ProductUseCase;
+    let productUseCase: ProductUseCaseImpl;
 
     beforeEach(() => {
         productService = sinon.createStubInstance<ProductService>(ProductServiceTestDouble as any);
-        productUseCase = new ProductUseCase(productService);
+        productUseCase = new ProductUseCaseImpl(productService);
     });
 
     it('should find all products', async () => {

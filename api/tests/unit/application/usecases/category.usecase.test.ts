@@ -3,15 +3,15 @@ import sinon, {SinonStubbedInstance} from 'sinon';
 import Category from "../../../../src/core/models/category.model";
 import {CategoryServiceTestDouble} from "../../test-doubles/category.service.test-double";
 import {CategoryService} from "../../../../src/core/services/category.service";
-import CategoryUseCase from "../../../../src/application/usecases/category.usecase";
+import CategoryUseCaseImpl from "../../../../src/application/usecases/categoryUseCaseImpl";
 
 describe("CategoryUseCase tests", () => {
     let categoryService: SinonStubbedInstance<CategoryService>;
-    let categoryUseCase: CategoryUseCase;
+    let categoryUseCase: CategoryUseCaseImpl;
 
     beforeEach(() => {
         categoryService = sinon.createStubInstance<CategoryService>(CategoryServiceTestDouble as any);
-        categoryUseCase = new CategoryUseCase(categoryService);
+        categoryUseCase = new CategoryUseCaseImpl(categoryService);
     });
 
     it('should find a category by uuid', async () => {

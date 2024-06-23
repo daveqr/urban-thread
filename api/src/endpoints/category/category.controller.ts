@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import CategoryUseCase from "../../application/usecases/category.usecase";
+import {CategoryUseCase} from "../../application/usecases/categoryUseCaseImpl";
 import {
     CategoryTransformationService,
     HighlightedCategoryTransformationService

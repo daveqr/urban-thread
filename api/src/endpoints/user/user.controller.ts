@@ -2,14 +2,14 @@ import {Request, Response} from 'express';
 import nodemailer from 'nodemailer';
 import {validationResult} from 'express-validator';
 import {generateToken} from '../../utils/jwt.util';
-import UserUseCase from "../../application/usecases/user.usecase";
+import UserUseCaseImpl from "../../application/usecases/user.usecase";
 import User from "../../core/models/user.model";
 import {inject, injectable} from "tsyringe";
 
 @injectable()
 export default class UserController {
 
-    constructor(@inject('UserUseCase') private userUseCase: UserUseCase) {
+    constructor(@inject('UserUseCase') private userUseCase: UserUseCaseImpl) {
     }
 
     async createUser(req: Request, res: Response) {
