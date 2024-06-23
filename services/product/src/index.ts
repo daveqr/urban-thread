@@ -1,16 +1,36 @@
-import express from 'express';
-import dotenv from 'dotenv';
-
-// Initialize dotenv
-dotenv.config();
+import express, {Request, Response} from 'express';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = 4000;
 
-app.get('/', (req, res) => {
-    res.send('Hello, Product Service!');
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+// Route handler for '/test'
+app.get('/test', async (req: Request, res: Response) => {
+    try {
+        // Simulate an async operation (e.g., database call)
+        await simulateAsyncOperation();
+
+        // Return a JSON response
+        res.json({message: 'Registration successful'});
+    } catch (error) {
+        // Handle errors
+        console.error('Error:', error);
+        res.status(500).json({error: 'Failed to process request'});
+    }
 });
 
-app.listen(port, () => {
-    console.log(`Product service is running on port ${port}`);
+function simulateAsyncOperation() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('Operation completed successfully');
+        }, 1000);
+    });
+}
+
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });

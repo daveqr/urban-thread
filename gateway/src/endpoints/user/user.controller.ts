@@ -69,4 +69,8 @@ export default class UserController {
             return res.status(500).json({error: ('Internal server error')});
         }
     }
+
+    async testConnection(req: Request, res: Response) {
+        return res.json({message: ('Registration successful')});
+    }
 }
