@@ -1,8 +1,8 @@
 import User from "../models/user.model";
 import {DataSource, EntityManager} from "typeorm";
 import {UserRepository} from "../repositories/user.repository";
-import {v4 as uuidv4} from "uuid";
 import {inject, injectable} from "tsyringe";
+import {IdGenerator} from "../../utils/id-generator.util";
 
 export interface UserService {
     findById(id: string): Promise<User | null>;
@@ -16,7 +16,9 @@ export class UserServiceImpl implements UserService {
 
     constructor(
         @inject('DataSource') dataSource: DataSource,
-        @inject('UserRepository') private userRepository: UserRepository) {
+        @inject('UserRepository') private userRepository: UserRepository,
+        @inject('IdGenerator') private idGenerator: IdGenerator
+    ) {
         this.entityManager = dataSource.manager;
     }
 
@@ -35,7 +37,7 @@ export class UserServiceImpl implements UserService {
                 userToUpsert.lname = user.lname;
             } else {
                 userToUpsert = new User();
-                userToUpsert.id = uuidv4();
+                userToUpsert.id = this.idGenerator.generateId();
                 userToUpsert.email = user.email;
                 userToUpsert.password = user.password;
                 userToUpsert.fname = user.fname;

@@ -13,8 +13,8 @@ class TypeORMUserRepository implements UserRepository {
         this.userRepository = this.dataSource.getRepository(UserEntity);
     }
 
-    async findById(uuid: string): Promise<User | null> {
-        const userEntity = await this.userRepository.findOne({where: {uuid: uuid}});
+    async findById(id: string): Promise<User | null> {
+        const userEntity = await this.userRepository.findOne({where: {uuid: id}});
 
         if (userEntity) {
             return {

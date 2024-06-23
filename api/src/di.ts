@@ -23,7 +23,10 @@ import {UserRepository} from "./core/repositories/user.repository";
 import {UserService, UserServiceImpl} from "./core/services/user.service";
 import UserUseCase from "./application/usecases/user.usecase";
 import UserController from "./endpoints/user/user.controller";
+import {IdGenerator, UuidIdGenerator} from "./utils/id-generator.util";
 
+
+container.register<IdGenerator>('IdGenerator', UuidIdGenerator);
 
 container.register<DataSource>('DataSource', {useValue: AppDataSource});
 container.register<TransformationService<Category, any>>('CategoryTransformationService', CategoryTransformationService);
