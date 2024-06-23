@@ -10,12 +10,12 @@ export class ProductRestService implements ProductService {
     }
 
     async findAllProducts(): Promise<Product[]> {
-        const response = await axios.get('http://localhost:4000/products');
+        const response = await axios.get('http://localhost:4000/catalog/products');
         return response.data;
     }
 
     async findProductByUuid(uuid: string): Promise<Product | null> {
-        const response = await axios.get('http://localhost:4000/products/' + uuid);
+        const response = await axios.get('http://localhost:4000/catalog/products/' + uuid);
         return response.data;
     }
 }

@@ -1,6 +1,6 @@
 import express from 'express';
-import ProductController from './product.controller';
 import {container} from "tsyringe";
+import ProductController from "./product.controller";
 
 const router = express.Router();
 const productController = container.resolve("ProductController") as ProductController;
@@ -12,12 +12,8 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/', async (req, res) => {
+router.get('/products', async (req, res) => {
     await productController.findAllProducts(req, res);
-});
-
-router.get('/:id', async (req, res) => {
-    await productController.getProductById(req, res);
 });
 
 export default router;
