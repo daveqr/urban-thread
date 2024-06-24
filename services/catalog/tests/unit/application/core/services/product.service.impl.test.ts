@@ -7,7 +7,7 @@ import {ProductServiceImpl} from "../../../../../src/core/services/product.servi
 
 describe("ProductServiceImpl use case", () => {
     let productRepository: SinonStubbedInstance<ProductRepository>;
-    let productService: ProductServiceImpl;
+    let productService: ProductServiceImpl
 
     beforeEach(() => {
         productRepository = createStubInstance<ProductRepository>(ProductRepositoryTestDouble as any);

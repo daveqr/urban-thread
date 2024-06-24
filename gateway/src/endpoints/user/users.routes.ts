@@ -13,5 +13,8 @@ router.use((req, res, next) => {
 });
 
 router.post('/', userController.createUser.bind(userController));
+router.get('/test', async (req, res) => {
+    await userController.testConnection(req, res);
+});
 
 export default router;

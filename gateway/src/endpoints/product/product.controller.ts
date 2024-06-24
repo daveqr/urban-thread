@@ -13,6 +13,7 @@ export default class ProductController {
             const products = await this.productUseCase.findAllProducts();
             response.json(products);
         } catch (error) {
+            console.error(error);
             response.status(500).json({error: 'Failed to fetch products'});
         }
     }

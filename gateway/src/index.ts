@@ -122,7 +122,6 @@ app.use(cors(corsOptionsReact));
 // Routes
 app.use('/', routes);
 
-// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     logger.info(`Server is running on port ${PORT}`);
@@ -134,7 +133,7 @@ async function main() {
             console.log("Data Source has been initialized!")
         })
         .then(() => {
-            console.log("UrbanThread API is ready.")
+            console.log("UrbanThread Gateway is ready.")
         })
         .catch((err) => {
             console.error("Error during Data Source initialization", err)

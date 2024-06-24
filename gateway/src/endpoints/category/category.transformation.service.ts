@@ -14,7 +14,7 @@ export class CategoryTransformationService implements TransformationService<Cate
                 self: createSelfLink(CATEGORY_BASE_URL, category.uuid),
             },
             _embedded: {
-                // products: categoryDto.productLinks,
+                // products: category.productLinks,
             },
         };
     }
