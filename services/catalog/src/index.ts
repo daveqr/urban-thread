@@ -1,13 +1,13 @@
 import "reflect-metadata";
 import "./di";
 import express from 'express';
-import productRoutes from "./endpoints/product/products.routes";
+import routes from "./config/routes.config";
 import {AppDataSource} from "./data-source";
 import logger from './utils/logger.util';
 
 const app = express();
 app.use(express.json());
-app.use('/catalog', productRoutes);
+app.use('/', routes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

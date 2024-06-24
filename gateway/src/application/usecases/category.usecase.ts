@@ -4,7 +4,7 @@ import {inject, injectable} from "tsyringe";
 import {CategoryService} from "../../core/services/category.service";
 
 export interface CategoryUseCase {
-    find(isDetailed: boolean): Promise<Category[]>;
+    findAllCategories(): Promise<Category[]>;
 
     findHighlightedCategories(): Promise<HighlightedCategory[]>;
 
@@ -18,7 +18,7 @@ class CategoryUseCaseImpl implements CategoryUseCase {
         @inject('CategoryService') private categoryService: CategoryService) {
     }
 
-    async find(isDetailed: boolean): Promise<Category[]> {
+    async findAllCategories(): Promise<Category[]> {
         return await this.categoryService.findAllCategories();
     }
 

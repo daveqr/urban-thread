@@ -12,7 +12,7 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/products', async (req, res) => {
+router.get('/', async (req, res) => {
     await productController.findAllProducts(req, res);
 });
 

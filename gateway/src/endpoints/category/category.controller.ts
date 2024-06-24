@@ -1,11 +1,10 @@
 import {Request, Response} from 'express';
-import {CategoryUseCase} from "../../application/usecases/categoryUseCaseImpl";
+import {CategoryUseCase} from "../../application/usecases/category.usecase";
 import {
     CategoryTransformationService,
     HighlightedCategoryTransformationService
 } from "./category.transformation.service";
-import {container, inject, injectable} from "tsyringe";
-import {CategoryRepository} from "../../core/repositories/category.repository";
+import {inject, injectable} from "tsyringe";
 
 @injectable()
 class CategoryController {
@@ -19,9 +18,9 @@ class CategoryController {
 
     async getAllCategories(req: Request, res: Response) {
         try {
-            const isDetailed = Boolean(req.query.detailed);
-            const categoryRepository = container.resolve("CategoryRepository") as CategoryRepository;
-            const categories = await categoryRepository.find();
+            // const isDetailed = Boolean(req.query.detailed);
+            // const categoryService = container.resolve("CategoryService") as CategoryService;
+            const categories = await this.categoryUseCase.findAllCategories();
             const transformedCategories = categories.map(category =>
                 this.categoryTransformationService.transform(category)
             );
