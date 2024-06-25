@@ -20,15 +20,18 @@ jobs:
         with:
           node-version: 'v22.2.0'
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Install dependencies
         run: |
-          cd services/gateway
-          yarn install
+          cd gateway
+          corepack yarn install
 
       - name: Run Gateway tests
         run: |
-          cd services/gateway
-          yarn test:all
+          cd gateway
+          corepack yarn test:all
 
   catalog-tests:
     name: Run tests for Catalog
@@ -43,12 +46,15 @@ jobs:
         with:
           node-version: 'v22.2.0'
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Install dependencies
         run: |
           cd services/catalog
-          yarn install
+          corepack yarn install
 
       - name: Run Catalog tests
         run: |
           cd services/catalog
-          yarn test:all
+          corepack yarn test:all
