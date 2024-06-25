@@ -2,7 +2,7 @@ import "reflect-metadata";
 import "./di";
 import express, {ErrorRequestHandler, NextFunction, Request, Response} from "express";
 import dotenv from "dotenv";
-import routes from "./config/routes.config";
+import routes from "./endpoints/routes.config";
 import path from "path";
 import {AppDataSource} from "./data-source";
 import helmet from "helmet";
