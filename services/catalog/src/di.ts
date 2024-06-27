@@ -17,7 +17,7 @@ import {ProductRepository} from "./core/repositories/product.repository";
 import TypeORMProductRepository from "./infrastructure/data/typeorm/product.repository.typeorm";
 import {ProductService, ProductServiceImpl} from "./core/services/product.service";
 import ProductController from "./endpoints/product/product.controller";
-import CategoryUseCaseImpl, {CategoryUseCase} from "./application/usecases/categoryUseCaseImpl";
+import CategoryUseCaseImpl, {CategoryUseCase} from "./application/usecases/category.use.case";
 import ProductUseCaseImpl, {ProductUseCase} from "./application/usecases/product.usecase";
 
 container.register<IdGenerator>('IdGenerator', UuidIdGenerator);

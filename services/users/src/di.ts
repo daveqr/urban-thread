@@ -1,0 +1,25 @@
+import {container} from "tsyringe";
+import {IdGenerator, UuidIdGenerator} from "./utils/id-generator.util";
+import {DataSource} from "typeorm";
+import {TransformationService} from "./endpoints/transformation.service";
+import {AppDataSource} from "./data-source";
+
+import UserController from "./endpoints/users/user.controller";
+import {UserRepository} from "./core/repositories/user.repository";
+import TypeORMUserRepository from "./infrastructure/data/typeorm/user.repository.typeorm";
+import {UserService, UserServiceImpl} from "./core/services/user.service";
+import UserUseCaseImpl, {UserUseCase} from "./application/usecases/user.usecase";
+import User from "./core/models/user.model";
+import UserResponseTransformer from "./endpoints/users/user.response.transformer";
+
+container.register<IdGenerator>('IdGenerator', UuidIdGenerator);
+
+container.register<DataSource>('DataSource', {useValue: AppDataSource});
+container.register<TransformationService<User, any>>('CategoryTransformationService', UserResponseTransformer);
+
+container.register<UserRepository>('UserRepository', TypeORMUserRepository);
+container.register<UserService>('UserService', UserServiceImpl);
+container.register<UserUseCase>('UserUseCase', UserUseCaseImpl);
+container.register<UserController>('UserController', UserController);
+
+

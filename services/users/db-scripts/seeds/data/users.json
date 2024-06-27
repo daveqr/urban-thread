@@ -1,0 +1,9 @@
+[
+  {
+    "email": "dave@example.com",
+    "password": "pass-to-hash",
+    "fname": "Dave",
+    "lname": "Johnson"
+  }
+
+]

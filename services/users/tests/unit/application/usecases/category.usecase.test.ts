@@ -3,7 +3,7 @@ import sinon, {SinonStubbedInstance} from 'sinon';
 import Category from "../../../../src/core/models/category.model";
 import {CategoryServiceTestDouble} from "../../test-doubles/category.service.test-double";
 import {CategoryService} from "../../../../src/core/services/category.service";
-import CategoryUseCaseImpl from "../../../../src/application/usecases/category.use.case";
+import CategoryUseCaseImpl from "../../../../src/application/usecases/categoryUseCaseImpl";
 
 describe("CategoryUseCase tests", () => {
     let categoryService: SinonStubbedInstance<CategoryService>;
