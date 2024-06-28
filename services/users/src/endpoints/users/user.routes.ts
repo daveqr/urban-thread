@@ -5,7 +5,7 @@ import UserController from "./user.controller";
 const router = express.Router();
 const userController = container.resolve("UserController") as UserController;
 
-router.get('/', async (req, res) => {
+router.get('/:id', async (req, res) => {
     await userController.findById(req, res);
 });
 

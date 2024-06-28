@@ -1,5 +1,6 @@
 import {Repository} from "typeorm";
 import slugify from "slugify";
+// @ts-ignore
 import productsData from '../data/products.json';
 import {ProductEntity} from "../../../src/infrastructure/data/typeorm/entities/product.entity";
 import {CategoryEntity} from "../../../src/infrastructure/data/typeorm/entities/category.entity";

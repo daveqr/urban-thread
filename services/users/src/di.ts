@@ -10,12 +10,12 @@ import TypeORMUserRepository from "./infrastructure/data/typeorm/user.repository
 import {UserService, UserServiceImpl} from "./core/services/user.service";
 import UserUseCaseImpl, {UserUseCase} from "./application/usecases/user.usecase";
 import User from "./core/models/user.model";
-import UserResponseTransformer from "./endpoints/users/user.response.transformer";
+import {UserTransformationService} from "./endpoints/users/user.transformation.service";
 
 container.register<IdGenerator>('IdGenerator', UuidIdGenerator);
 
 container.register<DataSource>('DataSource', {useValue: AppDataSource});
-container.register<TransformationService<User, any>>('CategoryTransformationService', UserResponseTransformer);
+container.register<TransformationService<User, any>>('UserResponseTransformer', UserTransformationService);
 
 container.register<UserRepository>('UserRepository', TypeORMUserRepository);
 container.register<UserService>('UserService', UserServiceImpl);
