@@ -12,6 +12,13 @@ export default class UserController {
     constructor(@inject('UserUseCase') private userUseCase: UserUseCaseImpl) {
     }
 
+    async findUser(request: Request, response: Response) {
+        const userId = request.params.id;
+        const user = await this.userUseCase.findById(userId);
+
+        response.json(user);
+    }
+
     async createUser(req: Request, res: Response) {
         try {
             const errors = validationResult(req);

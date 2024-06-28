@@ -18,7 +18,7 @@ export default class ProductController {
         }
     }
 
-    async getProductById(request: Request, response: Response) {
+    async findProductById(request: Request, response: Response) {
         try {
             const productId = request.params.id;
             const basic = request.query.basic;
