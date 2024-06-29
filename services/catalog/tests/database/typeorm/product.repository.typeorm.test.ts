@@ -3,7 +3,7 @@ import {ProductEntity} from "../../../src/infrastructure/data/typeorm/entities/p
 import TypeORMProductRepository from "../../../src/infrastructure/data/typeorm/product.repository.typeorm";
 import {faker} from "@faker-js/faker";
 import {testDataSource} from "./test.data-source";
-import {UuidIdGenerator} from "../../../src/utils/id-generator.util";
+import {UuidIdGenerator} from "shared/lib/id-generator.util";
 
 beforeAll(async () => {
     await testDataSource.initialize();

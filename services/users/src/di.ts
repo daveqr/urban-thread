@@ -1,5 +1,5 @@
 import {container} from "tsyringe";
-import {IdGenerator, UuidIdGenerator} from "./utils/id-generator.util";
+import {IdGenerator, UuidIdGenerator} from "../../../shared/src/id-generator.util";
 import {DataSource} from "typeorm";
 import {TransformationService} from "./endpoints/transformation.service";
 import {AppDataSource} from "./data-source";

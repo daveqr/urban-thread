@@ -4720,6 +4720,7 @@ __metadata:
     node-mocks-http: "npm:^1.15.0"
     nodemon: "npm:^3.1.4"
     reflect-metadata: "npm:^0.2.2"
+    shared: ../../shared
     sinon: "npm:^18.0.0"
     slugify: "npm:^1.6.6"
     sqlite3: "npm:^5.1.7"
@@ -5080,6 +5081,15 @@ __metadata:
   bin:
     sha.js: ./bin.js
   checksum: 10c0/b7a371bca8821c9cc98a0aeff67444a03d48d745cb103f17228b96793f455f0eb0a691941b89ea1e60f6359207e36081d9be193252b0f128e0daf9cfea2815a5
+  languageName: node
+  linkType: hard
+
+"shared@file:../../shared::locator=product-service%40workspace%3A.":
+  version: 1.0.0
+  resolution: "shared@file:../../shared#../../shared::hash=6cbbf9&locator=product-service%40workspace%3A."
+  dependencies:
+    uuid: "npm:^10.0.0"
+  checksum: 10c0/0f1e7c8f7212b2bd29187bca19b7244d619a9b6035f1a7a357154178a8572cbb3c2bda602ea4e35bdec28151da5e7ff5733e7a7b34ed2cfb1c7dbf29d1b398bf
   languageName: node
   linkType: hard
 
@@ -5900,6 +5910,15 @@ __metadata:
   version: 1.0.1
   resolution: "utils-merge@npm:1.0.1"
   checksum: 10c0/02ba649de1b7ca8854bfe20a82f1dfbdda3fb57a22ab4a8972a63a34553cf7aa51bc9081cf7e001b035b88186d23689d69e71b510e610a09a4c66f68aa95b672
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "uuid@npm:10.0.0"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 10c0/eab18c27fe4ab9fb9709a5d5f40119b45f2ec8314f8d4cf12ce27e4c6f4ffa4a6321dc7db6c515068fa373c075b49691ba969f0010bf37f44c37ca40cd6bf7fe
   languageName: node
   linkType: hard
 
