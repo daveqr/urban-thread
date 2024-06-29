@@ -1,8 +1,8 @@
+import TypeORMUserRepository from "../../../src/infrastructure/data/typeorm/user.repository.typeorm";
 import {faker} from "@faker-js/faker";
+import User from "../../../src/core/models/user.model";
 import {testDataSource} from "./test.data-source";
-import UserEntity from "../../src/infrastructure/data/typeorm/entities/user.entity";
-import TypeORMUserRepository from "../../src/infrastructure/data/typeorm/user.repository.typeorm";
-import User from "../../src/core/models/user.model";
+import UserEntity from "../../../src/infrastructure/data/typeorm/entities/user.entity";
 
 beforeAll(async () => {
     await testDataSource.initialize();
@@ -28,7 +28,6 @@ describe("TypeORMUserRepository", () => {
     async function insertTestUsers() {
         const savePromises: Promise<UserEntity>[] = [];
         const users: UserEntity[] = [];
-
         for (let i = 0; i < 10; i++) {
             const userEntity = new UserEntity();
             userEntity.uuid = faker.string.uuid();

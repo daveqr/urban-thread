@@ -1,9 +1,9 @@
-import {CategoryEntity} from "../../../../../src/infrastructure/data/typeorm/entities/category.entity";
-import {ProductEntity} from "../../../../../src/infrastructure/data/typeorm/entities/product.entity";
-import TypeORMProductRepository from "../../../../../src/infrastructure/data/typeorm/product.repository.typeorm";
+import {CategoryEntity} from "../../../src/infrastructure/data/typeorm/entities/category.entity";
+import {ProductEntity} from "../../../src/infrastructure/data/typeorm/entities/product.entity";
+import TypeORMProductRepository from "../../../src/infrastructure/data/typeorm/product.repository.typeorm";
 import {faker} from "@faker-js/faker";
 import {testDataSource} from "./test.data-source";
-import {UuidIdGenerator} from "../../../../../src/utils/id-generator.util";
+import {UuidIdGenerator} from "../../../src/utils/id-generator.util";
 
 beforeAll(async () => {
     await testDataSource.initialize();

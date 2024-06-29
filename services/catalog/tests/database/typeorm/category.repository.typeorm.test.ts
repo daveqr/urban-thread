@@ -1,10 +1,10 @@
-import {CategoryEntity} from "../../../../../src/infrastructure/data/typeorm/entities/category.entity";
-import {ProductEntity} from "../../../../../src/infrastructure/data/typeorm/entities/product.entity";
+import {CategoryEntity} from "../../../src/infrastructure/data/typeorm/entities/category.entity";
+import {ProductEntity} from "../../../src/infrastructure/data/typeorm/entities/product.entity";
 import HighlightedCategoryEntity
-    from "../../../../../src/infrastructure/data/typeorm/entities/highlighted-category.entity";
-import TypeORMCategoryRepository from "../../../../../src/infrastructure/data/typeorm/category.repository.typeorm";
+    from "../../../src/infrastructure/data/typeorm/entities/highlighted-category.entity";
+import TypeORMCategoryRepository from "../../../src/infrastructure/data/typeorm/category.repository.typeorm";
 import {faker} from "@faker-js/faker";
-import {UuidIdGenerator} from "../../../../../src/utils/id-generator.util";
+import {UuidIdGenerator} from "../../../src/utils/id-generator.util";
 import {testDataSource} from "./test.data-source"
 
 beforeAll(async () => {
