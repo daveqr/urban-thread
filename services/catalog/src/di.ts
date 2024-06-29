@@ -1,4 +1,5 @@
 import {container} from "tsyringe";
+import {IdGenerator, UuidIdGenerator} from "./utils/id-generator.util";
 import {DataSource} from "typeorm";
 import {TransformationService} from "./endpoints/transformation.service";
 import Category from "./core/models/category.model";
@@ -18,7 +19,6 @@ import {ProductService, ProductServiceImpl} from "./core/services/product.servic
 import ProductController from "./endpoints/product/product.controller";
 import CategoryUseCaseImpl, {CategoryUseCase} from "./application/usecases/category.use.case";
 import ProductUseCaseImpl, {ProductUseCase} from "./application/usecases/product.usecase";
-import {IdGenerator, UuidIdGenerator} from "shared/lib/id-generator.util";
 
 container.register<IdGenerator>('IdGenerator', UuidIdGenerator);
 
