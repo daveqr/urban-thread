@@ -117,15 +117,16 @@ const corsOptionsReact = {
     optionsSuccessStatus: 204,
     credentials: true,
 };
-app.use(cors(corsOptionsReact));
 
-// Routes
+app.use(cors(corsOptionsReact));
 app.use('/', routes);
+app.get("/cart")
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     logger.info(`Server is running on port ${PORT}`);
 });
+
 
 async function main() {
     await AppDataSource.initialize()

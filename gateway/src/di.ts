@@ -16,12 +16,13 @@ import {ProductService} from "./core/services/product.service";
 import {CategoryService} from "./core/services/category.service";
 import TypeORMUserRepository from "./infrastructure/data/typeorm/user.repository.typeorm";
 import {UserRepository} from "./core/repositories/user.repository";
-import {UserService, UserServiceImpl} from "./core/services/user.service";
+import {UserService} from "./core/services/user.service";
 import UserUseCaseImpl, {UserUseCase} from "./application/usecases/user.usecase";
 import UserController from "./endpoints/user/user.controller";
 import {IdGenerator, UuidIdGenerator} from "./utils/id-generator.util";
 import {ProductRestService} from "./infrastructure/services/product.service.rest";
 import {CategoryRestService} from "./infrastructure/services/category.service.rest";
+import {UserRestService} from "./infrastructure/services/user.service";
 
 
 container.register<IdGenerator>('IdGenerator', UuidIdGenerator);
@@ -39,6 +40,6 @@ container.register<ProductUseCase>('ProductUseCase', ProductUseCaseImpl);
 container.register<ProductController>('ProductController', ProductController);
 
 container.register<UserRepository>('UserRepository', TypeORMUserRepository);
-container.register<UserService>('UserService', UserServiceImpl);
+container.register<UserService>('UserService', UserRestService);
 container.register<UserUseCase>('UserUseCase', UserUseCaseImpl);
 container.register<UserController>('UserController', UserController);

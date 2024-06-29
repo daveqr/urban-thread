@@ -1,5 +1,6 @@
 import {Repository} from "typeorm";
 import {CategoryEntity} from "../../../src/infrastructure/data/typeorm/entities/category.entity";
+// @ts-ignore
 import categoriesData from '../data/categories.json';
 import {UuidIdGenerator} from "../../../src/utils/id-generator.util";
 import slugify from "slugify";

@@ -12,9 +12,6 @@ router.use((req, res, next) => {
     next();
 });
 
-router.post('/', userController.createUser.bind(userController));
-router.get('/test', async (req, res) => {
-    await userController.testConnection(req, res);
-});
+router.get('/:id', userController.findUser.bind(userController));
 
 export default router;

@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-    await productController.getProductById(req, res);
+    await productController.findProductById(req, res);
 });
 
 export default router;
