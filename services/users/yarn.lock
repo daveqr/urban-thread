@@ -4720,6 +4720,7 @@ __metadata:
     node-mocks-http: "npm:^1.15.0"
     nodemon: "npm:^3.1.4"
     reflect-metadata: "npm:^0.2.2"
+    shared: ../../shared
     sinon: "npm:^18.0.0"
     slugify: "npm:^1.6.6"
     sqlite3: "npm:^5.1.7"
@@ -5080,6 +5081,13 @@ __metadata:
   bin:
     sha.js: ./bin.js
   checksum: 10c0/b7a371bca8821c9cc98a0aeff67444a03d48d745cb103f17228b96793f455f0eb0a691941b89ea1e60f6359207e36081d9be193252b0f128e0daf9cfea2815a5
+  languageName: node
+  linkType: hard
+
+"shared@file:../../shared::locator=product-service%40workspace%3A.":
+  version: 1.0.0
+  resolution: "shared@file:../../shared#../../shared::hash=e999e2&locator=product-service%40workspace%3A."
+  checksum: 10c0/8cbfb3211f5c6c3a2b15f74d1e3a238ccb364505cf7bcc310b779e9bcdf60517297fa2a3fa06fd5363ac6d46cda461e07d3aa14c138c0364523fc47c8123f3ba
   languageName: node
   linkType: hard
 
