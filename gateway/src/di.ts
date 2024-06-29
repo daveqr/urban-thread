@@ -19,10 +19,10 @@ import {UserRepository} from "./core/repositories/user.repository";
 import {UserService} from "./core/services/user.service";
 import UserUseCaseImpl, {UserUseCase} from "./application/usecases/user.usecase";
 import UserController from "./endpoints/user/user.controller";
+import {IdGenerator, UuidIdGenerator} from "./utils/id-generator.util";
 import {ProductRestService} from "./infrastructure/services/product.service.rest";
 import {CategoryRestService} from "./infrastructure/services/category.service.rest";
 import {UserRestService} from "./infrastructure/services/user.service";
-import {IdGenerator, UuidIdGenerator} from "shared/lib/id-generator.util";
 
 
 container.register<IdGenerator>('IdGenerator', UuidIdGenerator);

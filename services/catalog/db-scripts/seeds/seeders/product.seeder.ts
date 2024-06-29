@@ -4,7 +4,7 @@ import slugify from "slugify";
 import productsData from '../data/products.json';
 import {ProductEntity} from "../../../src/infrastructure/data/typeorm/entities/product.entity";
 import {CategoryEntity} from "../../../src/infrastructure/data/typeorm/entities/category.entity";
-import {UuidIdGenerator} from "shared/lib/id-generator.util";
+import {UuidIdGenerator} from "../../../src/utils/id-generator.util";
 
 export async function seedProducts(productRepo: Repository<ProductEntity>, categoryEntities: CategoryEntity[]) {
     const categoryEntityMap = createCategoryMap(categoryEntities);

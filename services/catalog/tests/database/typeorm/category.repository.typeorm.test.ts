@@ -4,8 +4,8 @@ import HighlightedCategoryEntity
     from "../../../src/infrastructure/data/typeorm/entities/highlighted-category.entity";
 import TypeORMCategoryRepository from "../../../src/infrastructure/data/typeorm/category.repository.typeorm";
 import {faker} from "@faker-js/faker";
+import {UuidIdGenerator} from "../../../src/utils/id-generator.util";
 import {testDataSource} from "./test.data-source"
-import {UuidIdGenerator} from "shared/lib/id-generator.util";
 
 beforeAll(async () => {
     await testDataSource.initialize();

@@ -1,10 +1,10 @@
 import {DataSource, EntityManager} from "typeorm";
 import {inject, injectable} from "tsyringe";
+import {IdGenerator} from "../../utils/id-generator.util";
 import {UserService} from "../../core/services/user.service";
 import {UserRepository} from "../../core/repositories/user.repository";
 import User from "../../core/models/user.model";
 import axios from "axios";
-import {IdGenerator} from "shared/lib/id-generator.util";
 
 @injectable()
 export class UserRestService implements UserService {
@@ -19,6 +19,7 @@ export class UserRestService implements UserService {
     }
 
     async findById(id: string): Promise<User | null> {
+        console.log("in findbyuid")
         const response = await axios.get('http://localhost:4000/users/' + id);
         return response.data;
     }
