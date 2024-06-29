@@ -38,6 +38,9 @@
     "typeorm": "^0.3.20",
     "winston": "^3.13.0"
   },
+  "resolutions": {
+    "shared": "../../shared"
+  },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
     "@types/jest": "^29.5.12",
