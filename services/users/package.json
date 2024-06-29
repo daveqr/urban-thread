@@ -36,8 +36,7 @@
     "sqlite3": "^5.1.7",
     "tsyringe": "^4.8.0",
     "typeorm": "^0.3.20",
-    "winston": "^3.13.0",
-
+    "winston": "^3.13.0"
   },
   "resolutions": {
     "shared": "../../shared"
@@ -55,5 +54,4 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.5.2"
   }
-
 }
