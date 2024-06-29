@@ -78,7 +78,6 @@ jobs:
       - name: Install dependencies
         run: |
           cd services/users
-          export YARN_DISABLE_HARDENED_MODE=true
           corepack yarn install
 
       - name: Run User tests
