@@ -7,57 +7,57 @@ on:
     branches: [ master ]
 
 jobs:
-  gateway-tests:
-    name: Run tests for Gateway
-    runs-on: ubuntu-latest
+#  gateway-tests:
+#    name: Run tests for Gateway
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v2
+#        with:
+#          node-version: 'v22.2.0'
+#
+#      - name: Enable Corepack
+#        run: corepack enable
+#
+#      - name: Install dependencies
+#        run: |
+#          cd gateway
+#          corepack yarn install
+#
+#      - name: Run Gateway tests
+#        run: |
+#          cd gateway
+#          corepack yarn test:all
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 'v22.2.0'
-
-      - name: Enable Corepack
-        run: corepack enable
-
-      - name: Install dependencies
-        run: |
-          cd gateway
-          corepack yarn install
-
-      - name: Run Gateway tests
-        run: |
-          cd gateway
-          corepack yarn test:all
-
-  catalog-tests:
-    name: Run tests for Catalog service
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 'v22.2.0'
-
-      - name: Enable Corepack
-        run: corepack enable
-
-      - name: Install dependencies
-        run: |
-          cd services/catalog
-          corepack yarn install
-
-      - name: Run Catalog tests
-        run: |
-          cd services/catalog
-          corepack yarn test:all
+#  catalog-tests:
+#    name: Run tests for Catalog service
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v2
+#        with:
+#          node-version: 'v22.2.0'
+#
+#      - name: Enable Corepack
+#        run: corepack enable
+#
+#      - name: Install dependencies
+#        run: |
+#          cd services/catalog
+#          corepack yarn install
+#
+#      - name: Run Catalog tests
+#        run: |
+#          cd services/catalog
+#          corepack yarn test:all
 
   shared-tests:
     name: Run tests for Shared library

@@ -1,4 +1,4 @@
-import winston from "winston";
+import winston from 'winston';
 
 export interface Logger {
     debug(message: string, ...meta: any[]): void;
@@ -10,17 +10,26 @@ export interface Logger {
     error(message: string, ...meta: any[]): void;
 }
 
-export class WinstonLogger implements Logger {
+export class CentralLogger implements Logger {
     private logger: winston.Logger;
 
-    constructor() {
-        this.logger = winston.createLogger({
+    constructor(serviceName: string, combinedLogPath: string) {
+        this.logger = this.createLogger(serviceName, combinedLogPath);
+    }
+
+    private createLogger(serviceName: string, combinedLogPath: string) {
+        return winston.createLogger({
             level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
-            format: winston.format.simple(),
+            format: winston.format.combine(
+                winston.format.timestamp(),
+                winston.format.printf(({timestamp, level, message, ...meta}) => {
+                    return `${timestamp} [${serviceName}] ${level}: ${message} ${JSON.stringify(meta)}`;
+                })
+            ),
             transports: [
                 new winston.transports.Console(),
-                new winston.transports.File({filename: 'error.log', level: 'error'}),
-                new winston.transports.File({filename: 'combined.log'}),
+                // new winston.transports.File({filename: 'error.log', level: 'error'}),
+                new winston.transports.File({filename: combinedLogPath}),
             ],
         });
     }
@@ -41,6 +50,3 @@ export class WinstonLogger implements Logger {
         this.logger.error(message, ...meta);
     }
 }
-
-const logger = new WinstonLogger();
-export default logger;

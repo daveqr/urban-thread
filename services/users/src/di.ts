@@ -11,7 +11,11 @@ import {UserService, UserServiceImpl} from "./core/services/user.service";
 import UserUseCaseImpl, {UserUseCase} from "./application/usecases/user.usecase";
 import User from "./core/models/user.model";
 import {UserTransformationService} from "./endpoints/users/user.transformation.service";
+import {CentralLogger} from "shared/lib/logger.util";
 
+container.register<CentralLogger>('CentralLogger', {
+    useFactory: () => new CentralLogger('UserService', '/Users/dave/projects/urban-thread/ut.log')
+});
 container.register<IdGenerator>('IdGenerator', UuidIdGenerator);
 
 container.register<DataSource>('DataSource', {useValue: AppDataSource});

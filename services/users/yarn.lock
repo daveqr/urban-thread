@@ -5086,10 +5086,11 @@ __metadata:
 
 "shared@file:../../shared::locator=product-service%40workspace%3A.":
   version: 1.0.0
-  resolution: "shared@file:../../shared#../../shared::hash=1c61c7&locator=product-service%40workspace%3A."
+  resolution: "shared@file:../../shared#../../shared::hash=5e1b24&locator=product-service%40workspace%3A."
   dependencies:
     uuid: "npm:^10.0.0"
-  checksum: 10c0/65b13b10bb8f14ae02f6a775fce016b4968fdd51702a032e1aeb75c0f2805f39e7ed8c7a45aa5829c235719d4a77a0896dc09c7a1e757286c62f0b8d05d1ae38
+    winston: "npm:^3.13.0"
+  checksum: 10c0/39dd260dbe327def1dd49fa84e930dc0087a83f88d2ed7a4914d23b667df4e5c3499c8b364d3c8e32218693fbe28c37e3de430c14a24d38d47a459f4f3a5ff92
   languageName: node
   linkType: hard
 

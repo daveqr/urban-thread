@@ -19,7 +19,11 @@ import {ProductService, ProductServiceImpl} from "./core/services/product.servic
 import ProductController from "./endpoints/product/product.controller";
 import CategoryUseCaseImpl, {CategoryUseCase} from "./application/usecases/category.use.case";
 import ProductUseCaseImpl, {ProductUseCase} from "./application/usecases/product.usecase";
+import {CentralLogger} from "shared/lib/logger.util";
 
+container.register<CentralLogger>('CentralLogger', {
+    useFactory: () => new CentralLogger('CatalogService', '/Users/dave/projects/urban-thread/ut.log')
+});
 container.register<IdGenerator>('IdGenerator', UuidIdGenerator);
 
 container.register<DataSource>('DataSource', {useValue: AppDataSource});

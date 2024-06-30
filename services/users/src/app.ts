@@ -1,7 +1,10 @@
 import express, {Application} from 'express';
 import userRoutes from './endpoints/users/user.routes';
 import {USERS_BASE_URL} from './config/urls';
-import logger from './utils/logger.util';
+import {container} from "tsyringe";
+import {CentralLogger} from "shared/lib/logger.util";
+
+const logger = container.resolve<CentralLogger>('CentralLogger');
 
 class App {
     private app: Application;

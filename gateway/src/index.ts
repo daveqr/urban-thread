@@ -6,8 +6,10 @@ import routes from "./endpoints/routes.config";
 import path from "path";
 import {AppDataSource} from "./data-source";
 import helmet from "helmet";
-import logger, {WinstonLogger} from './utils/logger.util';
+import {container} from "tsyringe";
+import {CentralLogger} from "shared/lib/logger.util";
 
+const logger = container.resolve<CentralLogger>('CentralLogger');
 const session = require('express-session');
 const cors = require('cors');
 
@@ -49,7 +51,7 @@ app.use((req: LanguageRequest, res: any, next: any) => {
     req.locale = languages.length > 0 ? languages[0].code : 'en';
 
     req.i18n = i18n;
-    new WinstonLogger().debug(`Preferred locale: ${req.locale}`);
+    logger.debug(`Preferred locale: ${req.locale}`);
     next();
 });
 
