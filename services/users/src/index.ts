@@ -2,9 +2,12 @@ import 'reflect-metadata';
 import './di';
 import app from './app';
 import {AppDataSource} from './data-source';
-import logger from './utils/logger.util';
+import {container} from "tsyringe";
+import {CentralLogger} from "shared/lib/logger.util";
 
-const PORT = process.env.PORT || 4000;
+const logger = container.resolve<CentralLogger>('CentralLogger');
+
+const PORT = process.env.PORT || 4444;
 
 app.listen(PORT);
 

@@ -23,8 +23,12 @@ import {IdGenerator, UuidIdGenerator} from "./utils/id-generator.util";
 import {ProductRestService} from "./infrastructure/services/product.service.rest";
 import {CategoryRestService} from "./infrastructure/services/category.service.rest";
 import {UserRestService} from "./infrastructure/services/user.service";
+import {CentralLogger} from "shared/lib/logger.util";
 
 
+container.register<CentralLogger>('CentralLogger', {
+    useFactory: () => new CentralLogger('APIGateway', '/Users/dave/projects/urban-thread/ut.log')
+});
 container.register<IdGenerator>('IdGenerator', UuidIdGenerator);
 
 container.register<DataSource>('DataSource', {useValue: AppDataSource});
