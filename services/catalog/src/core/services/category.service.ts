@@ -1,32 +1,32 @@
 import Category from "../models/category.model";
-import {HighlightedCategory} from "../models/highlighted-category.model";
-import {inject, injectable} from "tsyringe";
-import {CategoryRepository} from "../repositories/category.repository";
+import { HighlightedCategory } from "../models/highlighted-category.model";
+import { inject, injectable } from "tsyringe";
+import { CategoryRepository } from "../repositories/category.repository";
 
 export interface CategoryService {
-    findAllCategories(): Promise<Category[]>;
+  findAllCategories(): Promise<Category[]>;
 
-    findHighlightedCategories(): Promise<HighlightedCategory[]>;
+  findHighlightedCategories(): Promise<HighlightedCategory[]>;
 
-    findCategoryByUuid(uuid: string): Promise<Category | null>;
+  findCategoryByUuid(uuid: string): Promise<Category | null>;
 }
 
 @injectable()
 export class CategoryServiceImpl implements CategoryService {
+  constructor(
+    @inject("CategoryRepository")
+    private categoryRepository: CategoryRepository,
+  ) {}
 
-    constructor(
-        @inject('CategoryRepository') private categoryRepository: CategoryRepository) {
-    }
+  async findAllCategories(): Promise<Category[]> {
+    return await this.categoryRepository.find();
+  }
 
-    async findAllCategories(): Promise<Category[]> {
-        return await this.categoryRepository.find();
-    }
+  async findHighlightedCategories(): Promise<HighlightedCategory[]> {
+    return await this.categoryRepository.findHighlightedCategories();
+  }
 
-    async findHighlightedCategories(): Promise<HighlightedCategory[]> {
-        return await this.categoryRepository.findHighlightedCategories();
-    }
-
-    async findCategoryByUuid(uuid: string): Promise<Category | null> {
-        return await this.categoryRepository.findByUuid(uuid);
-    }
+  async findCategoryByUuid(uuid: string): Promise<Category | null> {
+    return await this.categoryRepository.findByUuid(uuid);
+  }
 }

@@ -1,8 +1,7 @@
-import {Product} from "../models/product.model";
+import { Product } from "../models/product.model";
 
 export interface ProductRepository {
+  find(): Promise<Product[]>;
 
-    find(): Promise<Product[]>;
-
-    findByUuid(uuid: string): Promise<Product | null>;
+  findByUuid(uuid: string): Promise<Product | null>;
 }

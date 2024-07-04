@@ -1,27 +1,33 @@
-import {Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
-import {CategoryEntity} from "./category.entity";
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { CategoryEntity } from "./category.entity";
 
-@Entity('products')
+@Entity("products")
 export class ProductEntity {
-    @PrimaryGeneratedColumn()
-    id!: number;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Column({nullable: true})
-    uuid!: string;
+  @Column({ nullable: true })
+  uuid!: string;
 
-    @Column({nullable: false})
-    name!: string;
+  @Column({ nullable: false })
+  name!: string;
 
-    @Column({nullable: true})
-    description?: string;
+  @Column({ nullable: true })
+  description?: string;
 
-    @Column({nullable: false})
-    slug!: string;
+  @Column({ nullable: false })
+  slug!: string;
 
-    @ManyToMany(() => CategoryEntity, categoryEntity => categoryEntity.products)
-    @JoinTable()
-    categories!: CategoryEntity[];
+  @ManyToMany(() => CategoryEntity, (categoryEntity) => categoryEntity.products)
+  @JoinTable()
+  categories!: CategoryEntity[];
 
-    // @ManyToOne(() => Edition, edition => edition.categories)
-    // edition: Edition;
+  // @ManyToOne(() => Edition, edition => edition.categories)
+  // edition: Edition;
 }

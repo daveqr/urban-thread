@@ -1,12 +1,11 @@
 export interface Link {
-    href: string;
-    rel?: string;
-    name?: string;
+  href: string;
+  rel?: string;
+  name?: string;
 }
 
 export interface ResourceLinks {
-    self: Link;
+  self: Link;
 
-    [key: string]: Link;
+  [key: string]: Link;
 }
-

@@ -1,10 +1,10 @@
 import Category from "../models/category.model";
-import {HighlightedCategory} from "../models/highlighted-category.model";
+import { HighlightedCategory } from "../models/highlighted-category.model";
 
 export interface CategoryService {
-    findAllCategories(): Promise<Category[]>;
+  findAllCategories(): Promise<Category[]>;
 
-    findHighlightedCategories(): Promise<HighlightedCategory[]>;
+  findHighlightedCategories(): Promise<HighlightedCategory[]>;
 
-    findCategoryByUuid(uuid: string): Promise<Category | null>;
+  findCategoryByUuid(uuid: string): Promise<Category | null>;
 }
