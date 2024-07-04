@@ -1,1 +1,1 @@
-export const USERS_BASE_URL = '/users';
+export const USERS_BASE_URL = "/users";

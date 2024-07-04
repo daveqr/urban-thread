@@ -1,3 +1,3 @@
 export interface Highlighted {
-    position: number;
+  position: number;
 }

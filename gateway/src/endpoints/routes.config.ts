@@ -1,5 +1,10 @@
-import express from 'express';
-import {ACCOUNTS_BASE_URL, CATEGORY_BASE_URL, PRODUCT_BASE_URL, USERS_BASE_URL,} from './urls';
+import express from "express";
+import {
+  ACCOUNTS_BASE_URL,
+  CATEGORY_BASE_URL,
+  PRODUCT_BASE_URL,
+  USERS_BASE_URL,
+} from "./urls";
 import categoryRoutes from "./category/categories.routes";
 import productRoutes from "./product/products.routes";
 import userRoutes from "./user/users.routes";
