@@ -12,7 +12,10 @@ import UserUseCaseImpl, {
   UserUseCase,
 } from "./application/usecases/user.usecase";
 import User from "./core/models/user.model";
-import { UserTransformationService } from "./endpoints/users/user.transformation.service";
+import {
+  TransformedUser,
+  UserTransformationService,
+} from "./endpoints/users/user.transformation.service";
 import { CentralLogger } from "shared/lib/logger.util";
 
 container.register<CentralLogger>("CentralLogger", {
@@ -25,7 +28,7 @@ container.register<CentralLogger>("CentralLogger", {
 container.register<IdGenerator>("IdGenerator", UuidIdGenerator);
 
 container.register<DataSource>("DataSource", { useValue: AppDataSource });
-container.register<TransformationService<User, any>>(
+container.register<TransformationService<User, TransformedUser>>(
   "UserResponseTransformer",
   UserTransformationService,
 );
