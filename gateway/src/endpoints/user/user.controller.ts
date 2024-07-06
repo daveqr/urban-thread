@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import nodemailer from "nodemailer";
 import { validationResult } from "express-validator";
-import { generateToken } from "../../utils/jwt.util";
+import { generateToken, TokenPayload } from "../../utils/jwt.util";
 import UserUseCaseImpl from "../../application/usecases/user.usecase";
 import User from "../../core/models/user.model";
 import { inject, injectable } from "tsyringe";
@@ -41,7 +41,7 @@ export default class UserController {
       const token = generateToken({
         userId: tempUser.id,
         username: tempUser.email,
-      });
+      } as TokenPayload);
 
       // Sending email (TODO: Move this to a service or utility function)
       const transporter = nodemailer.createTransport({
@@ -62,11 +62,13 @@ export default class UserController {
 
       transporter.sendMail(mailOptions, (error, info) => {
         // TODO: Handle email sending error
-        // if (error) {
-        //     logger.error(error);
-        // } else {
-        //     logger.debug('Email sent: ' + info.response);
-        // }
+        if (error) {
+          console.log(error);
+          // logger.error(error);
+        } else {
+          // console.log(error);
+          console.debug("Email sent: " + info.response);
+        }
       });
       // End email stuff
 

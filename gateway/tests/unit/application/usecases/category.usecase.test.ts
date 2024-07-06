@@ -10,9 +10,9 @@ describe("CategoryUseCase tests", () => {
   let categoryUseCase: CategoryUseCaseImpl;
 
   beforeEach(() => {
-    categoryService = sinon.createStubInstance<CategoryService>(
-      CategoryServiceTestDouble as any,
-    );
+    categoryService = sinon.createStubInstance(
+      CategoryServiceTestDouble,
+    ) as sinon.SinonStubbedInstance<CategoryService>;
     categoryUseCase = new CategoryUseCaseImpl(categoryService);
   });
 

@@ -72,7 +72,7 @@ describe("TypeORMCategoryRepository", () => {
     highlighted.position = 1;
 
     await testDataSource
-      .getRepository(HighlightedCategoryEntity as any)
+      .getRepository(HighlightedCategoryEntity)
       .save(highlighted);
 
     // When

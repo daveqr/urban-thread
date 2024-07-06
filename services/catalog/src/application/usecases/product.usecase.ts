@@ -1,7 +1,7 @@
 import { Product } from "../../core/models/product.model";
 import { inject, injectable } from "tsyringe";
 import { ProductService } from "../../core/services/product.service";
-import { CentralLogger } from "shared/lib/logger.util";
+import { Logger } from "shared/lib/logger.util";
 
 export interface ProductUseCase {
   findAllProducts(): Promise<Product[]>;
@@ -17,7 +17,7 @@ export interface ProductUseCase {
 class ProductUseCaseImpl implements ProductUseCase {
   constructor(
     @inject("ProductService") private productService: ProductService,
-    @inject("CentralLogger") private logger: CentralLogger,
+    @inject("CentralLogger") private logger: Logger,
   ) {}
 
   async findAllProducts() {

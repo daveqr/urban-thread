@@ -28,7 +28,6 @@ export class CentralLogger implements Logger {
       ),
       transports: [
         new winston.transports.Console(),
-        // new winston.transports.File({filename: 'error.log', level: 'error'}),
         new winston.transports.File({ filename: combinedLogPath }),
       ],
     });

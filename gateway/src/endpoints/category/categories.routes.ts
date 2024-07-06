@@ -1,15 +1,16 @@
-import express from "express";
+import express, { NextFunction } from "express";
 import CategoryController from "./category.controller";
 import { container } from "tsyringe";
+import { Request, Response } from "express";
 
 const router = express.Router();
 const categoryController = container.resolve(
   "CategoryController",
 ) as CategoryController;
 
-router.use((req: any, res: any, next: any) => {
-  if (req.method === "GET") {
-    res.setHeader("Content-Type", "application/hal+json");
+router.use((request: Request, response: Response, next: NextFunction) => {
+  if (request.method === "GET") {
+    response.setHeader("Content-Type", "application/hal+json");
   }
   next();
 });

@@ -39,7 +39,7 @@ export function mapEntityToProduct(productEntity: ProductEntity): Product {
 
 export function mapToDomainHighlightedCategories(
   categories: {
-    position: any;
+    position: number;
     categoryEntity: CategoryEntity;
   }[],
 ): HighlightedCategory[] {

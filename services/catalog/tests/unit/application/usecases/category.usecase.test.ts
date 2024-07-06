@@ -11,7 +11,7 @@ describe("CategoryUseCase tests", () => {
 
   beforeEach(() => {
     categoryService = sinon.createStubInstance<CategoryService>(
-      CategoryServiceTestDouble as any,
+      CategoryServiceTestDouble,
     );
     categoryUseCase = new CategoryUseCaseImpl(categoryService);
   });

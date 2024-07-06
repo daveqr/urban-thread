@@ -18,6 +18,7 @@ class CategoryUseCaseImpl implements CategoryUseCase {
   ) {}
 
   async find(isDetailed: boolean): Promise<Category[]> {
+    console.log(isDetailed);
     return await this.categoryService.findAllCategories();
   }
 

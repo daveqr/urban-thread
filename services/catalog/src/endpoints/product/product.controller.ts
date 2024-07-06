@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { ProductUseCase } from "../../application/usecases/product.usecase";
 import { inject, injectable } from "tsyringe";
+import { isAxiosError } from "axios";
 
 @injectable()
 export default class ProductController {
@@ -32,10 +33,14 @@ export default class ProductController {
       }
 
       response.json(transformedProduct);
-    } catch (error: any) {
-      response
-        .status(500)
-        .json({ message: "Error fetching product: " + error.message, error });
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        response
+          .status(500)
+          .json({ message: "Error fetching product: " + error.message, error });
+      }
+
+      response.status(500);
     }
   }
 }

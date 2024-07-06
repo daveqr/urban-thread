@@ -10,9 +10,9 @@ describe("Product use case", () => {
   let productUseCase: ProductUseCaseImpl;
 
   beforeEach(() => {
-    productService = sinon.createStubInstance<ProductService>(
-      ProductServiceTestDouble as any,
-    );
+    productService = sinon.createStubInstance(
+      ProductServiceTestDouble,
+    ) as sinon.SinonStubbedInstance<ProductService>;
     productUseCase = new ProductUseCaseImpl(productService);
   });
 

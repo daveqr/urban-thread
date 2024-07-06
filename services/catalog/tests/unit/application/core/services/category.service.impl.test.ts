@@ -11,7 +11,7 @@ describe("CategoryServiceImpl tests", () => {
 
   beforeEach(() => {
     categoryRepository = createStubInstance<CategoryRepository>(
-      CategoryRepositoryTestDouble as any,
+      CategoryRepositoryTestDouble,
     );
     categoryService = new CategoryServiceImpl(categoryRepository);
   });
