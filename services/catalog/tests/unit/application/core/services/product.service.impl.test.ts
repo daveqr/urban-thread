@@ -11,7 +11,7 @@ describe("ProductServiceImpl use case", () => {
 
   beforeEach(() => {
     productRepository = createStubInstance<ProductRepository>(
-      ProductRepositoryTestDouble as any,
+      ProductRepositoryTestDouble,
     );
     productService = new ProductServiceImpl(productRepository);
   });

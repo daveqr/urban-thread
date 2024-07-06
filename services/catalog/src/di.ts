@@ -8,6 +8,8 @@ import { HighlightedCategory } from "./core/models/highlighted-category.model";
 import {
   CategoryTransformationService,
   HighlightedCategoryTransformationService,
+  TransformedCategory,
+  TransformedHighlightedCategory,
 } from "./endpoints/category/category.transformation.service";
 import { CategoryRepository } from "./core/repositories/category.repository";
 import TypeORMCategoryRepository from "./infrastructure/data/typeorm/category.repository.typeorm";
@@ -41,11 +43,13 @@ container.register<CentralLogger>("CentralLogger", {
 container.register<IdGenerator>("IdGenerator", UuidIdGenerator);
 
 container.register<DataSource>("DataSource", { useValue: AppDataSource });
-container.register<TransformationService<Category, any>>(
+container.register<TransformationService<Category, TransformedCategory>>(
   "CategoryTransformationService",
   CategoryTransformationService,
 );
-container.register<TransformationService<HighlightedCategory, any>>(
+container.register<
+  TransformationService<HighlightedCategory, TransformedHighlightedCategory>
+>(
   "HighlightedCategoryTransformationService",
   HighlightedCategoryTransformationService,
 );

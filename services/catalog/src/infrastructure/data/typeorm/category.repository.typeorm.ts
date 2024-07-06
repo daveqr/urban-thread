@@ -37,7 +37,7 @@ class TypeORMCategoryRepository implements CategoryRepository {
       return null;
     }
 
-    let categories = mapToDomainCategories([categoryEntity]);
+    const categories = mapToDomainCategories([categoryEntity]);
     return categories[0];
   }
 
@@ -64,6 +64,7 @@ class TypeORMCategoryRepository implements CategoryRepository {
   }
 
   async findByIdWithProductLinks(categoryId: string): Promise<Category | null> {
+    console.log(categoryId);
     // const categoryRepo = getRepository(Category);
     // const category = await categoryRepo.findOne(categoryId, { relations: ["productEntities", "edition"] });
     // return category ? new CategoryModel(category) : null;
@@ -89,13 +90,15 @@ class TypeORMCategoryRepository implements CategoryRepository {
   }
 
   async findByIds(categoryIds: string[]): Promise<Category[]> {
+    console.log(categoryIds);
     const categoryRepo = AppDataSource.getRepository(CategoryEntity);
 
     const categoryEntities = await categoryRepo.findBy({ id: In([1, 2, 3]) });
     return mapToDomainCategories(categoryEntities);
   }
 
-  async findById(categoryId: any): Promise<Category | null> {
+  async findById(categoryId: string): Promise<Category | null> {
+    console.log(categoryId);
     // const categoryRepo = AppDataSource.getRepository(Category);
     // const category = await categoryRepo.findOne(categoryId, {relations: ["products", "edition"]});
     // return category ? new CategoryModel(category) : null;

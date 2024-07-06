@@ -12,7 +12,7 @@ const seedDatabase = async () => {
     await AppDataSource.initialize();
 
     const highlightedCategoryRepo = AppDataSource.getRepository(
-      HighlightedCategoryEntity as any,
+      HighlightedCategoryEntity,
     ) as Repository<HighlightedCategoryEntity>;
     const productRepo = AppDataSource.getRepository(ProductEntity);
     const categoryRepo = AppDataSource.getRepository(CategoryEntity);

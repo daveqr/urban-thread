@@ -1,7 +1,6 @@
 import { Repository } from "typeorm";
 import slugify from "slugify";
-// @ts-ignore
-import productsData from "../data/products.json";
+import productSeeds from "../data/products";
 import { ProductEntity } from "../../../src/infrastructure/data/typeorm/entities/product.entity";
 import { CategoryEntity } from "../../../src/infrastructure/data/typeorm/entities/category.entity";
 import { UuidIdGenerator } from "../../../src/utils/id-generator.util";
@@ -11,14 +10,14 @@ export async function seedProducts(
   categoryEntities: CategoryEntity[],
 ) {
   const categoryEntityMap = createCategoryMap(categoryEntities);
-  const products = [];
+  const productEntities: ProductEntity[] = [];
 
-  for (const productData of productsData) {
-    const productCategories = productData.categories.map(
+  for (const productSeed of productSeeds) {
+    const productCategories = productSeed.categories.map(
       (name: string) => categoryEntityMap[name],
     );
     const productEntity: ProductEntity = productRepo.create({
-      ...productData,
+      ...productSeed,
       categories: productCategories,
     }) as unknown as ProductEntity;
 
@@ -28,10 +27,10 @@ export async function seedProducts(
       remove: /[*+~.()'"!:@]/g,
     });
 
-    products.push(productEntity);
+    productEntities.push(productEntity);
   }
 
-  await productRepo.save(products);
+  await productRepo.save(productEntities);
 }
 
 function createCategoryMap(categoryEntities: CategoryEntity[]): {

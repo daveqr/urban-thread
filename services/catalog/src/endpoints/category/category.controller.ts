@@ -6,6 +6,7 @@ import {
 } from "./category.transformation.service";
 import { container, inject, injectable } from "tsyringe";
 import { CategoryRepository } from "../../core/repositories/category.repository";
+import { isAxiosError } from "axios";
 
 @injectable()
 class CategoryController {
@@ -19,7 +20,7 @@ class CategoryController {
 
   async getAllCategories(req: Request, res: Response) {
     try {
-      const isDetailed = Boolean(req.query.detailed);
+      // const isDetailed = Boolean(req.query.detailed);
       const categoryRepository = container.resolve(
         "CategoryRepository",
       ) as CategoryRepository;
@@ -37,7 +38,7 @@ class CategoryController {
 
   async getHighlightedCategories(req: Request, res: Response) {
     try {
-      let categories = await this.categoryUseCase.findHighlightedCategories();
+      const categories = await this.categoryUseCase.findHighlightedCategories();
       const transformedCategories = categories.map((category) =>
         this.highlightedCategoryTransformationService.transform(category),
       );
@@ -50,16 +51,20 @@ class CategoryController {
 
   async getCategoryById(req: Request, res: Response) {
     try {
-      let uuid = req.params.id;
+      const uuid = req.params.id;
       const category = await this.categoryUseCase.findByUuid(uuid);
       if (!category) {
         return res.status(404).json({ message: "Category not found" });
       }
       res.json(category);
-    } catch (error: any) {
-      res
-        .status(500)
-        .json({ message: "Error fetching category: " + error.message, error });
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        return res.status(500).json({
+          message: "Error fetching category: " + error.message,
+          error,
+        });
+      }
+      return res.status(500);
     }
   }
 }

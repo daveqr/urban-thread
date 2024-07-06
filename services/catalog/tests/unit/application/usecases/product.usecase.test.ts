@@ -4,6 +4,7 @@ import { ProductServiceTestDouble } from "../../test-doubles/product.service.tes
 import { Product } from "../../../../src/core/models/product.model";
 import ProductUseCaseImpl from "../../../../src/application/usecases/product.usecase";
 import { ProductService } from "../../../../src/core/services/product.service";
+import consoleLogger from "../../../ConsoleLogger";
 
 describe("Product use case", () => {
   let productService: SinonStubbedInstance<ProductService>;
@@ -11,9 +12,9 @@ describe("Product use case", () => {
 
   beforeEach(() => {
     productService = sinon.createStubInstance<ProductService>(
-      ProductServiceTestDouble as any,
+      ProductServiceTestDouble,
     );
-    productUseCase = new ProductUseCaseImpl(productService);
+    productUseCase = new ProductUseCaseImpl(productService, consoleLogger);
   });
 
   it("should find all products", async () => {

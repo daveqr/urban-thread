@@ -4,14 +4,14 @@ import ProductUseCaseImpl from "../../../../src/application/usecases/product.use
 import ProductController from "../../../../src/endpoints/product/product.controller";
 import { Product } from "../../../../src/core/models/product.model";
 
-const httpMocks = require("node-mocks-http");
+import httpMocks from "node-mocks-http";
 
 describe("Product controller", () => {
   let productUseCase: SinonStubbedInstance<ProductUseCaseImpl>;
   let productController: ProductController;
 
   beforeEach(() => {
-    productUseCase = sinon.createStubInstance(ProductUseCaseImpl as any);
+    productUseCase = sinon.createStubInstance(ProductUseCaseImpl);
     productController = new ProductController(productUseCase);
   });
 

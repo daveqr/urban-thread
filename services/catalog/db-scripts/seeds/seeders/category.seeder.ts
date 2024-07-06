@@ -1,17 +1,16 @@
 import { Repository } from "typeorm";
 import { CategoryEntity } from "../../../src/infrastructure/data/typeorm/entities/category.entity";
-// @ts-ignore
-import categoriesData from "../data/categories.json";
 import { UuidIdGenerator } from "../../../src/utils/id-generator.util";
 import slugify from "slugify";
+import categorySeeds from "../data/categories";
 
 export async function seedCategories(
   categoryRepo: Repository<CategoryEntity>,
 ): Promise<CategoryEntity[]> {
   const categoryEntities = [];
-  for (const categoryData of categoriesData) {
+  for (const categorySeed of categorySeeds) {
     const categoryEntity: CategoryEntity = categoryRepo.create(
-      categoryData,
+      categorySeed,
     ) as unknown as CategoryEntity;
 
     categoryEntity.uuid = new UuidIdGenerator().generateId();
