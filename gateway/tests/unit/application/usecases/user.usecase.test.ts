@@ -11,9 +11,9 @@ describe("User use case", () => {
   let userUseCase: UserUseCaseImpl;
 
   beforeEach(() => {
-    userService = sinon.createStubInstance<UserService>(
-      UserServiceTestDouble as any,
-    );
+    userService = sinon.createStubInstance(
+      UserServiceTestDouble,
+    ) as sinon.SinonStubbedInstance<UserService>;
     userUseCase = new UserUseCaseImpl(AppDataSource, userService);
   });
 

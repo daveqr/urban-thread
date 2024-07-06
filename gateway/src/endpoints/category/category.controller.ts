@@ -5,6 +5,7 @@ import {
   HighlightedCategoryTransformationService,
 } from "./category.transformation.service";
 import { inject, injectable } from "tsyringe";
+import { isAxiosError } from "axios";
 
 @injectable()
 class CategoryController {
@@ -32,31 +33,36 @@ class CategoryController {
     }
   }
 
-  async getHighlightedCategories(req: Request, res: Response) {
+  async getHighlightedCategories(request: Request, response: Response) {
     try {
-      let categories = await this.categoryUseCase.findHighlightedCategories();
+      const categories = await this.categoryUseCase.findHighlightedCategories();
       const transformedCategories = categories.map((category) =>
         this.highlightedCategoryTransformationService.transform(category),
       );
-      res.json(transformedCategories);
+      response.json(transformedCategories);
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Failed to fetch categories" });
+      if (isAxiosError(error)) {
+        console.error(error);
+        response.status(500).json({ error: "Failed to fetch categories" });
+      }
     }
   }
 
-  async getCategoryById(req: Request, res: Response) {
+  async getCategoryById(request: Request, response: Response) {
     try {
-      let uuid = req.params.id;
+      const uuid = request.params.id;
       const category = await this.categoryUseCase.findByUuid(uuid);
       if (!category) {
-        return res.status(404).json({ message: "Category not found" });
+        return response.status(404).json({ message: "Category not found" });
       }
-      res.json(category);
-    } catch (error: any) {
-      res
-        .status(500)
-        .json({ message: "Error fetching category: " + error.message, error });
+      response.json(category);
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        response.status(500).json({
+          message: "Error fetching category: " + error.message,
+          error,
+        });
+      }
     }
   }
 }

@@ -1,8 +1,8 @@
-interface CategoryLink {
-  id: string;
-  name: string;
-  href: string;
-}
+// interface CategoryLink {
+//   id: string;
+//   name: string;
+//   href: string;
+// }
 
 class ProductResponseTransformer {
   // static transform(product: ProductModel, categoryLinks: CategoryLink[], extended?: boolean): any {

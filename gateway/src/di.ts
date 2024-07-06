@@ -8,6 +8,8 @@ import CategoryController from "./endpoints/category/category.controller";
 import {
   CategoryTransformationService,
   HighlightedCategoryTransformationService,
+  TransformedCategory,
+  TransformedHighlightedCategory,
 } from "./endpoints/category/category.transformation.service";
 import { TransformationService } from "./endpoints/transformation.service";
 import Category from "./core/models/category.model";
@@ -38,11 +40,13 @@ container.register<CentralLogger>("CentralLogger", {
 container.register<IdGenerator>("IdGenerator", UuidIdGenerator);
 
 container.register<DataSource>("DataSource", { useValue: AppDataSource });
-container.register<TransformationService<Category, any>>(
+container.register<TransformationService<Category, TransformedCategory>>(
   "CategoryTransformationService",
   CategoryTransformationService,
 );
-container.register<TransformationService<HighlightedCategory, any>>(
+container.register<
+  TransformationService<HighlightedCategory, TransformedHighlightedCategory>
+>(
   "HighlightedCategoryTransformationService",
   HighlightedCategoryTransformationService,
 );
