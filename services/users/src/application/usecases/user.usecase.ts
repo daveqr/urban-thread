@@ -28,7 +28,7 @@ class UserUseCaseImpl implements UserUseCase {
   async save(user: User): Promise<void> {
     userSchema.validate(user);
 
-    await this.entityManager.transaction(async (transactionalEntityManager) => {
+    await this.entityManager.transaction(async () => {
       await this.userService.save(user);
     });
   }

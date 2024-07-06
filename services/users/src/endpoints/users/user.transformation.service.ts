@@ -8,11 +8,18 @@ function createSelfLink(baseUrl: string, resourceId: string | undefined): Link {
   return { href };
 }
 
+export interface TransformedUser extends User {
+  _links: {
+    self: Link;
+  };
+  _embedded: Record<string, never>;
+}
+
 @injectable()
 export class UserTransformationService
-  implements TransformationService<User, any>
+  implements TransformationService<User, TransformedUser>
 {
-  transform(user: User): any {
+  transform(user: User): TransformedUser {
     return {
       ...user,
       _links: {
@@ -21,6 +28,6 @@ export class UserTransformationService
       _embedded: {
         // products: category.productLinks,
       },
-    };
+    } as TransformedUser;
   }
 }

@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import sinon, { SinonStubbedInstance } from "sinon";
+import sinon from "sinon";
 import { UserService } from "../../../../src/core/services/user.service";
 import UserUseCaseImpl from "../../../../src/application/usecases/user.usecase";
 import { AppDataSource } from "../../../../src/data-source";
@@ -7,13 +7,13 @@ import User from "../../../../src/core/models/user.model";
 import { UserServiceTestDouble } from "../../test-doubles/user.service.test-double";
 
 describe("User use case", () => {
-  let userService: SinonStubbedInstance<UserService>;
+  let userService: sinon.SinonStubbedInstance<UserService>;
   let userUseCase: UserUseCaseImpl;
 
   beforeEach(() => {
-    userService = sinon.createStubInstance<UserService>(
-      UserServiceTestDouble as any,
-    );
+    userService = sinon.createStubInstance(
+      UserServiceTestDouble,
+    ) as unknown as sinon.SinonStubbedInstance<UserService>;
     userUseCase = new UserUseCaseImpl(AppDataSource, userService);
   });
 

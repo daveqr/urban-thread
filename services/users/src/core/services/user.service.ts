@@ -27,7 +27,7 @@ export class UserServiceImpl implements UserService {
   }
 
   async save(user: User): Promise<void> {
-    await this.entityManager.transaction(async (transactionalEntityManager) => {
+    await this.entityManager.transaction(async () => {
       let userToUpsert = await this.findById(user.id);
 
       if (userToUpsert) {

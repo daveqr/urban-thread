@@ -1,5 +1,5 @@
 import { Repository } from "typeorm";
-// @ts-ignore
+// @ts-expect-error need to look at this later
 import userData from "../data/users.json";
 import { UuidIdGenerator } from "../../../src/utils/id-generator.util";
 import UserEntity from "../../../src/infrastructure/data/typeorm/entities/user.entity";
