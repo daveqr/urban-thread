@@ -5,6 +5,7 @@ import TypeORMCategoryRepository from "../../../src/infrastructure/data/typeorm/
 import { faker } from "@faker-js/faker";
 import { UuidIdGenerator } from "../../../src/utils/id-generator.util";
 import { testDataSource } from "./test.data-source";
+import { ConsoleLogger } from "shared/lib/logger/console.logger";
 
 beforeAll(async () => {
   await testDataSource.initialize();
@@ -22,7 +23,10 @@ describe("TypeORMCategoryRepository", () => {
   let categoryRepository: TypeORMCategoryRepository;
 
   beforeEach(() => {
-    categoryRepository = new TypeORMCategoryRepository(testDataSource);
+    categoryRepository = new TypeORMCategoryRepository(
+      testDataSource,
+      new ConsoleLogger(),
+    );
   });
 
   async function populateSingleCategory() {

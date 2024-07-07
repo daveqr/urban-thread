@@ -1,14 +1,5 @@
 import winston from "winston";
-
-export interface Logger {
-  debug(message: string, ...meta: any[]): void;
-
-  info(message: string, ...meta: any[]): void;
-
-  warn(message: string, ...meta: any[]): void;
-
-  error(message: string, ...meta: any[]): void;
-}
+import { Logger } from "./logger";
 
 export class CentralLogger implements Logger {
   private logger: winston.Logger;

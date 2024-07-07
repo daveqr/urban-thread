@@ -3,7 +3,7 @@ import categoryRoutes from "./endpoints/category/categories.routes";
 import productRoutes from "./endpoints/product/products.routes";
 import { CATEGORY_BASE_URL, PRODUCT_BASE_URL } from "./config/urls";
 import { container } from "tsyringe";
-import { CentralLogger } from "shared/lib/logger.util";
+import { CentralLogger } from "shared/lib/logger/central.logger";
 
 const logger = container.resolve<CentralLogger>("CentralLogger");
 

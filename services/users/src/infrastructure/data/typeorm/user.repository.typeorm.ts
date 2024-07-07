@@ -17,7 +17,6 @@ class TypeORMUserRepository implements UserRepository {
       where: { uuid: id },
     });
 
-    console.log(userEntity);
     if (userEntity) {
       return {
         id: userEntity.uuid,

@@ -16,7 +16,8 @@ import {
   TransformedUser,
   UserTransformationService,
 } from "./endpoints/users/user.transformation.service";
-import { CentralLogger } from "shared/lib/logger.util";
+import { CentralLogger } from "shared/lib/logger/central.logger";
+import ConsoleLogger from "shared/lib/logger/console.logger";
 
 container.register<CentralLogger>("CentralLogger", {
   useFactory: () =>
@@ -25,6 +26,8 @@ container.register<CentralLogger>("CentralLogger", {
       "/Users/dave/projects/urban-thread/ut.log",
     ),
 });
+
+container.register<ConsoleLogger>("ConsoleLogger", ConsoleLogger);
 container.register<IdGenerator>("IdGenerator", UuidIdGenerator);
 
 container.register<DataSource>("DataSource", { useValue: AppDataSource });

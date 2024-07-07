@@ -6943,11 +6943,11 @@ __metadata:
 
 "shared@file:../shared::locator=apparel-ecomm-backend%40workspace%3A.":
   version: 1.0.0
-  resolution: "shared@file:../shared#../shared::hash=f80cfb&locator=apparel-ecomm-backend%40workspace%3A."
+  resolution: "shared@file:../shared#../shared::hash=f18ce0&locator=apparel-ecomm-backend%40workspace%3A."
   dependencies:
     uuid: "npm:^10.0.0"
     winston: "npm:^3.13.0"
-  checksum: 10/1161d2ccd788e3462f623d0bfa8aefc4a05bc437f41fc41b01e82787cd82485497c9c355e2e179f53a365f21f61fa5e08935f1fc17430198e3b0bc65dbfe0781
+  checksum: 10/0ffc8ad86abfed7d02aa24a9639ab58c2a1b48b878973dc92e45e0125733dabc33c8bad981c7b3176e782d6c747ad36454313242b9312578f3ecb5b456e009a4
   languageName: node
   linkType: hard
 

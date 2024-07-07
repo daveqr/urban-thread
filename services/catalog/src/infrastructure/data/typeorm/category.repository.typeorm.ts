@@ -9,12 +9,16 @@ import {
   mapToDomainHighlightedCategories,
 } from "./mapper";
 import { inject, injectable } from "tsyringe";
+import { Logger } from "shared/lib/logger/logger";
 
 @injectable()
 class TypeORMCategoryRepository implements CategoryRepository {
   private categoryEntityRepository: Repository<CategoryEntity>;
 
-  constructor(@inject("DataSource") private dataSource: DataSource) {
+  constructor(
+    @inject("DataSource") private dataSource: DataSource,
+    @inject("CentralLogger") private logger: Logger,
+  ) {
     this.categoryEntityRepository = this.categoryEntityRepository =
       this.dataSource.getRepository(CategoryEntity);
   }

@@ -1,7 +1,7 @@
 import { Product } from "../../core/models/product.model";
 import { inject, injectable } from "tsyringe";
 import { ProductService } from "../../core/services/product.service";
-import { Logger } from "shared/lib/logger.util";
+import { Logger } from "shared/lib/logger/logger";
 
 export interface ProductUseCase {
   findAllProducts(): Promise<Product[]>;
