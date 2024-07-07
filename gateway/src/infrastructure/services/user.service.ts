@@ -19,7 +19,6 @@ export class UserRestService implements UserService {
   }
 
   async findById(id: string): Promise<User | null> {
-    console.log("in findbyuid");
     const response = await axios.get("http://localhost:4444/users/" + id);
     return response.data;
   }

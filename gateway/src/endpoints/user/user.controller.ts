@@ -64,13 +64,10 @@ export default class UserController {
         // TODO: Handle email sending error
         if (error) {
           console.log(error);
-          // logger.error(error);
         } else {
-          // console.log(error);
-          console.debug("Email sent: " + info.response);
+          console.log("Email sent: " + info.response);
         }
       });
-      // End email stuff
 
       return res.json({
         message: "Registration successful",

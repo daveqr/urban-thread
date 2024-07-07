@@ -31,7 +31,7 @@ import { IdGenerator, UuidIdGenerator } from "./utils/id-generator.util";
 import { ProductRestService } from "./infrastructure/services/product.service.rest";
 import { CategoryRestService } from "./infrastructure/services/category.service.rest";
 import { UserRestService } from "./infrastructure/services/user.service";
-import { CentralLogger } from "shared/lib/logger.util";
+import { CentralLogger } from "shared/lib/logger/central.logger";
 
 container.register<CentralLogger>("CentralLogger", {
   useFactory: () =>

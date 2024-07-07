@@ -31,7 +31,8 @@ import CategoryUseCaseImpl, {
 import ProductUseCaseImpl, {
   ProductUseCase,
 } from "./application/usecases/product.usecase";
-import { CentralLogger } from "shared/lib/logger.util";
+import { CentralLogger } from "shared/lib/logger/central.logger";
+import { ConsoleLogger } from "shared/lib/logger/console.logger";
 
 container.register<CentralLogger>("CentralLogger", {
   useFactory: () =>
@@ -40,6 +41,7 @@ container.register<CentralLogger>("CentralLogger", {
       "/Users/dave/projects/urban-thread/ut.log",
     ),
 });
+container.register<ConsoleLogger>("ConsoleLogger", ConsoleLogger);
 container.register<IdGenerator>("IdGenerator", UuidIdGenerator);
 
 container.register<DataSource>("DataSource", { useValue: AppDataSource });

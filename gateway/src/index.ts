@@ -6,13 +6,13 @@ import routes from "./endpoints/routes.config";
 import { AppDataSource } from "./data-source";
 import helmet from "helmet";
 import { container } from "tsyringe";
-import { CentralLogger } from "shared/lib/logger.util";
 
 import session from "express-session";
 
 import cors from "cors";
 
 import compression from "compression";
+import { CentralLogger } from "shared/lib/logger/central.logger";
 
 const logger = container.resolve<CentralLogger>("CentralLogger");
 // // const i18n = require("i18n-2");

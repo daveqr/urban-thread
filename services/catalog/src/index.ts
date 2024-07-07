@@ -3,7 +3,7 @@ import "./di";
 import app from "./app";
 import { AppDataSource } from "./data-source";
 import { container } from "tsyringe";
-import { CentralLogger } from "shared/lib/logger.util";
+import { CentralLogger } from "shared/lib/logger/central.logger";
 
 const logger = container.resolve<CentralLogger>("CentralLogger");
 const PORT = process.env.PORT || 4000;
