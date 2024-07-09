@@ -5806,11 +5806,11 @@ __metadata:
 
 "shared@file:../../shared::locator=product-service%40workspace%3A.":
   version: 1.0.0
-  resolution: "shared@file:../../shared#../../shared::hash=18f8dc&locator=product-service%40workspace%3A."
+  resolution: "shared@file:../../shared#../../shared::hash=853a31&locator=product-service%40workspace%3A."
   dependencies:
     uuid: "npm:^10.0.0"
     winston: "npm:^3.13.0"
-  checksum: 10c0/604ff59f9ae41b6e7c7fd927f53b6fedd15bbcaa2b65505992ff517f1db36938874b956799d13e9d44d9eebac6cc5459ff7c2a4db02f3f8edf749f0966afcec3
+  checksum: 10c0/fb42fa5bf701a5b73c12a7af5213f7667ad4ab0841a30cabf06b75195b1177dd448fb9bf28c08d697082a767b1e5a23b3275c874b0d3ad98964b127a41168ea4
   languageName: node
   linkType: hard
 
